@@ -1,4 +1,4 @@
-import { BaseBridge } from "../baseBridge";
+import { BaseBridge } from "../baseBridgeProvider";
 
 export class GlitterBridge implements BaseBridge {
 

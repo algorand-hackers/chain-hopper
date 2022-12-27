@@ -1,5 +1,5 @@
-import { GlitterBridge } from "./glitterBridge";
-import { WormHoleBridge } from "./wormholeBridge";
+import { GlitterBridge } from "./glitterBridgeProvider";
+import { WormHoleBridge } from "./wormholeBridgeProvider";
 
 export const BRIDGES = {
     'WormHole': WormHoleBridge,
