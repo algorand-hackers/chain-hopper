@@ -1,0 +1,11 @@
+{
+  "name": "ts-config-chain-hopper",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "main": "index.js",
+  "files": [
+    "base.json",
+    "react-library.json"
+  ]
+}

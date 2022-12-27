@@ -1,0 +1,5 @@
+{
+  "extends": "ts-config-chain-hopper/react-library.json",
+  "include": ["."],
+  "exclude": ["dist", "build", "node_modules"]
+}
