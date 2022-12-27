@@ -11,6 +11,7 @@
     "@chain-hopper/sdk": "*"
   },
   "devDependencies": {
+    "ts-config-chain-hopper": "*",
     "eslint-config-chain-hopper": "*",
     "typescript": "4.5.4"
   }
