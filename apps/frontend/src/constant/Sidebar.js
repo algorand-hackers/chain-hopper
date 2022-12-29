@@ -16,7 +16,7 @@ const Sidebar = () => {
 
   return (
     <Box h="100%">
-      <Flex ml="auto" mr="10px" my="4" justify="space-between" align="center" w="80%">
+      <Flex ml="auto" mr="10px" mt="4" mb="1" justify="space-between" align="center" w="80%">
         <div className="flex ">
           <Image color="dark" h="25px" src={wallet} alt="logo" />
           <Text ml="3" fontWeight="500">
@@ -36,7 +36,7 @@ const Sidebar = () => {
         </Text>
       </Flex>
       <Flex w="80%" mr="14px" ml="auto" direction="column" justify="space-between" h="80%">
-        <Box mt="25px">
+        <Box>
             <Box mx="auto" my="2" rounded="8px"
                 className={ active ? `rounded-[8px]` : `bg-[#3A6EFF] text-[white]`}
             >
