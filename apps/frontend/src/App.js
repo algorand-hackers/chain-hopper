@@ -23,8 +23,6 @@ function App() {
           <Box bg="#E3E7EE" w={{base:"100%", md:"100%", lg:"100%"}}>
             <Routes>
               <Route index element={<Home />} />
-              {/* <Route path="/signin" element={<SignIn />} /> */}
-              {/* <Route path="*" element={<ProtectedRoutes />} /> */}
             </Routes>
           </Box>
         </Box>
