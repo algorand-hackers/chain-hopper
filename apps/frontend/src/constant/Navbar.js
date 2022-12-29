@@ -7,11 +7,11 @@ import wallet from "../asset/wallet.svg"
 
 const Navbar = () => {
   return (
-    <Box bg="#FFFFFF" h="10vh" pt="16px">
-        <Flex w="90%" mx="auto" justify="space-between" align="center">
+    <Box bg="#FFFFFF" h="12vh" pt="16px">
+        <Flex w="95%" mx="auto" justify="space-between" align="center">
             <Flex className="font-[syne]">
                 <img src={Applogo} alt="logo" />
-                <Text ml="3" fontWeight="800"  fontSize="20px">ChainHopper</Text>
+                <Text ml="3" fontWeight="800" color="dark" fontSize="20px">ChainHopper</Text>
             </Flex>
             <Flex>
                 <Link className='mr-4 p-2 font-[500]'>
