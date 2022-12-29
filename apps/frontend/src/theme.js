@@ -3,7 +3,9 @@ import { extendTheme } from "@chakra-ui/react";
 
 // 2. Extend the theme to include custom colors, fonts, etc
 const colors = {
-  primary: "#FFF",
+  primary: "#404040",
+  white: "#ffffff",
+  btnBg: "linear-gradient(90deg, #4A48FF 0%, #2996FF 100%)",
 };
 
 // 3. Add your color mode config

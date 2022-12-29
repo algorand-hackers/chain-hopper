@@ -11,7 +11,9 @@ module.exports = {
           200: "#1E1E1E",
         },
       },
-      fontFamily: { },
+      fontFamily: { 
+        Syne: ["syne", "sans-serif"]
+      },
       screens: { },
       backgroundImage: {   },
     },
