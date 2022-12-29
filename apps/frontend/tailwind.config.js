@@ -6,12 +6,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        yellow: "#FFD700",
-        black: {
-          200: "#1E1E1E",
-        },
+        primary: "#404040",
       },
-      fontFamily: { },
+      fontFamily: { 
+        Syne: ["syne", "sans-serif"]
+      },
       screens: { },
       backgroundImage: {   },
     },
