@@ -4,7 +4,7 @@ import { Box, Button } from "@chakra-ui/react";
 import Home from './pages/Home';
 import Navbar from './constant/Navbar';
 import Sidebar from './constant/Sidebar';
-import Bridge from './pages/Bridge';
+import Bridge from './pages/Bridge/Bridge';
 // import { useColorMode } from "@chakra-ui/color-mode"
 
 
