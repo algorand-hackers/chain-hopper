@@ -1,19 +1,28 @@
-import React from 'react'
-import { Box, Flex, Button, Text } from "@chakra-ui/react";
+import React, { useState } from 'react'
+import { Box, Flex, Button, Text, Icon } from "@chakra-ui/react";
+import {GiHamburgerMenu} from "react-icons/gi"
+import { useDisclosure } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import Applogo from "../asset/Applogo.svg"
 import wallet from "../asset/wallet.svg"
+import Btn from '../components/UI/Btn';
+import MobileNavbar from './MobileNavbar';
 
 
 const Navbar = () => {
+    const { getDisclosureProps, getButtonProps } = useDisclosure()
+
+    const buttonProps = getButtonProps()
+    const disclosureProps = getDisclosureProps()
+
   return (
-    <Box bg="#FFFFFF" h="12vh" pt="16px">
+    <Box  h="10vh" pt="16px">
         <Flex w="95%" mx="auto" justify="space-between" align="center">
             <Flex className="font-[syne]">
                 <img src={Applogo} alt="logo" />
-                <Text ml="3" fontWeight="800" color="dark" fontSize="20px">ChainHopper</Text>
+                <Text ml="3" fontWeight="800"  fontSize="20px">ChainHopper</Text>
             </Flex>
-            <Flex>
+            <Flex display={{base:"none", md:"block"}}>
                 <Link className='mr-4 p-2 font-[500]'>
                     Networks
                 </Link>
@@ -27,11 +36,19 @@ const Navbar = () => {
                     Contact us
                 </Link>
             </Flex>
-            <Button bg="btnBg" rounded="24px" color="white" >
-                <img src={wallet} alt="logo" />
-                <Text ml="2">connect wallet</Text>
-            </Button>
+            <Box display={{base:"none", md:"block"}}>
+                <Btn text="connect wallet" />
+            </Box>
+            <Box 
+                display={{base:"block", md:"none"}}
+                {...buttonProps}
+            >
+                <Icon boxSize={6} as={GiHamburgerMenu} />
+            </Box>
         </Flex>
+        <Box {...disclosureProps} display={{base:"block", md:"none"}}>
+            <MobileNavbar />
+        </Box>
     </Box>
   )
 }
