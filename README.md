@@ -21,7 +21,7 @@ yarn install
 
 This Turborepo includes the following packages and applications:
 
-- `apps/bridge`: The bridge site
+- `apps/frontend`: The bridge site
 - `packages/@chain-hopper/sdk`: Unified SDK that incorporates Wormhole and Glitter plus potential for integrating others
 - `packages/ts-config-chain-hopper`: Shared `tsconfig.json`s used throughout the Turborepo
 - `packages/eslint-config-chain-hopper`: Shared eslint config
