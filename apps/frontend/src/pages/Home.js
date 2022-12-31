@@ -9,6 +9,8 @@ import Btn from '../components/UI/Btn';
 const Home = () => {
   const { colorMode, toggleColorMode } = useColorMode()
 
+   let copyRightYear = new Date().getFullYear() + " ChainHooper ";
+
   return (
     <Flex direction="column" justify="space-between"   h={{base:"90vh", md:"100%"}} px={5}>
         <Box w={{base:"100%", md:"100%", lg:"85%"}} mt="6rem" mx="auto">
@@ -16,7 +18,7 @@ const Home = () => {
             <Text className='leading-[24px] font-[syne]' mb={5}>Are you tired of juggling multiple bridge solutions to transfer your assets between different blockchains? Our bridge aggregator simplifies the process by curating the best route for you. Simply specify your source and destination chains, and we'll handle the rest</Text>
             <Btn text="connect wallet" />
         </Box>
-        <Text mb={3}>© 2023 ChainHooper</Text>
+        <Text mb={3}>© {copyRightYear}</Text>
     </Flex>
   )
 }

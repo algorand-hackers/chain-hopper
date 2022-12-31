@@ -16,7 +16,7 @@ const Navbar = () => {
     const disclosureProps = getDisclosureProps()
 
   return (
-    <Box  h="10vh" pt="16px">
+    <Box  h="100px" pt="16px">
         <Flex w="95%" mx="auto" justify="space-between" align="center">
             <Flex className="font-[syne]">
                 <img src={Applogo} alt="logo" />

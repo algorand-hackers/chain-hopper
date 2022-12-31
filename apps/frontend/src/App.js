@@ -11,10 +11,10 @@ function App() {
 
   return (
     <div>
-      <Box >
+      <Box>
         <Navbar />
         <Box display="flex">
-          <Box>
+          <Box h="100vh">
             <Sidebar />
           </Box>
           <Box bg="bg2" w={{base:"100%", md:"100%", lg:"100%"}}>
