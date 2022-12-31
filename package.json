@@ -20,5 +20,8 @@
     "eslint-config-chain-hopper": "*",
     "prettier": "2.5.1",
     "turbo": "1.2.12"
+  },
+  "dependencies": {
+    "react-icons": "^4.7.1"
   }
 }
