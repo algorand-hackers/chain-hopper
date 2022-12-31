@@ -14,11 +14,11 @@ function App() {
     <div>
       <Box >
         <Navbar />
-        <Box display="flex">
+        <Box display="flex" >
           <Box>
             <Sidebar />
           </Box>
-          <Box bg="bg2" w={{base:"100%", md:"100%", lg:"100%"}}>
+          <Box h="100vh" bg="bg2" w={{base:"100%", md:"100%", lg:"100%"}}>
             <Routes>
               <Route index element={<Home />} />
               <Route path='/bridge' element={<Bridge />} />
