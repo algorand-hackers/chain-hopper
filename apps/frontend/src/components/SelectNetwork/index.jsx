@@ -28,9 +28,7 @@ const SelectNetwork = ({ selected, setSelected, tokenIcon, setTokenIcon }) => {
     }
   ]
 
-  const onElementClicked = () => {
-    //  setValue()
-  };
+
 
   return (
     <Flex  {...wrapperSelect}>
@@ -54,14 +52,11 @@ const SelectNetwork = ({ selected, setSelected, tokenIcon, setTokenIcon }) => {
               display: 'none',
             },
           }}
-          // onClick={() => {
-          //   onElementClicked();
-          // }}
         >
           <Box>
-            {options?.map((option) => (
+            {options?.map((option, index) => (
               <Flex
-              // key={index}
+              key={index}
               {...optionContentChild}
               _hover={{ bg: '#F7F7F8', borderRadius: '5.3183px' }}
               p={'5px'}
