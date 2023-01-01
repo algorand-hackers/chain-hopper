@@ -61,7 +61,7 @@ const CryptoModal = () => {
     <ModalCloseButton />
     <ModalBody>
       {crypto.map(c => (
-        <Box d="flex" alignItems="center" mb={5}>
+        <Box d="flex" justify="space-between" alignItems="center" mb={5}>
           <Image src={c.imageUrl} size={2} mr={5} />
           <Text fontSize="lg">{c.symbol}: {c.amount}</Text>
         </Box>
