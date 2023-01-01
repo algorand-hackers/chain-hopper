@@ -8,6 +8,7 @@ import {
 import {MdOutlineKeyboardArrowDown} from 'react-icons/md'
 import Images_Icons from "../../constant/icons-images";
 
+
 const SelectNetwork = ( props, {...rest}) => {
        const {
         wrapperSelect,
@@ -56,6 +57,7 @@ const SelectNetwork = ( props, {...rest}) => {
           <Image fallbackSrc={Images_Icons.avalancheLogo} mr={"10px"} />
           <Text>Avalanche</Text>
           </Flex>
+          
      </Stack>
      </Flex>
   )
