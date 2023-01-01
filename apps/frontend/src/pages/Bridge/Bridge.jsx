@@ -71,7 +71,16 @@ const Bridge = ({...rest}) => {
                           
                           {/* ------------------- SELECT NETWORK -------------------- */}
                           <Flex {...rest} mt={"10px"}>
-                           <SelectNetwork selecttable={["Ethereum", "BNB Chain", "Polygon", "Avalanche"]} />
+                           <SelectNetwork selectable=
+                           {[ "BNB Chain","Polygon","Avalanche",
+                           {
+                             1: "Ethereum"
+                           },
+                           {
+                              2: "BNB Chain"
+                           }
+                          ]} 
+                           />
                           </Flex>
                           {/* ------------------- SELECT TOKENS -------------------- */}
                           <Flex {...rest}>

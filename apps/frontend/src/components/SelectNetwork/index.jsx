@@ -8,7 +8,7 @@ import {
 import {MdOutlineKeyboardArrowDown} from 'react-icons/md'
 import Images_Icons from "../../constant/icons-images";
 
-const SelectNetwork = ( props, {...rest}) => {
+export const SelectNetwork = ( props, {...rest}) => {
        const {
         wrapperSelect,
         buttonSelect,
@@ -18,8 +18,8 @@ const SelectNetwork = ( props, {...rest}) => {
 
     const [value, setValue] = useState("Select network");
 
-    const onElementClicked = () => {
-     setValue()
+    const onElementClicked = (string) => {
+     setValue(string)
     }
 
   return (
@@ -29,20 +29,22 @@ const SelectNetwork = ( props, {...rest}) => {
      <MdOutlineKeyboardArrowDown/>
      </Flex>
      {/* -------------------- THE SELECT OPTION DROPDOWN NETWORK AVAILABLE ---------------------- */}
-     <Stack {...optionContent} zIndex={"10000"} overflowY="auto"
+     {props.selectable.map((string) => {
+         return (
+        <Stack {...optionContent} zIndex={"10000"} overflowY="auto"
           css={{
           '&::-webkit-scrollbar': {
-          display: "none"
+          display: "none" 
           }
-     }}
-     onClick={() => {onElementClicked()}}
-     >
+        }}
+        onClick={() => {onElementClicked(string)}}
+       >
           <Flex {...optionContentChild} _hover={{ bg:"#F7F7F8", borderRadius: "5.3183px" }} p={"5px"}>
           <Image fallbackSrc={Images_Icons.ethereumLogo} mr={"10px"} />
-          <Text>Ethereum</Text>
+          <Text>{string}</Text>
           </Flex>
 
-          <Flex {...optionContentChild} _hover={{ bg:"#F7F7F8", borderRadius: "5.3183px" }} p={"5px"}>
+          {/* <Flex {...optionContentChild} _hover={{ bg:"#F7F7F8", borderRadius: "5.3183px" }} p={"5px"}>
           <Image fallbackSrc={Images_Icons.bnbLogo} mr={"10px"} />
           <Text>BNB Chain</Text>
           </Flex>
@@ -55,8 +57,11 @@ const SelectNetwork = ( props, {...rest}) => {
           <Flex {...optionContentChild} _hover={{ bg:"#F7F7F8", borderRadius: "5.3183px" }} p={"5px"}>
           <Image fallbackSrc={Images_Icons.avalancheLogo} mr={"10px"} />
           <Text>Avalanche</Text>
-          </Flex>
-     </Stack>
+          </Flex> */}
+         </Stack>
+      )
+     })}
+   
      </Flex>
   )
 }
