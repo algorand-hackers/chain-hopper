@@ -4,26 +4,22 @@ import { Flex, Box,
      Text, 
      Spinner,
      Tabs, TabList, TabPanels, Tab, TabPanel,
-     Select,
     } from '@chakra-ui/react';
 import SelectNetwork from '../../components/SelectNetwork';
 // const NetworkSelector = lazy(
 //   () => import("../../components/NetworkSelector")
 // );
 
-
-
 const Bridge = ({...rest}) => {
       
   const {
         root,
-        root2,
-        root3,
         fontsm,
     } = useBridgeStyles();
     // const [displaySwitcher, setDisplaySwitcher] = useState(true);
-    // const [network, setNetwork] = useState("");
-    // const [network2, setNetwork2] = useState("");
+    const [selected, setSelected] = useState("Select Network");
+    const [tokenIcon, setTokenIcon] = useState();
+    // const [network2, setNetwork2] = useState(false);
     
 
   //   const networkData = networks.map((data) => {
@@ -71,35 +67,9 @@ const Bridge = ({...rest}) => {
                           
                           {/* ------------------- SELECT NETWORK -------------------- */}
                           <Flex {...rest} mt={"10px"}>
-                           <SelectNetwork selectable=
-                           {[ "BNB Chain","Polygon","Avalanche",
-                           {
-                             1: "Ethereum"
-                           },
-                           {
-                              2: "BNB Chain"
-                           }
-                          ]} 
-                           />
+                           <SelectNetwork selected={selected} setSelected={setSelected} tokenIcon={tokenIcon} setTokenIcon={setTokenIcon} />
                           </Flex>
-                          {/* ------------------- SELECT TOKENS -------------------- */}
-                          <Flex {...rest}>
-                            <Select 
-                            //  variant="unstyled"
-                             placeholder="Select tokens"
-                             pl={"5px"}
-                             h="50px"
-                             alignSelf="center"
-                             justifySelf={"center"}
-                             justifyContent="center"
-                             {...root3}
-                            >
-                              <option value='option1'>Option 1</option>
-                              <option value='option2'>Option 2</option>
-                              <option value='option3'>Option 3</option>
-                            </Select>
-                          </Flex>
-
+                        
                            {/* ------------------------ BRIDGING ---------------------- */}
                           
                           <Flex flexDir={"column"} mt={"15px"}>
