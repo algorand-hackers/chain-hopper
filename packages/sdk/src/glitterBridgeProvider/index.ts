@@ -4,8 +4,8 @@ import { BaseBridgeProvider } from "../baseBridgeProvider";
 
 export class GlitterBridgeProvider implements BaseBridgeProvider {
 
-    public supportedAssets() {
-        
+    public supportedNetworks() {
+        return [Networks.ALGO, Networks.SOL];
     }
 
     public  supportedAssetsByNetwork(network: string){
@@ -17,6 +17,6 @@ export class GlitterBridgeProvider implements BaseBridgeProvider {
     }
         
     public  performNextStep(update) {
-        
+
     }
 }
