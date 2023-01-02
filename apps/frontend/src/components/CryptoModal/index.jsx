@@ -7,64 +7,67 @@ import {  Modal,
   ModalBody, 
   ModalCloseButton, 
   Image, 
-  Text, Button, Box } from "@chakra-ui/react";
+  Text, Button, Box, Flex } from "@chakra-ui/react";
 const CryptoModal = () => {
   const [isOpen, setIsOpen] = useState(false);
   const onClose = () => setIsOpen(false);
   
   const crypto = [
     {
-      name: 'Bitcoin',
-      symbol: 'BTC',
-      amount: '0.01',
-      imageUrl: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png'
-    },
-    {
       name: 'Ethereum',
       symbol: 'ETH',
-      amount: '0.5',
+      amount: '0.8',
       imageUrl: 'https://cryptologos.cc/logos/ethereum-eth-logo.png'
     },
     {
-      name: 'Litecoin',
-      symbol: 'LTC',
-      amount: '1',
-      imageUrl: 'https://cryptologos.cc/logos/litecoin-ltc-logo.png'
-    },
-    {
-      name: 'Ripple',
+      name: 'xrp',
       symbol: 'XRP',
-      amount: '20',
-      imageUrl: 'https://cryptologos.cc/logos/ripple-xrp-logo.png'
+      amount: '23,060.45',
+      imageUrl: 'https://cryptologos.cc/logos/xrp-xrp-logo.png?v=002'
     },
     {
-      name: 'Monero',
-      symbol: 'XMR',
-      amount: '0.1',
-      imageUrl: 'https://cryptologos.cc/logos/monero-xmr-logo.png'
+      name: 'USDT',
+      symbol: 'USDT',
+      amount: '104.29',
+      imageUrl: 'https://cryptologos.cc/logos/tether-usdt-logo.png?v=002'
+    },
+ 
+ 
+
+    {
+      name: 'AAVE',
+      symbol: 'aave',
+      amount: '20.82',
+      imageUrl: 'https://cryptologos.cc/logos/aave-aave-logo.png?v=024'
     },
     {
-      name: 'Dogecoin',
-      symbol: 'DOGE',
-      amount: '100',
-      imageUrl: 'https://cryptologos.cc/logos/dogecoin-doge-logo.png'
+      name: 'UNI',
+      symbol: 'uniswap',
+      amount: '0.8',
+      imageUrl: 'https://cryptologos.cc/logos/uniswap-uni-logo.png?v=024'
     }
   ];
   return (
     <>
-  <Button onClick={() => setIsOpen(true)}>Show Modal</Button>
+   <Button onClick={() => setIsOpen(true)}>Show Modal</Button>
 
-<Modal isOpen={isOpen} onClose={onClose}>
+<Modal isOpen={isOpen} onClose={onClose} >
   <ModalOverlay />
   <ModalContent>
-    <ModalHeader>Crypto Holdings</ModalHeader>
+    <ModalHeader>Ethereum network tokens</ModalHeader>
     <ModalCloseButton />
-    <ModalBody>
+    <ModalBody >
       {crypto.map(c => (
-        <Box d="flex" justify="space-between" alignItems="center" mb={5}>
-          <Image src={c.imageUrl} size={2} mr={5} />
-          <Text fontSize="lg">{c.symbol}: {c.amount}</Text>
-        </Box>
+        <Flex d="flex" justifyContent="space-between" alignItems="center" mb={5}>
+          <Flex>
+          <Image src={c.imageUrl} width="48px" mr={5} />
+          <Box>
+          <Text>{c.symbol}</Text>
+          <Text color="#404040">{c.name}</Text>
+          </Box>
+          </Flex>
+          <Text color="#404040" fontSize="lg"> {c.amount}</Text>
+        </Flex>
       ))}
     </ModalBody>
     
