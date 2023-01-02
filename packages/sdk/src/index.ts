@@ -19,9 +19,15 @@ function createBridgeProvider(bridgeProviderId: string) {
 
 // Combine the  supported  assets of all bridge providers and return it. This function is
 // beyond the scope of any particular bridge provider
-export function allSupportedAssets() {
+export function allSupportedNetworks() {
 
 }
+
+export function supportedAssetsByNetwork(network: string)  {
+    
+}
+
+
 
 
 // ... Add other functions that frontend will need to call without using a specific bridge provider
