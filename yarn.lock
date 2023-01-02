@@ -1280,6 +1280,13 @@
   dependencies:
     "@chakra-ui/shared-utils" "2.0.4"
 
+"@chakra-ui/icons@^2.0.15":
+  version "2.0.15"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/icons/-/icons-2.0.15.tgz#9613eae03e08dd9622723540cd3bf582e38b1fde"
+  integrity sha512-/Hsefej7DfRMg+Go+gf/UU4PHNMPmba41ogO1K3242aP9VSs/6/qXB3zrZHl21OX/rdrK408VqYEPInLmUwiHw==
+  dependencies:
+    "@chakra-ui/icon" "3.0.14"
+
 "@chakra-ui/image@2.0.13":
   version "2.0.13"
   resolved "https://registry.yarnpkg.com/@chakra-ui/image/-/image-2.0.13.tgz#adc8bc97a65ef15491d7abfa7e4aa31debb3e4c1"
@@ -3268,7 +3275,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*":
+"@types/react@*", "@types/react@^18.0.5":
   version "18.0.26"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.26.tgz#8ad59fc01fef8eaf5c74f4ea392621749f0b7917"
   integrity sha512-hCR3PJQsAIXyxhTNSiDFY//LhnMZWpNNr5etoCqx/iUfGc5gXWtQR2Phl908jVR6uPXacojQWTg4qRpkxTuGug==
@@ -3894,6 +3901,11 @@ ast-types-flow@^0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/ast-types-flow/-/ast-types-flow-0.0.7.tgz#f70b735c6bca1a5c9c22d982c3e39e7feba3bdad"
   integrity sha512-eBvWn1lvIApYMhzQMsu9ciLfkBY499mFZlNqG+/9WR7PVlroQw0vG30cOQQbaKz3sCEc44TAOu2ykzqXSNnwag==
+
+async-ref@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/async-ref/-/async-ref-0.1.6.tgz#babc3b57e87ccf93be11635c9a64169f50a5ebe9"
+  integrity sha512-gIvfC7ahv452pM+nwnxZJd/vhUh8UFMrd1DCvIvWjoy9WrRmYroXTTDxwg91oiD+4CqQKrg+11uCxZrzat4UvQ==
 
 async@^3.2.3:
   version "3.2.4"
@@ -6066,6 +6078,14 @@ find-yarn-workspace-root2@1.2.16:
   dependencies:
     micromatch "^4.0.2"
     pkg-dir "^4.2.0"
+
+flag@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/flag/-/flag-5.0.1.tgz#31214fcbe275ea38f088ac6bf52d08f50616bfcb"
+  integrity sha512-4P/rvPGKcFBneboyYHMOKbKaJL5ZhNjScbY7bGToas7FgBvrTWbh76yxRaoSoFe3HSjWc6IJ0EajUwSadcP6Lg==
+  dependencies:
+    "@types/react" "^18.0.5"
+    async-ref "^0.1.6"
 
 flat-cache@^3.0.4:
   version "3.0.4"

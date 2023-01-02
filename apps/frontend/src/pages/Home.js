@@ -22,7 +22,7 @@ const Home = () => {
         </Box>
         
         <Text mb={3}>© {copyRightYear}</Text>
-        
+        <CryptoModal/>
     </Flex>
   )
 }
