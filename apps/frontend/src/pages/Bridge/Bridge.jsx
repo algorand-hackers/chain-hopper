@@ -20,12 +20,17 @@ import AlgoTranc from "../../asset/AlgoTran.svg";
 //   () => import("../../components/NetworkSelector")
 // );
 
-const Bridge = ({ ...rest }) => {
-  const { root, root2, root3, fontsm } = useBridgeStyles();
-  // const [displaySwitcher, setDisplaySwitcher] = useState(true);
-  const [selected, setSelected] = useState('Select Network');
-  const [tokenIcon, setTokenIcon] = useState();
-  // const [network2, setNetwork2] = useState(false);
+const Bridge = ({...rest}) => {
+      
+  const {
+        root,
+        fontsm,
+    } = useBridgeStyles();
+    // const [displaySwitcher, setDisplaySwitcher] = useState(true);
+    const [selected, setSelected] = useState("Select Network");
+    const [tokenIcon, setTokenIcon] = useState();
+    // const [network2, setNetwork2] = useState(false);
+    
 
   //   const networkData = networks.map((data) => {
   //   return { id: nanoid(), ...data };

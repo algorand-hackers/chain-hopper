@@ -81,7 +81,6 @@ const SelectNetwork = ({ selected, setSelected, tokenIcon, setTokenIcon }) => {
               <Image fallbackSrc={Images_Icons.bnbLogo} mr={'10px'} />
               BNB Chain
             </Flex>
-
             <Flex
               {...optionContentChild}
               _hover={{ bg: '#F7F7F8', borderRadius: '5.3183px' }}
@@ -90,7 +89,6 @@ const SelectNetwork = ({ selected, setSelected, tokenIcon, setTokenIcon }) => {
               <Image fallbackSrc={Images_Icons.polygonLogo} mr={'10px'} />
               Polygon
             </Flex>
-
             <Flex
               {...optionContentChild}
               _hover={{ bg: '#F7F7F8', borderRadius: '5.3183px' }}
