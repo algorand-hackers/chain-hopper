@@ -117,7 +117,7 @@ export const useSelectNetworkStyles = () => {
     },
     buttonSelect: {
       w: '100%',
-      h: '48px',
+      h: '42px',
       color: '#404040',
       border: '1px solid #E5E5E5',
       borderRadius: '10px 10px 0px 0px',
