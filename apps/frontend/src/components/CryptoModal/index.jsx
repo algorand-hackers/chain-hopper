@@ -16,6 +16,7 @@ import {
   Icon,
   InputGroup,
   InputLeftElement,
+  Spacer,
 
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
@@ -82,16 +83,19 @@ const CryptoModal = () => {
         alignItems="center"
       >
         <ModalOverlay />
-        <ModalContent mx={8}>
+        <ModalContent mx={4}>
           <ModalHeader>Ethereum network tokens</ModalHeader>
           <ModalCloseButton />
           
             <InputGroup>
     <InputLeftElement
-    mx={8}
+    mx={6}
+    mt="6px"
+   pr={4}
       pointerEvents='none'
       children={<SearchIcon color='gray.300' />}
     />
+    
     <Input  p={6}
             variant="filled"
             placeholder="Search token name.."
@@ -99,7 +103,7 @@ const CryptoModal = () => {
             type="text"
             value={searchTerm}
             onChange={handleSearch} 
-            mx={7}/>
+            mx={6}/>
   </InputGroup>
 
 
