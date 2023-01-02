@@ -7,6 +7,7 @@ module.exports = {
     extend: {
       colors: {
         primary: "#404040",
+        white: "#ffffff",
       },
       fontFamily: { 
         Syne: ["syne", "sans-serif"]

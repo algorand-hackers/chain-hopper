@@ -15,6 +15,7 @@ import {
 import SelectNetwork from '../../components/SelectNetwork';
 import TokenRoute from '../../constant/TokenRoute';
 import AlgoTranc from "../../asset/AlgoTran.svg";
+import TransactionLoader from '../../components/TransactionLoader';
 
 // const NetworkSelector = lazy(
 //   () => import("../../components/NetworkSelector")
@@ -37,12 +38,13 @@ const Bridge = ({...rest}) => {
   // });
 
   return (
-    <Flex flexDir={'column'}>
-      <Stack {...root}>
+    <Flex flexDir={'column'} h="100%">
+      <Stack {...root} pos="relative">
         <Box
           bg="rgba(255, 255, 255, 0.97)"
           w="590px"
-          h="100%"
+          pos="relative"
+          h="fit-content"
           color="dark"
           borderRadius={'16px'}
           flexDir={'column'}
@@ -141,6 +143,10 @@ const Bridge = ({...rest}) => {
             Transfer
           </Box>
         </Box>
+          {/* ----------------------------------- TRANSACTION lOADER --------------------------------------------- */}
+
+          <TransactionLoader />
+
       </Stack>
     </Flex>
   );
@@ -152,6 +158,7 @@ export const useBridgeStyles = () => {
   return {
     root: {
       w: '100%',
+      h: "100%",
       justifyContent: 'center',
       alignItems: 'center',
       // mt: '6px',
