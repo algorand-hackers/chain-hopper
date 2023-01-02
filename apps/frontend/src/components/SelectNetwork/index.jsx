@@ -71,32 +71,7 @@ const SelectNetwork = ({ selected, setSelected, tokenIcon, setTokenIcon }) => {
               {option.token}
             </Flex>
             ))}
-            
-
-            {/* <Flex
-              {...optionContentChild}
-              _hover={{ bg: '#F7F7F8', borderRadius: '5.3183px' }}
-              p={'5px'}
-            >
-              <Image fallbackSrc={Images_Icons.bnbLogo} mr={'10px'} />
-              BNB Chain
-            </Flex>
-            <Flex
-              {...optionContentChild}
-              _hover={{ bg: '#F7F7F8', borderRadius: '5.3183px' }}
-              p={'5px'}
-            >
-              <Image fallbackSrc={Images_Icons.polygonLogo} mr={'10px'} />
-              Polygon
-            </Flex>
-            <Flex
-              {...optionContentChild}
-              _hover={{ bg: '#F7F7F8', borderRadius: '5.3183px' }}
-              p={'5px'}
-            >
-              <Image fallbackSrc={Images_Icons.avalancheLogo} mr={'10px'} />
-              Avalanche
-            </Flex> */}
+          
           </Box>
         </Stack>
       )}
@@ -115,7 +90,7 @@ export const useSelectNetworkStyles = () => {
     },
     buttonSelect: {
       w: '100%',
-      h: '48px',
+      h: '42px',
       color: '#404040',
       border: '1px solid #E5E5E5',
       borderRadius: '10px 10px 0px 0px',
