@@ -28,7 +28,7 @@ const TokenRoute = () => {
 
       <Flex justify="space-between" mb={2} mt={5}>
         <Flex fontSize="14px" h="fit-content" align={"flex-end"} fontWeight="500">
-            <Image src={Wormhole} w="30px" h="30px"  mr={1} alt="algo" />
+            <Image src={Wormhole} w="25px" h="25px"  mr={1} alt="algo" />
             WormHole
             <Image src={AlgoTranc} w="15px" h="15px" mb="3px" ml={1} alt="algo" />
         </Flex>
