@@ -17,13 +17,12 @@ import {
   InputGroup,
   InputLeftElement,
   Spacer,
-
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
 const crypto = [
   {
     id: 1,
-    name: 'Ethereum',
+    name: 'ethereum',
     symbol: 'ETH',
     amount: '0.8',
     imageUrl: 'https://cryptologos.cc/logos/ethereum-eth-logo.png',
@@ -37,7 +36,7 @@ const crypto = [
   },
   {
     id: 3,
-    name: 'USDT',
+    name: 'usdt',
     symbol: 'USDT',
     amount: '104.29',
     imageUrl: 'https://cryptologos.cc/logos/tether-usdt-logo.png?v=002',
@@ -45,15 +44,15 @@ const crypto = [
 
   {
     id: 4,
-    name: 'AAVE',
-    symbol: 'aave',
+    name: 'aave',
+    symbol: 'AAVE',
     amount: '20.82',
     imageUrl: 'https://cryptologos.cc/logos/aave-aave-logo.png?v=024',
   },
   {
     id: 5,
-    name: 'UNI',
-    symbol: 'uniswap',
+    name: 'uniswap',
+    symbol: 'UNI',
     amount: '0.8',
     imageUrl: 'https://cryptologos.cc/logos/uniswap-uni-logo.png?v=024',
   },
@@ -71,6 +70,8 @@ const CryptoModal = () => {
     setFilteredCrypto(crypto.filter((c) => c.name.includes(searchTerm.toLocaleLowerCase)));
   };
 
+  const {search, font} = useCryptoModalStyles();
+
   return (
     <>
       <Button onClick={() => setIsOpen(true)}>Show Modal</Button>
@@ -78,34 +79,39 @@ const CryptoModal = () => {
       <Modal
         isOpen={isOpen}
         onClose={onClose}
-       
       >
         <ModalOverlay  />
-        <ModalContent mx={4}>
-          <ModalHeader>Ethereum network tokens</ModalHeader>
-          <ModalCloseButton />
-          
-            <InputGroup>
-    <InputLeftElement
-    mx={6}
-    mt="6px"
-   pr={4}
-      pointerEvents='none'
-      children={<SearchIcon color='gray.300' />}
-    />
-    
-    <Input  p={6}
-            variant="filled"
-            placeholder="Search token name.."
-            id="search"
-            type="text"
-            value={searchTerm}
-            onChange={handleSearch} 
-            mx={5}/>
-  </InputGroup>
-
-
-          <ModalBody>
+        <ModalContent  w={{base: "90vw", md: "30vw"}}
+         borderRadius={16}
+         p={"1%"}
+         >
+          <ModalHeader color={"#404040"} 
+          fontWeight="600" 
+          fontSize={"18px"}
+          >
+            Ethereum network tokens
+          </ModalHeader>
+          <ModalCloseButton mt={5} />
+                <InputGroup _focus={{boxShadow: "none"}} as="button" bg={"#F7F7F8"} borderRadius="9.11545px">
+                    <InputLeftElement
+                        pointerEvents="none"
+                        cursor={"pointer"}
+                        children={<Icon as={SearchIcon} color="black"/>}
+                    />
+                      <Input
+                          {...font}
+                          value={searchTerm}
+                          // onChange={(e) => {
+                          //     setSearchValue(e.target.value);
+                          // }}
+                          onChange={handleSearch}
+                          placeholder="Search token name.."
+                          _placeholder={{ color: "black" }}
+                          borderRadius="9.11545px"
+                          borderWidth="0"
+                      />
+                  </InputGroup>
+          <ModalBody mt={5}>
             {crypto.map((c) => (
               <Flex
                 d="flex"
@@ -114,9 +120,9 @@ const CryptoModal = () => {
                 mb={5}
               >
                 <Flex>
-                  <Image src={c.imageUrl} width="48px" mr={5} />
+                  <Image src={c.imageUrl} w="48px" h="48px" mr={5} />
                   <Box>
-                    <Text>{c.symbol}</Text>
+                    <Text fontWeight={"700"}>{c.symbol}</Text>
                     <Text color="#404040">{c.name}</Text>
                   </Box>
                 </Flex>
@@ -134,3 +140,23 @@ const CryptoModal = () => {
 };
 
 export default CryptoModal;
+
+
+export const useCryptoModalStyles = () => {
+    return {
+        font: {
+            fontSize: ["14px", "14px", "14px", "16px", "16px"],
+            // lineHeight: "19px",
+         },
+           search: {
+            w: "100%",
+            h: "40px",
+            background: "#F6F6F6",
+            borderRadius: "53px",
+            justify: "flex-start",
+            align: "center",
+            pl: "1%",
+        },
+    }
+
+};
