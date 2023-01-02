@@ -13,7 +13,7 @@ import notification from '../asset/notification.svg';
 
 
 const Sidebar = () => {
-    const [active, setActive] = useState(true);
+    // const [active, setActive] = useState(true);
 
 
   return (
@@ -39,21 +39,12 @@ const Sidebar = () => {
       </Flex>
       <Flex w="80%" mr="14px" ml="auto" direction="column" justify="space-between" h="80%">
         <Box>
-            <Box mx="auto" my="2" rounded="8px"
-                // className={ active ? `rounded-[8px]` : `bg-[#3A6EFF] text-[white]`}
-            >
+            <Box mx="auto" my="2" rounded="8px">
             <NavLink
-            // onClick={() => {setActive(false)}}
                 to="/bridge"
                 className="px-3 py-2 rounded-[5px] flex mx-auto "
             >
                 <Icon boxSize={6} as={Bridge} />
-                {/* <Image color="dark" h="25px" src={Bridge} alt="logo" /> */}
-                {/* { 
-                    active ? (<Image color="dark" h="25px" src={Bridge} alt="logo" />
-                    ) : (
-                    <Image color="dark" h="25px" src={bridgeLight} alt="logo" /> )
-                } */}
                 <Text ml="6" fontWeight="500">
                 Bridge
                 </Text>
