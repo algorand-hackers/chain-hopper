@@ -78,11 +78,9 @@ const CryptoModal = () => {
       <Modal
         isOpen={isOpen}
         onClose={onClose}
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
+       
       >
-        <ModalOverlay />
+        <ModalOverlay  />
         <ModalContent mx={4}>
           <ModalHeader>Ethereum network tokens</ModalHeader>
           <ModalCloseButton />
@@ -103,7 +101,7 @@ const CryptoModal = () => {
             type="text"
             value={searchTerm}
             onChange={handleSearch} 
-            mx={6}/>
+            mx={5}/>
   </InputGroup>
 
 
