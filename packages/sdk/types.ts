@@ -15,7 +15,6 @@ export type QuoteRequest = {
  assetName: string
  fromNetworkName: string,
  toNetworkName: string,
- slippagePercentage: number,
 }
 
 export type Quote = {
@@ -26,7 +25,6 @@ export type Quote = {
     amountOut: string,
     gasFeeEstimate: string,
     timeEstimate: string,
-    slippagePercentage: number,
     bridgeProviderId: string  
 }
 
