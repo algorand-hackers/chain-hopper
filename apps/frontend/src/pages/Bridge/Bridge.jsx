@@ -114,7 +114,7 @@ const Bridge = ({...rest}) => {
                       <Text fontSize="12px">
                         Verified on 2 bridges. Confirm token address
                       </Text>
-                      <Flex fontSize="12px" color="blue" mb={4} ml={2}>
+                      <Flex fontSize="12px" color="#3A6EFF" mb={4} ml={2}>
                         Algoexplorer 
                         <Image src={AlgoTranc} ml={1} alt="algo" />
                       </Flex>
