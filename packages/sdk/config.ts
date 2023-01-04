@@ -26,6 +26,6 @@ export const Assets = {
 
         xSOL: {symbol: 'xSOL', description: 'Wrapped Sol on Algorand'},
 
-        USDCs: {symbol: 'USDCs', description: "USDC on Solana"}
+        USDCa: {symbol: 'USDCs', description: "USDC on Solana"}
     }
 }
