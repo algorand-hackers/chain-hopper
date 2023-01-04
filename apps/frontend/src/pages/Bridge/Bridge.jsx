@@ -16,6 +16,7 @@ import SelectNetwork from '../../components/SelectNetwork';
 import TokenRoute from '../../constant/TokenRoute';
 import AlgoTranc from "../../asset/AlgoTran.svg";
 import TransactionLoader from '../../components/TransactionLoader';
+import TransactionModal from '../../components/TransactionModal/TransactionModal';
 
 // const NetworkSelector = lazy(
 //   () => import("../../components/NetworkSelector")
@@ -113,7 +114,7 @@ const Bridge = ({...rest}) => {
                       <Text fontSize="12px">
                         Verified on 2 bridges. Confirm token address
                       </Text>
-                      <Flex fontSize="12px" color="blue" mb={4} ml={2}>
+                      <Flex fontSize="12px" color="#3A6EFF" mb={4} ml={2}>
                         Algoexplorer 
                         <Image src={AlgoTranc} ml={1} alt="algo" />
                       </Flex>
@@ -145,7 +146,8 @@ const Bridge = ({...rest}) => {
         </Box>
           {/* ----------------------------------- TRANSACTION lOADER --------------------------------------------- */}
 
-          <TransactionLoader />
+            <TransactionLoader />
+          
 
       </Stack>
     </Flex>

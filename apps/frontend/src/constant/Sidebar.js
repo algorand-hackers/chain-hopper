@@ -18,25 +18,32 @@ const Sidebar = () => {
 
   return (
     <Box  w={{base:"0", md:"230px", lg:"257px"}} display={{base:"none", md:"block"}} h="547px">
-      <Flex ml="auto" mr="10px" mt="4" mb="1" justify="space-between" align="center" w="80%">
-        <div className="flex">
-          <Image color="dark" h="25px" src={wallet} alt="logo" />
-          <Text ml="3" fontWeight="500">
-            Portfolio
+      
+        {/* <Flex ml="auto" mr="10px" mt="4" mb="1" justify="space-between" align="center" w="80%"> */}
+      <NavLink 
+        to="/"
+        className="px-3 py-2 rounded-[5px] mt-4 mb-1 mr-4 justify-between items-center w-[80%] flex ml-auto"
+      >
+        
+          <div className="flex">
+            <Image color="dark" h="25px" src={wallet} alt="logo" />
+            <Text ml="3" fontWeight="500" color="dark">
+              Portfolio
+            </Text>
+          </div>
+          <Text
+            fontSize="16px"
+            fontWeight={500}
+            color="dark"
+            bg="bg2"
+            px={1.5}
+            py={1}
+            rounded="50%"
+          >
+            00
           </Text>
-        </div>
-        <Text
-          fontSize="16px"
-          fontWeight={500}
-          color="dark"
-          bg="bg2"
-          px={1.5}
-          py={1}
-          rounded="50%"
-        >
-          00
-        </Text>
-      </Flex>
+      </NavLink>
+        {/* </Flex> */}
       <Flex w="80%" mr="14px" ml="auto" direction="column" justify="space-between" h="80%">
         <Box>
             <Box mx="auto" my="2" rounded="8px">
