@@ -16,6 +16,7 @@ import SelectNetwork from '../../components/SelectNetwork';
 import TokenRoute from '../../constant/TokenRoute';
 import AlgoTranc from "../../asset/AlgoTran.svg";
 import TransactionLoader from '../../components/TransactionLoader';
+import TransactionModal from '../../components/TransactionModal/TransactionModal';
 
 // const NetworkSelector = lazy(
 //   () => import("../../components/NetworkSelector")
@@ -145,7 +146,8 @@ const Bridge = ({...rest}) => {
         </Box>
           {/* ----------------------------------- TRANSACTION lOADER --------------------------------------------- */}
 
-          <TransactionLoader />
+            <TransactionLoader />
+          
 
       </Stack>
     </Flex>

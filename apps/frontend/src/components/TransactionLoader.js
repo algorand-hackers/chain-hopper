@@ -8,17 +8,28 @@ import {
     Progress,
     Circle,
     Stack,
-    Spacer
+    Spacer,
+    useDisclosure,
+
   } from '@chakra-ui/react';
 import Expand from "../asset/Expand.svg"
+import TransactionModal from './TransactionModal/TransactionModal';
 
 const TransactionLoader = () => {
+    const { isOpen, onOpen, onClose } = useDisclosure()
+
+
   return (
     <div className='absolute p-4 top-[430px] shadow-md rounded-[12.42px] right-[20px] w-[390px] h-fit-content bg-[white]'>
         <Flex >
             <Text fontSize="18px" fontWeight={"500"}>Bridging in progress</Text>
             <Spacer />
-            <Image src={Expand} alt-="expand"/>
+            {/* <Button onClick={onOpen}>
+                Trigger modal
+            </Button> */}
+
+            {/* <Icon as={Expand} /> */}
+                <Image  src={Expand} alt-="expand"/>
         </Flex>
         <Text my={3} fontSize={"14px"} fontWeight="500" >Estimated completion time 01:23PM WAT</Text>
         <Box w="100%" mb="10px" pos="relative" >
@@ -46,6 +57,24 @@ const TransactionLoader = () => {
                 Switch
             </Box>
         </Flex>
+<TransactionModal />
+<div>
+        {/* <Button onClick={onOpen}>Trigger modal</Button>
+        <Modal onClose={onClose} isOpen={isOpen} isCentered>
+            <ModalOverlay />
+            <ModalContent>
+            <ModalHeader>Modal Title</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+                ghhjhj
+            </ModalBody>
+            <ModalFooter>
+                <Button onClick={onClose}>Close</Button>
+            </ModalFooter>
+            </ModalContent>
+        </Modal> */}
+        </div>
+
     </div>
   )
 }

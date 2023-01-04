@@ -19,7 +19,7 @@ function App() {
           </Box>
           <Box h="90vh" bg="bg2" w={{base:"100%", md:"100%", lg:"100%"}}>
             <Routes>
-              <Route index element={<Home />} />
+              <Route index path="/"  element={<Home />} />
               <Route path='/bridge' element={<Bridge />} />
             </Routes>
           </Box>
