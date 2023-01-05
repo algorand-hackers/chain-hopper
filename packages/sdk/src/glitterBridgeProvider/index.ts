@@ -70,14 +70,14 @@ export class GlitterBridgeProvider implements BaseBridgeProvider {
     private async _getQuote (quoteRequest: QuoteRequest) {
         
         // xAlgo from solana to Algo
-        if (quoteRequest.assetName == solAssets.xALGO?.symbol) {
+        if (quoteRequest.assetName == solMainnetAssets.xALGO?.symbol) {
 
-            const xALGOFee = await this.getFee(solAssets.xALGO?.symbol);
-            const xALGORelease = await this.getPrice(solAssets.xALGO?.symbol) 
+            const xALGOFee = await this.getFee(solMainnetAssets.xALGO?.symbol);
+            const xALGORelease = await this.getPrice(solMainnetAssets.xALGO?.symbol) 
             return {
-                assetName: algoAssets.ALGO?.symbol,
-                fromNetworkName: Networks.SOL,
-                toNetworkName: Networks.ALGO,
+                assetName: algoMainnetAssets.ALGO?.symbol,
+                fromChainName: Chains.SOL,
+                toChainName: Chains.ALGO,
                 amountIn: quoteRequest.amountIn,
                 amountOut: xALGORelease * Number(quoteRequest.amountIn),
                 gasFeeEstimate: xALGOFee,
@@ -86,15 +86,15 @@ export class GlitterBridgeProvider implements BaseBridgeProvider {
         } 
 
         // Algo from Algorand to Solana 
-        else if (quoteRequest.assetName == algoAssets.ALGO?.symbol) {
+        else if (quoteRequest.assetName == algoMainnetAssets.ALGO?.symbol) {
 
-            const ALGOFee = await this.getFee(algoAssets.ALGO?.symbol);
-            const ALGORelease = await this.getPrice(algoAssets.ALGO?.symbol) 
+            const ALGOFee = await this.getFee(algoMainnetAssets.ALGO?.symbol);
+            const ALGORelease = await this.getPrice(algoMainnetAssets.ALGO?.symbol) 
 
             return {
-                assetName: solAssets.xALGO?.symbol,
-                fromNetworkName: Networks.ALGO,
-                toNetworkName: Networks.SOL,
+                assetName: solMainnetAssets.xALGO?.symbol,
+                fromChainName: Chains.ALGO,
+                toChainName: Chains.SOL,
                 amountIn: quoteRequest.amountIn,
                 amountOut: ALGORelease * Number(quoteRequest.amountIn),
                 gasFeeEstimate: ALGOFee,
@@ -103,14 +103,14 @@ export class GlitterBridgeProvider implements BaseBridgeProvider {
         }
         
         // SOl from solana to algorand
-        else if (quoteRequest.assetName == solAssets.SOLANA?.symbol) {
-            const SOLFee = await this.getFee(solAssets.SOLANA?.symbol);
-            const SOLRelease = await this.getPrice(solAssets.SOLANA?.symbol) 
+        else if (quoteRequest.assetName == solMainnetAssets.SOLANA?.symbol) {
+            const SOLFee = await this.getFee(solMainnetAssets.SOLANA?.symbol);
+            const SOLRelease = await this.getPrice(solMainnetAssets.SOLANA?.symbol) 
 
             return {
-                assetName: algoAssets.xSOL?.symbol,
-                fromNetworkName: Networks.SOL,
-                toNetworkName: Networks.ALGO,
+                assetName: algoMainnetAssets.xSOL?.symbol,
+                fromChainName: Chains.SOL,
+                toChainName: Chains.ALGO,
                 amountIn: quoteRequest.amountIn,
                 amountOut: Number(quoteRequest.amountIn) * SOLRelease,
                 gasFeeEstimate: SOLFee,
@@ -120,14 +120,14 @@ export class GlitterBridgeProvider implements BaseBridgeProvider {
 
 
         // xSOL from algorand to solana 
-        else if (quoteRequest.assetName == algoAssets.xSOL?.symbol) {
-            const xSOLFee = await this.getFee(algoAssets.xSOL?.symbol);
-            const xSOLRelease = await this.getPrice(algoAssets.xSOL?.symbol) 
+        else if (quoteRequest.assetName == algoMainnetAssets.xSOL?.symbol) {
+            const xSOLFee = await this.getFee(algoMainnetAssets.xSOL?.symbol);
+            const xSOLRelease = await this.getPrice(algoMainnetAssets.xSOL?.symbol) 
 
             return {
-                assetName: solAssets.SOLANA?.symbol,
-                fromNetworkName: Networks.ALGO,
-                toNetworkName: Networks.SOL,
+                assetName: solMainnetAssets.SOLANA?.symbol,
+                fromChainName: Chains.ALGO,
+                toChainName: Chains.SOL,
                 amountIn: quoteRequest.amountIn,
                 amountOut: Number(quoteRequest.amountIn) * xSOLRelease,
                 gasFeeEstimate: xSOLFee,
@@ -137,14 +137,14 @@ export class GlitterBridgeProvider implements BaseBridgeProvider {
         }
 
         // USDCs from solana to Algorand
-        else if (quoteRequest.assetName  ==  solAssets.USDCs?.symbol) {
-            const USDcFee = await this.getFee( solAssets.USDCs?.symbol);
-            const USDcRelease = await this.getPrice(solAssets.USDCs?.symbol) 
+        else if (quoteRequest.assetName  ==  solMainnetAssets.USDCs?.symbol) {
+            const USDcFee = await this.getFee( solMainnetAssets.USDCs?.symbol);
+            const USDcRelease = await this.getPrice(solMainnetAssets.USDCs?.symbol) 
          
                 return {
-                        assetName: algoAssets.USDCa?.symbol,
-                        fromNetworkName: Networks.SOL,
-                        toNetworkName: Networks.ALGO,
+                        assetName: algoMainnetAssets.USDCa?.symbol,
+                        fromChainName: Chains.SOL,
+                        toChainName: Chains.ALGO,
                         amountIn: quoteRequest.amountIn,
                         amountOut: Number(quoteRequest.amountIn) * USDcRelease,
                         gasFeeEstimate: USDcFee,
@@ -154,14 +154,14 @@ export class GlitterBridgeProvider implements BaseBridgeProvider {
         }
 
         // USDCa from algorand to Solana 
-        else if (quoteRequest.assetName == algoAssets.USDCa?.symbol) {
-            const USDaFee = await this.getFee( algoAssets.USDCa?.symbol);
-            const USDaRelease = await this.getPrice(algoAssets.USDCa?.symbol)
+        else if (quoteRequest.assetName == algoMainnetAssets.USDCa?.symbol) {
+            const USDaFee = await this.getFee( algoMainnetAssets.USDCa?.symbol);
+            const USDaRelease = await this.getPrice(algoMainnetAssets.USDCa?.symbol)
 
             return {
-                assetName: solAssets.USDCs?.symbol,
-                fromNetworkName: Networks.ALGO,
-                toNetworkName: Networks.SOL,
+                assetName: solMainnetAssets.USDCs?.symbol,
+                fromChainName: Chains.ALGO,
+                toChainName: Chains.SOL,
                 amountIn: quoteRequest.amountIn,
                 amountOut: Number(quoteRequest.amountIn) * USDaRelease,
                 gasFeeEstimate: USDaFee,
