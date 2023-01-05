@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { GrTransaction } from "react-icons/gr"
 import { Box, Flex, Text, Image, Button, Icon } from '@chakra-ui/react';
 import wallet from '../asset/walleticon.svg';
 import Bridge from '../asset/bridge.svg';
@@ -51,7 +52,7 @@ const Sidebar = () => {
                 to="/bridge"
                 className="px-3 py-2 rounded-[5px] flex mx-auto "
             >
-                <Icon boxSize={6} as={Bridge} />
+                <Icon boxSize={6} as={GrTransaction} />
                 <Text ml="6" fontWeight="500">
                 Bridge
                 </Text>

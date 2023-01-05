@@ -19,7 +19,7 @@ const TransactionLoader = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <div className="w-[450px] absolute p-4 top-[430px] shadow-md rounded-[12.42px] right-[20px] h-fit-content bg-[white]">
+    <Box w={{base:"80%", md:"400px", lg:"450px"}} className="absolute p-4 top-[430px] shadow-md rounded-[12.42px] right-[20px] h-fit-content bg-[white]">
       <Flex>
         <Text fontSize="20px" fontWeight={'500'}>
           Bridging in progress
@@ -59,7 +59,7 @@ const TransactionLoader = () => {
         </Box>
       </Flex>
       <TransactionModal onOpen={onOpen} isOpen={isOpen} onClose={onClose} />
-    </div>
+    </Box>
   );
 };
 
