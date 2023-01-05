@@ -31,7 +31,7 @@ const Bridge = ({...rest}) => {
     // const [displaySwitcher, setDisplaySwitcher] = useState(true);
     const [selected, setSelected] = useState("Select Network");
     const [tokenIcon, setTokenIcon] = useState();
-    // const [network2, setNetwork2] = useState(false);
+    const [isTransac, setIsTransac] = useState(false);
     
 
   //   const networkData = networks.map((data) => {
@@ -40,10 +40,10 @@ const Bridge = ({...rest}) => {
 
   return (
     <Flex flexDir={'column'} h="100%">
-      <Stack {...root} pos="relative">
+      <Stack {...root} maxW="1600px" mx="auto" pos="relative">
         <Box
           bg="rgba(255, 255, 255, 0.97)"
-          w="590px"
+          w={{base:"95%", md:"520px", lg:"590px"}}
           pos="relative"
           h="fit-content"
           color="dark"
@@ -140,13 +140,14 @@ const Bridge = ({...rest}) => {
             h="49.65px"
             color="white"
             borderRadius={'9.11545px'}
+            onClick={() => setIsTransac(true)}
           >
             Transfer
           </Box>
         </Box>
           {/* ----------------------------------- TRANSACTION lOADER --------------------------------------------- */}
 
-            <TransactionLoader />
+           {isTransac && <TransactionLoader />}
           
 
       </Stack>
@@ -161,10 +162,8 @@ export const useBridgeStyles = () => {
     root: {
       w: '100%',
       h: "100%",
-      justifyContent: 'center',
       alignItems: 'center',
-      // mt: '6px',
-      pt: '3%',
+      pt: '7%',
     },
     root2: {
       w: '100%',
