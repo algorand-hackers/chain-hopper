@@ -7,10 +7,11 @@ import Applogo from "../asset/Applogo.svg"
 import wallet from "../asset/wallet.svg"
 import Btn from '../components/UI/Btn';
 import MobileNavbar from './MobileNavbar';
+import ConnectWallet from '../components/ConnectWallet/ConnectWallet';
 
 
 const Navbar = () => {
-    const { getDisclosureProps, getButtonProps } = useDisclosure()
+    const { getDisclosureProps, getButtonProps, isOpen, onOpen, onClose } = useDisclosure()
 
     const buttonProps = getButtonProps()
     const disclosureProps = getDisclosureProps()
@@ -36,7 +37,7 @@ const Navbar = () => {
                     Contact us
                 </Link>
             </Flex>
-            <Box display={{base:"none", md:"block"}}>
+            <Box onClick={onOpen} display={{base:"none", md:"block"}}>
                 <Btn text="connect wallet" />
             </Box>
             <Box 
@@ -49,6 +50,8 @@ const Navbar = () => {
         <Box {...disclosureProps} display={{base:"block", md:"none"}}>
             <MobileNavbar />
         </Box>
+
+        <ConnectWallet isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
     </Flex>
   )
 }

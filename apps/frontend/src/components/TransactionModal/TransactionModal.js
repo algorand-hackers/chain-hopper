@@ -50,8 +50,8 @@ const TransactionModal = ({ isOpen, onOpen, onClose }) => {
     <>
       <Modal onClose={onClose} isOpen={isOpen}  isCentered>
         <ModalOverlay />
-        <ModalContent rounded="18px" w={{base:"95%", md:"500px", lg:"800px"}}>
-          <ModalBody rounded="18px" bg="white" px={6}  w={{base:"100%", md:"500px", lg:"800px"}}>
+        <ModalContent rounded="18px" w={{base:"95%", md:"500px", lg:"550px"}}>
+          <ModalBody rounded="18px" bg="white" px={6}  w={{base:"100%", md:"500px", lg:"550px"}}>
             <Flex>
               <Text fontSize={{base:"23px",md:"24px", lg:"28px"}} fontWeight={'500'}>
                 Bridging in progress
@@ -64,7 +64,7 @@ const TransactionModal = ({ isOpen, onOpen, onClose }) => {
             </Text>
             <Box w="100%" mb={7} pos="relative">
               <Circle zIndex={1} pos="absolute" size="20px" bottom="-8px" bg="#3A6EFF" />
-              <Box width="88%" mx="auto">
+              <Box width="94%" mx="auto">
                 <Progress value={70} h="4px" colorScheme="blue" />
               </Box>
               <Circle
@@ -119,7 +119,7 @@ const TransactionModal = ({ isOpen, onOpen, onClose }) => {
                     <Text fontSize={{base:"18px",md:"22px"}} ml={1}  fontWeight="500"> 0.9357 ETH</Text>
                   </Flex>
             </Box>
-            <Box mx="auto" w="100%" mt="30px" mb="10px" >
+            <Box mx="auto" w={{base:"100%", md:"100%", lg:"80%"}} mt="30px" mb="10px" >
                 {Transac.map((item) => (
                   <Flex key={item.id} justify="space-between">
                     <Flex align={"center"}>
