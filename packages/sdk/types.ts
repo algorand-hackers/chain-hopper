@@ -1,34 +1,44 @@
-export type NetworkAssets = {
- network: string,
- assets: Array<Asset>
+export enum NetworkType {
+    MAINNET = 'mainnet',
+    TESTNET = 'testnet'
 }
 
-export type Asset = {
- name: string,
- networkName: string,
- sourceNetworkName: string,
- mappedAssetName: string | null
-}
-
-export type QuoteRequest = {
- amountIn: string,
- assetName: string
- fromNetworkName: string,
- toNetworkName: string,
-}
-
-export type Quote = {
+export type QuoteRequest<FromWallet = any, ToWallet = any> = {
+    amountIn: string,
     assetName: string,
-    fromNetworkName: string,
-    toNetworkName: string,
+    fromAddress: string,
+    fromChainName: string,
+    fromWallet?: FromWallet,
+    fromWalletType?:string,
+    toAddress: string,
+    toChainName: string,
+    toWallet?: ToWallet,
+    toWalletType?:string,
+    network: NetworkType,
+}
+
+export type Quote<FromWallet = any, ToWallet = any> = {
+    assetName: string,
+    fromAddress: string,
+    fromChainName: string,
+    fromWallet?: FromWallet,
+    fromWalletType?:string,
+    toAddress: string,
+    toChainName: string,
+    toWallet?: ToWallet,
+    toWalletType?:string,
     amountIn: string,
     amountOut: string,
     gasFeeEstimate: string,
     timeEstimate: string,
-    bridgeProviderId: string  
+    bridgeProviderId: string  ,
+    network: NetworkType,
+
 }
 
 export type Update = {
-    quote: Quote
-    status?: string,   
+    quote: Quote,
+    status?: string,
+    errorMessage?: string
 }
+
