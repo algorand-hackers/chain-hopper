@@ -2603,6 +2603,34 @@
     "@ethersproject/properties" "^5.7.0"
     "@ethersproject/strings" "^5.7.0"
 
+"@floating-ui/core@^1.0.5":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@floating-ui/core/-/core-1.1.0.tgz#0a1dee4bbce87ff71602625d33f711cafd8afc08"
+  integrity sha512-zbsLwtnHo84w1Kc8rScAo5GMk1GdecSlrflIbfnEBJwvTSj1SL6kkOYV+nHraMCPEy+RNZZUaZyL8JosDGCtGQ==
+
+"@floating-ui/dom@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@floating-ui/dom/-/dom-1.1.0.tgz#29fea1344fdef15b6ba270a733d20b7134fee5c2"
+  integrity sha512-TSogMPVxbRe77QCj1dt8NmRiJasPvuc+eT5jnJ6YpLqgOD2zXc5UA3S1qwybN+GVCDNdKfpKy1oj8RpzLJvh6A==
+  dependencies:
+    "@floating-ui/core" "^1.0.5"
+
+"@floating-ui/react-dom@^1.1.0":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@floating-ui/react-dom/-/react-dom-1.1.1.tgz#8289bd28188fa0fce7e24fc2a6e57f3d94fea930"
+  integrity sha512-F27E+7SLB5NZvwF9Egqx/PlvxOhMnA6k/yNMQUqaQ9BPZdr4fQgSW6J6AKNIrBQElBT8IRDtv9j6h7FDkgp3dA==
+  dependencies:
+    "@floating-ui/dom" "^1.1.0"
+
+"@floating-ui/react@^0.15.1":
+  version "0.15.1"
+  resolved "https://registry.yarnpkg.com/@floating-ui/react/-/react-0.15.1.tgz#1eec9d369653627aeec5be325714db1ccdf983a6"
+  integrity sha512-fbzUt+JM9o7z/uTBIvTvxUOGXAx8JlCFNpcWen7IjQqqOISkZq1IT7u8wwR+u2emE8wAZoRuoUvny7UMcCGXbw==
+  dependencies:
+    "@floating-ui/react-dom" "^1.1.0"
+    aria-hidden "^1.1.3"
+    tabbable "^6.0.1"
+
 "@graphql-typed-document-node/core@^3.1.1":
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/@graphql-typed-document-node/core/-/core-3.1.1.tgz#076d78ce99822258cf813ecc1e7fa460fa74d052"
@@ -3098,6 +3126,22 @@
     globby "^11.0.0"
     read-yaml-file "^1.1.0"
 
+"@material-tailwind/react@^1.2.5":
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/@material-tailwind/react/-/react-1.2.5.tgz#4d77c06922ef4e201cb5b150974abdfa10d5c07a"
+  integrity sha512-ZlMYOO+zlw9UBCgBnLXeGcRPWrQ5cFTmhatrzoy7ovb1pZl7m83Bwfedi8NPMZRtzkQn/XsL6OPcct3qsfDRHQ==
+  dependencies:
+    "@floating-ui/react" "^0.15.1"
+    classnames "^2.3.2"
+    deepmerge "^4.2.2"
+    framer-motion "^6.5.1"
+    material-ripple-effects "^2.0.1"
+    prop-types "^15.8.1"
+    react "^18.2.0"
+    react-dom "^18.2.0"
+    react-merge-refs "1.1.0"
+    tailwind-merge "^1.8.1"
+
 "@metamask/eth-sig-util@^4.0.1":
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/@metamask/eth-sig-util/-/eth-sig-util-4.0.1.tgz#3ad61f6ea9ad73ba5b19db780d40d9aae5157088"
@@ -3109,7 +3153,7 @@
     tweetnacl "^1.0.3"
     tweetnacl-util "^0.15.1"
 
-"@motionone/animation@^10.15.1":
+"@motionone/animation@^10.12.0", "@motionone/animation@^10.15.1":
   version "10.15.1"
   resolved "https://registry.yarnpkg.com/@motionone/animation/-/animation-10.15.1.tgz#4a85596c31cbc5100ae8eb8b34c459fb0ccf6807"
   dependencies:
@@ -3310,6 +3354,18 @@
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==
+
+"@randlabs/communication-bridge@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@randlabs/communication-bridge/-/communication-bridge-1.0.1.tgz#d1ecfc29157afcbb0ca2d73122d67905eecb5bf3"
+  integrity sha512-CzS0U8IFfXNK7QaJFE4pjbxDGfPjbXBEsEaCn9FN15F+ouSAEUQkva3Gl66hrkBZOGexKFEWMwUHIDKpZ2hfVg==
+
+"@randlabs/myalgo-connect@^1.4.2":
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/@randlabs/myalgo-connect/-/myalgo-connect-1.4.2.tgz#ce3ad97b3889ea21da75852187511d3f6be0fa05"
+  integrity sha512-K9hEyUi7G8tqOp7kWIALJLVbGCByhilcy6123WfcorxWwiE1sbQupPyIU5f3YdQK6wMjBsyTWiLW52ZBMp7sXA==
+  dependencies:
+    "@randlabs/communication-bridge" "1.0.1"
 
 "@remix-run/router@1.2.1":
   version "1.2.1"
