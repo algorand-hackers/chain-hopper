@@ -11,28 +11,46 @@ import {
   Tab,
   TabPanel,
   Image,
+  useDisclosure,
 } from '@chakra-ui/react';
 import SelectNetwork from '../../components/SelectNetwork';
+import SelectToken from '../../components/SelectToken/selectToken';
 import TokenRoute from '../../constant/TokenRoute';
-import AlgoTranc from "../../asset/AlgoTran.svg";
+import AlgoTranc from '../../asset/AlgoTran.svg';
 import TransactionLoader from '../../components/TransactionLoader';
 import TransactionModal from '../../components/TransactionModal/TransactionModal';
+import Btn2 from '../../components/UI/Btn2';
+import ConnectWallet from '../../components/ConnectWallet/ConnectWallet';
+
+import { networks } from '../../constant/networksJSON'
+import wallet from "../../asset/ETH - Ethereum Token.png"
 
 // const NetworkSelector = lazy(
 //   () => import("../../components/NetworkSelector")
 // );
 
-const Bridge = ({...rest}) => {
-      
-  const {
-        root,
-        fontsm,
-    } = useBridgeStyles();
-    // const [displaySwitcher, setDisplaySwitcher] = useState(true);
-    const [selected, setSelected] = useState("Select Network");
-    const [tokenIcon, setTokenIcon] = useState();
-    const [isTransac, setIsTransac] = useState(false);
-    
+const Bridge = ({ isConnect }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const connectWallet = () => {
+    onOpen();
+    // setIsConnect(false)
+  };
+
+  const { root, fontsm } = useBridgeStyles();
+
+  // This is to select Network
+  const [selected, setSelected] = useState('Select Network');
+  const [tokenIcon, setTokenIcon] = useState();
+  // This is to select Token
+  const [selectToken, setSelectToken] = useState('Eth');
+  const [walletIcon, setWalletIcon] = useState(wallet);
+  // This is for the connect button on the component to start it
+  const [walletConnected, setWalletConnected] = useState(false);
+  // This useState is to display the transaction histroy before making transaction 
+  const [isTransac, setIsTransac] = useState(false);
+  // transre button 
+  const [tranferBtn, setTranferBtn] = useState(false)
 
   //   const networkData = networks.map((data) => {
   //   return { id: nanoid(), ...data };
@@ -43,7 +61,7 @@ const Bridge = ({...rest}) => {
       <Stack {...root} maxW="1600px" mx="auto" pos="relative">
         <Box
           bg="rgba(255, 255, 255, 0.97)"
-          w={{base:"95%", md:"520px", lg:"590px"}}
+          w={{ base: '95%', md: '520px', lg: '590px' }}
           pos="relative"
           h="fit-content"
           color="dark"
@@ -81,11 +99,13 @@ const Bridge = ({...rest}) => {
               {/* --------------------- TAB ONE DETAILS -------------------------- */}
               <TabPanel>
                 <Suspense fallback={<Spinner size="sm" />}>
-                  <Flex flexDir={'column'} padding={'5px'} >
-                    <Text fontSize="14px" mb={-1}>From the network</Text>
+                  <Flex flexDir={'column'} padding={'5px'}>
+                    <Text fontSize="14px" mb={-1}>
+                      From the network
+                    </Text>
 
                     {/* ------------------- SELECT NETWORK -------------------- */}
-                    <Flex {...rest} mt={'10px'}>
+                    <Flex zIndex={2} mt={'10px'}>
                       <SelectNetwork
                         selected={selected}
                         setSelected={setSelected}
@@ -93,11 +113,51 @@ const Bridge = ({...rest}) => {
                         setTokenIcon={setTokenIcon}
                       />
                     </Flex>
-                    
+
+                    {!walletConnected ? (
+                      <>
+                        <Box onClick={connectWallet}>
+                          <Btn2 text="Connect" />
+                        </Box>
+                      </>
+                    ) : (
+                      <div></div>
+                    )}
+
+                    {!walletConnected ? (
+                      <>
+                      <div></div>
+                      </>
+                    ) : (
+                      <Flex zIndex={1} mt={'20px'}>
+                        <SelectToken 
+                          networks={networks}
+                          setSelectToken={setSelectToken}
+                          selectToken={selectToken}
+                          walletIcon={walletIcon}
+                          setWalletIcon={setWalletIcon}
+                          setIsTransac={setIsTransac}
+                        />
+                      </Flex>
+                    )}
+
+                    {/* Connect Wallet  */}
+
+                    <ConnectWallet
+                      walletIcon={walletIcon}
+                      setWalletConnected={setWalletConnected}
+                      setWalletIcon={setWalletIcon}
+                      isOpen={isOpen}
+                      onOpen={onOpen}
+                      onClose={onClose}
+                    />
+
                     {/* ------------------------ BRIDGING ---------------------- */}
 
                     <Flex flexDir={'column'} mt={'15px'} mb="10px">
-                      <Text {...fontsm} mb={2}>To Algorand</Text>
+                      <Text {...fontsm} mb={2}>
+                        To Algorand
+                      </Text>
 
                       <Box
                         bg={'#EFF6FF'}
@@ -110,19 +170,10 @@ const Bridge = ({...rest}) => {
                         //  padding={"10px"}
                       ></Box>
                     </Flex>
-                    <Flex>
-                      <Text fontSize="12px">
-                        Verified on 2 bridges. Confirm token address
-                      </Text>
-                      <Flex fontSize="12px" color="#3A6EFF" mb={4} ml={2}>
-                        Algoexplorer 
-                        <Image src={AlgoTranc} ml={1} alt="algo" />
-                      </Flex>
-                    </Flex>
 
                     {/* -------------------- TOKEN ROUTE DETAILS ---------------------- */}
-                    <TokenRoute />
 
+                   {isTransac && <TokenRoute />}
                   </Flex>
                 </Suspense>
               </TabPanel>
@@ -140,16 +191,14 @@ const Bridge = ({...rest}) => {
             h="49.65px"
             color="white"
             borderRadius={'9.11545px'}
-            onClick={() => setIsTransac(true)}
+            onClick={() => setTranferBtn(true)}
           >
             Transfer
           </Box>
         </Box>
-          {/* ----------------------------------- TRANSACTION lOADER --------------------------------------------- */}
+        {/* ----------------------------------- TRANSACTION lOADER --------------------------------------------- */}
 
-           {isTransac && <TransactionLoader />}
-          
-
+        {tranferBtn && <TransactionLoader />}
       </Stack>
     </Flex>
   );
@@ -161,7 +210,7 @@ export const useBridgeStyles = () => {
   return {
     root: {
       w: '100%',
-      h: "100%",
+      h: '100%',
       alignItems: 'center',
       pt: '7%',
     },

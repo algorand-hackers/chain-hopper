@@ -13,3 +13,4 @@ const Btn = ({ text }) => {
 }
 
 export default Btn
+
