@@ -4,14 +4,18 @@ import {
     Box,
     Text,
     Icon,
-    Image
+    Image,
+    useDisclosure,
   } from '@chakra-ui/react';
 import AlgoTranc from "../asset/AlgoTran.svg";
 import Wormhole from "../asset/Wormhole.svg";
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
+import TokenRouteModal from '../components/TokenRouteModal/TokenRouteModal';
 
 
 const TokenRoute = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
   return (
     <Box mt={2}>
       <Flex justify="space-between" align="center">
@@ -21,7 +25,7 @@ const TokenRoute = () => {
             Saves you money, but you will wait a bit longer{' '}
           </Text>
         </Box>
-        <Text fontSize="12px" color="blue">
+        <Text onClick={onOpen} cursor="pointer" fontSize="12px" color="#4A48FF">
           Choose a different route (2)
         </Text>
       </Flex>
@@ -40,10 +44,12 @@ const TokenRoute = () => {
             <Text fontSize="14px" fontWeight="500">$46.28</Text>
             <Text fontSize="14px" fontWeight="500">Expected balance</Text>
         </Box>
-        <Flex align={"center"}>
+        <Flex onClick={onOpen} cursor="pointer" align={"center"}>
             <MdOutlineKeyboardArrowDown className='w-[25px] h-[25px] font-bold '/>
         </Flex>
       </Flex>
+
+      <TokenRouteModal onClose={onClose} isOpen={isOpen}/>
     </Box>
   );
 };

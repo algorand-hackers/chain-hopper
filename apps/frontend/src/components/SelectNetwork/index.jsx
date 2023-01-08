@@ -56,7 +56,7 @@ const SelectNetwork = ({ selected, setSelected, tokenIcon, setTokenIcon }) => {
           <Box>
             {options?.map((option, index) => (
               <Flex
-              key={index}
+              key={option.token}
               {...optionContentChild}
               _hover={{ bg: '#F7F7F8', borderRadius: '5.3183px' }}
               p={'5px'}
