@@ -1,8 +1,9 @@
+import { BaseBridgeProvider } from "./src/baseBridgeProvider"
 import { GlitterBridgeProvider } from "./src/glitterBridgeProvider"
 import { WormHoleBridgeProvider } from "./src/wormholeBridgeProvider"
 import { Asset, NetworkType } from "./types"
 
-export const BRIDGES = {
+export const BRIDGES: Record<string, new() => BaseBridgeProvider> = {
     'WormHole': WormHoleBridgeProvider,
     'Glitter': GlitterBridgeProvider
 }
