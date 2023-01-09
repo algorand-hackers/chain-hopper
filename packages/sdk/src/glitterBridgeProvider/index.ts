@@ -1,5 +1,5 @@
 import { Assets, Chains } from "../../config";
-import { NetworkType, Quote, QuoteRequest, Update } from "../../types";
+import { BridgeId, NetworkType, Quote, QuoteRequest, Update } from "../../types";
 import { BaseBridgeProvider } from "../baseBridgeProvider";
 import { getNonAlgorandChain } from "../utils";
 
@@ -67,7 +67,7 @@ export class GlitterBridgeProvider implements BaseBridgeProvider {
           }
     }
 
-    private async _getQuote (quoteRequest: QuoteRequest) {
+    private async _getQuote (quoteRequest: QuoteRequest): Promise<Quote | null> {
         
         // xAlgo from solana to Algo
         if (quoteRequest.assetName == solMainnetAssets.xALGO?.symbol) {
@@ -75,13 +75,14 @@ export class GlitterBridgeProvider implements BaseBridgeProvider {
             const xALGOFee = await this.getFee(solMainnetAssets.xALGO?.symbol);
             const xALGORelease = await this.getPrice(solMainnetAssets.xALGO?.symbol) 
             return {
+              ...quoteRequest,
                 assetName: algoMainnetAssets.ALGO?.symbol,
                 fromChainName: Chains.SOL,
                 toChainName: Chains.ALGO,
                 amountIn: quoteRequest.amountIn,
                 amountOut: xALGORelease * Number(quoteRequest.amountIn),
                 gasFeeEstimate: xALGOFee,
-                bridgeProviderId: null
+                bridgeId: BridgeId.Glitter
             }
         } 
 
@@ -92,13 +93,14 @@ export class GlitterBridgeProvider implements BaseBridgeProvider {
             const ALGORelease = await this.getPrice(algoMainnetAssets.ALGO?.symbol) 
 
             return {
+              ...quoteRequest,
                 assetName: solMainnetAssets.xALGO?.symbol,
                 fromChainName: Chains.ALGO,
                 toChainName: Chains.SOL,
                 amountIn: quoteRequest.amountIn,
                 amountOut: ALGORelease * Number(quoteRequest.amountIn),
                 gasFeeEstimate: ALGOFee,
-                bridgeProviderId: null
+                bridgeId: BridgeId.Glitter
             }
         }
         
@@ -108,13 +110,14 @@ export class GlitterBridgeProvider implements BaseBridgeProvider {
             const SOLRelease = await this.getPrice(solMainnetAssets.SOLANA?.symbol) 
 
             return {
+              ...quoteRequest,
                 assetName: algoMainnetAssets.xSOL?.symbol,
                 fromChainName: Chains.SOL,
                 toChainName: Chains.ALGO,
                 amountIn: quoteRequest.amountIn,
                 amountOut: Number(quoteRequest.amountIn) * SOLRelease,
                 gasFeeEstimate: SOLFee,
-                bridgeProviderId: null
+                bridgeId: BridgeId.Glitter
             }
         }
 
@@ -125,13 +128,14 @@ export class GlitterBridgeProvider implements BaseBridgeProvider {
             const xSOLRelease = await this.getPrice(algoMainnetAssets.xSOL?.symbol) 
 
             return {
+              ...quoteRequest,
                 assetName: solMainnetAssets.SOLANA?.symbol,
                 fromChainName: Chains.ALGO,
                 toChainName: Chains.SOL,
                 amountIn: quoteRequest.amountIn,
                 amountOut: Number(quoteRequest.amountIn) * xSOLRelease,
                 gasFeeEstimate: xSOLFee,
-                bridgeProviderId:  null 
+                bridgeId: BridgeId.Glitter
             }
 
         }
@@ -142,14 +146,15 @@ export class GlitterBridgeProvider implements BaseBridgeProvider {
             const USDcRelease = await this.getPrice(solMainnetAssets.USDCs?.symbol) 
          
                 return {
+                        ...quoteRequest,
                         assetName: algoMainnetAssets.USDCa?.symbol,
                         fromChainName: Chains.SOL,
                         toChainName: Chains.ALGO,
                         amountIn: quoteRequest.amountIn,
                         amountOut: Number(quoteRequest.amountIn) * USDcRelease,
                         gasFeeEstimate: USDcFee,
-                        bridgeProviderId: null  
-                    }
+                        bridgeId: BridgeId.Glitter
+                      }
         
         }
 
@@ -159,21 +164,23 @@ export class GlitterBridgeProvider implements BaseBridgeProvider {
             const USDaRelease = await this.getPrice(algoMainnetAssets.USDCa?.symbol)
 
             return {
+              ...quoteRequest,
                 assetName: solMainnetAssets.USDCs?.symbol,
                 fromChainName: Chains.ALGO,
                 toChainName: Chains.SOL,
                 amountIn: quoteRequest.amountIn,
                 amountOut: Number(quoteRequest.amountIn) * USDaRelease,
                 gasFeeEstimate: USDaFee,
-                bridgeProviderId: null
+                bridgeId: BridgeId.Glitter
             }
         }
 
+        return null;
         
     }
       
 
-    public async getQuote(quoteRequest: QuoteRequest) {
+    public async getQuote(quoteRequest: QuoteRequest): Promise<Quote | null> {
 
         const nonAlgorandChain = getNonAlgorandChain({from: quoteRequest.fromChainName, to: quoteRequest.toChainName});
 

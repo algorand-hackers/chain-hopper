@@ -1,7 +1,7 @@
 import { bridge, ChainId, ChainName, CHAINS, CHAIN_ID_ALGORAND, CONTRACTS, ethers_contracts, getEmitterAddressAlgorand, getEmitterAddressEth, getGovernorIsVAAEnqueued, getIsTransferCompletedAlgorand, getIsTransferCompletedEth, getSignedVAA, hexToUint8Array, parseSequenceFromLogAlgorand, parseSequenceFromLogEth, redeemOnAlgorand, redeemOnEth, redeemOnEthNative, transferFromAlgorand, transferFromEthNative, tryNativeToHexString, tryNativeToUint8Array, uint8ArrayToHex } from "@certusone/wormhole-sdk";
 import { nativeStringToHexAlgorand, TransactionSignerPair } from "@certusone/wormhole-sdk/lib/cjs/algorand";
 import { ethers, Signer } from "ethers";
-import { getAlgorandHost, ALGORAND_WALLETS, Assets, BRIDGE_STATUS, Chains, BRIDGES, ALGORAND_WAIT_FOR_CONFIRMATIONS, getWormHoleRpchost } from "../../config";
+import { getAlgorandHost, ALGORAND_WALLETS, Assets, BRIDGE_STATUS, Chains, BRIDGE_PROVIDERS, ALGORAND_WAIT_FOR_CONFIRMATIONS, getWormHoleRpchost } from "../../config";
 import { NetworkType, Quote, QuoteRequest, Update } from "../../types";
 import { BaseBridgeProvider } from "../baseBridgeProvider";
 import { getNonAlgorandChain } from "../utils";
@@ -37,7 +37,7 @@ export class WormHoleBridgeProvider implements BaseBridgeProvider  {
         return this.supportedAssetsMaps[network][chain].map(assetMap => assetMap[0]);
     }
 
-    public getQuote(quoteRequest: QuoteRequest) {
+    public async getQuote(quoteRequest: QuoteRequest): Promise<Quote | null> {
 
         const nonAlgorandChain = getNonAlgorandChain({from: quoteRequest.fromChainName, to: quoteRequest.toChainName});
 
@@ -49,6 +49,7 @@ export class WormHoleBridgeProvider implements BaseBridgeProvider  {
 
 
         // Get Quote ...
+        return null;
     }
 
     public moveAsset(quote: Quote)  {
