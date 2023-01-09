@@ -18,6 +18,13 @@ const TokenRoute = () => {
 
   return (
     <Box mt={2}>
+      <Flex gap={2} mb={12}>
+        <Text>Verified on 2 bridges. Confirm token address</Text>
+        <Flex gap={1} align="center">
+          <Text color="#396FFF">Etherscan</Text>
+          <Image src={AlgoTranc} size={"20px"} alt="tr" />
+        </Flex>
+      </Flex>
       <Flex justify="space-between" align="center">
         <Box>
           <Text fontWeight="500">Cheapest route</Text>
