@@ -14,7 +14,7 @@ const algoTestnetAssets = Assets.Testnet.ALGO;
 const baseURL =  'https://api.glitterfinance.org/api'
 
 const sdk = new GlitterBridgeSDK()
-            .setEnvironment(GlitterNetworks.testnet)
+            .setEnvironment(GlitterNetworks.mainnet)
             .connect([BridgeNetworks.algorand, BridgeNetworks.solana]);
 
 const algorandAccounts = sdk.algorand?.accounts;
@@ -216,72 +216,46 @@ export class GlitterBridgeProvider implements BaseBridgeProvider {
             if (!solana) throw new Error("Solana not loaded");
     }
 
-    private async getAlgorandAccount(algorandAccounts: any) {
-       return new Promise(async (resolve, reject) => {
-         try {
-          
-             //Check file path for saved config:
-             const algoAccountFile = path.join(__dirname, 'local/algoAccount.txt');
-          
-             //Load account if exists in file
-             if (fs.existsSync(algoAccountFile)) {
-                 //file exists
-                 const mnemonic = fs.readFileSync(algoAccountFile, 'utf8');
-              
-                 if (mnemonic) {
-                     //Add to loaded accounts
-                     let algoAccount = await algorandAccounts.add(mnemonic);
-                     resolve(algoAccount);
-                     return;
-                 }
-             }
-                
-         } catch (error) {
-             reject(error);
-         }
-      });
-    }
+    
 
-   private async getSolanaAccount(solanaAccounts: any) {
-      // eslint-disable-next-line no-async-promise-executor
-      return new Promise(async (resolve, reject) => {
-          try {
-  
-              //Check file path for saved config:
-              const solanaAccountFile = path.join(__dirname, 'local/solanaAccount.txt');
-  
-              //Load account if exists in file
-              if (fs.existsSync(solanaAccountFile)) {
-                  //file exists
-                  const mnemonic = fs.readFileSync(solanaAccountFile, 'utf8');
-  
-                  if (mnemonic) {
-                      //Add to loaded accounts
-                      let solanaAccount = await solanaAccounts.add(mnemonic);
-                      resolve(solanaAccount);
-                      return;
-                  }
-              }
-  
-          } catch (error) {
-              reject(error);
-          }
-      });
-  
-  }
-  
-
-
-
-    // Bridge Algo from Algorand to Solana
+    // Bridge Algo xAlgo from Algorand to Solana
     private async bridgeAlgoToxAlgo (quote: Quote) {
-      // const solanaAccount = await getSolanaAccount(solanaAccounts);
       await this.loadVariables()
-     // Check starting balance 
-    // let startingBalance = await solana?.getTokenBalance(solanaAccount.addr, "xALGO");
-
+  
+      let startingBalance = await solana?.getTokenBalance(quote.toAddress, solMainnetAssets.xALGO?.symbol);
+      let bridged = await algorand?.bridge(quote.fromWallet, algoMainnetAssets.ALGO?.symbol, Chains.SOL,quote.toAddress, solMainnetAssets.xALGO?.symbol, Number(quote.amountIn));
+      let newBalance = await solana?.waitForTokenBalanceChange(quote.toAddress, "xAlgo", Number(startingBalance),90);
+      return {startingBalance, bridged, newBalance};
     }
 
+    // Bridge xAlgo to Algo from solana to Algorand
+    private async bridgexAlgoToAlgo (quote: Quote) {
+      await this.loadVariables()
+
+     let startingBalance = await algorand?.getBalance(quote.toAddress);
+     let bridged = await solana?.bridge(quote.fromWallet, solMainnetAssets.xALGO?.symbol, Chains.ALGO, quote.toAddress, algoMainnetAssets.ALGO.symbol, Number(quote.amountIn));
+     let newBalance =    await algorand?.waitForBalanceChange(quote.toAddress, Number(startingBalance),90);
+
+     return {startingBalance, bridged, newBalance};
+    }
+
+    // Bridge Sol to xsol from Solana to Algorand
+    private async bridgeSolToxSol (quote: Quote) {
+      await this.loadVariables()
+
+     let startingBalance = await algorand?.getTokenBalance(quote.toAddress, algoMainnetAssets.xSOL.symbol);
+     let bridged = await solana?.bridge(quote.fromWallet, solMainnetAssets.SOLANA?.symbol, Chains.ALGO, quote.toAddress, algoMainnetAssets.xSOL.symbol, Number(quote.amountIn));
+     let newBalance = await algorand?.waitForTokenBalanceChange(quote.toAddress, "xSOL", Number(startingBalance),90)
+    }
+    
+    //Bridge xSol to sol from Algorand to Solana
+    private async bridgexSolToSol (quote: Quote) {
+      let startingBalance = await solana?.getBalance(quote.toAddress);
+      let bridged = await algorand?.bridge(quote.fromWallet, algoMainnetAssets.xSOL.symbol, Chains.SOL, quote.toAddress, solMainnetAssets.SOLANA?.symbol, Number(quote.amountIn));
+      let newBalance = await solana?.waitForBalanceChange(quote.toAddress, Number(startingBalance),90);
+
+      return {startingBalance, bridged, newBalance};  
+    }
 
 
     public  moveAsset(quote: any) {
