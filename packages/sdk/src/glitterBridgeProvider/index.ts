@@ -2,12 +2,25 @@ import { Assets, Chains } from "../../config";
 import { BridgeId, NetworkType, Quote, QuoteRequest, Update } from "../../types";
 import { BaseBridgeProvider } from "../baseBridgeProvider";
 import { getNonAlgorandChain } from "../utils";
+import { GlitterBridgeSDK, BridgeNetworks, GlitterNetworks } from 'glitter-bridge-sdk';
+const path = require('path');
+const util = require('util');
+const fs = require('fs');
 
 const solMainnetAssets = Assets.Mainnet.SOL;
-const solTestnetAssets = Assets.Testnet.SOL;
 const algoMainnetAssets = Assets.Mainnet.ALGO;
+const solTestnetAssets = Assets.Testnet.SOL;
 const algoTestnetAssets = Assets.Testnet.ALGO;
 const baseURL =  'https://api.glitterfinance.org/api'
+
+const sdk = new GlitterBridgeSDK()
+            .setEnvironment(GlitterNetworks.testnet)
+            .connect([BridgeNetworks.algorand, BridgeNetworks.solana]);
+
+const algorandAccounts = sdk.algorand?.accounts;
+const solanaAccounts = sdk.solana?.accounts;
+const algorand = sdk.algorand;
+const solana = sdk.solana;
 
 export class GlitterBridgeProvider implements BaseBridgeProvider {
 
@@ -30,7 +43,7 @@ export class GlitterBridgeProvider implements BaseBridgeProvider {
 
 
     public supportedChains(network: NetworkType) { 
-        return [Chains.SOL];
+         return [Chains.SOL];
     }
 
     public supportedAssetsByChain(chain: string, network: NetworkType) {
@@ -195,6 +208,81 @@ export class GlitterBridgeProvider implements BaseBridgeProvider {
         return await this._getQuote(quoteRequest)
 
     }
+
+    private async loadVariables () {
+      if (!algorandAccounts) throw new Error("Algorand Accounts not loaded");
+            if (!solanaAccounts) throw new Error("Solana Accounts not loaded");
+            if (!algorand) throw new Error("Algorand not loaded");
+            if (!solana) throw new Error("Solana not loaded");
+    }
+
+    private async getAlgorandAccount(algorandAccounts: any) {
+       return new Promise(async (resolve, reject) => {
+         try {
+          
+             //Check file path for saved config:
+             const algoAccountFile = path.join(__dirname, 'local/algoAccount.txt');
+          
+             //Load account if exists in file
+             if (fs.existsSync(algoAccountFile)) {
+                 //file exists
+                 const mnemonic = fs.readFileSync(algoAccountFile, 'utf8');
+              
+                 if (mnemonic) {
+                     //Add to loaded accounts
+                     let algoAccount = await algorandAccounts.add(mnemonic);
+                     resolve(algoAccount);
+                     return;
+                 }
+             }
+                
+         } catch (error) {
+             reject(error);
+         }
+      });
+    }
+
+   private async getSolanaAccount(solanaAccounts: any) {
+      // eslint-disable-next-line no-async-promise-executor
+      return new Promise(async (resolve, reject) => {
+          try {
+  
+              //Check file path for saved config:
+              const solanaAccountFile = path.join(__dirname, 'local/solanaAccount.txt');
+  
+              //Load account if exists in file
+              if (fs.existsSync(solanaAccountFile)) {
+                  //file exists
+                  const mnemonic = fs.readFileSync(solanaAccountFile, 'utf8');
+  
+                  if (mnemonic) {
+                      //Add to loaded accounts
+                      let solanaAccount = await solanaAccounts.add(mnemonic);
+                      resolve(solanaAccount);
+                      return;
+                  }
+              }
+  
+          } catch (error) {
+              reject(error);
+          }
+      });
+  
+  }
+  
+
+
+
+    // Bridge Algo from Algorand to Solana
+    private async bridgeAlgoToxAlgo (quote: Quote) {
+      // const solanaAccount = await getSolanaAccount(solanaAccounts);
+      await this.loadVariables()
+     // Check starting balance 
+    // let startingBalance = await solana?.getTokenBalance(solanaAccount.addr, "xALGO");
+
+    }
+
+
 
     public  moveAsset(quote: any) {
 
