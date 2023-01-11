@@ -1,4 +1,4 @@
-import { Assets, Chains } from "../../config";
+import { Assets, Chains, BRIDGE_STATUS } from "../../config";
 import { BridgeId, NetworkType, Quote, QuoteRequest, Update } from "../../types";
 import { BaseBridgeProvider } from "../baseBridgeProvider";
 import { getNonAlgorandChain } from "../utils";
@@ -17,8 +17,6 @@ const sdk = new GlitterBridgeSDK()
             .setEnvironment(GlitterNetworks.mainnet)
             .connect([BridgeNetworks.algorand, BridgeNetworks.solana]);
 
-const algorandAccounts = sdk.algorand?.accounts;
-const solanaAccounts = sdk.solana?.accounts;
 const algorand = sdk.algorand;
 const solana = sdk.solana;
 
@@ -209,43 +207,49 @@ export class GlitterBridgeProvider implements BaseBridgeProvider {
 
     }
 
-    private async loadVariables () {
-      if (!algorandAccounts) throw new Error("Algorand Accounts not loaded");
-            if (!solanaAccounts) throw new Error("Solana Accounts not loaded");
-            if (!algorand) throw new Error("Algorand not loaded");
-            if (!solana) throw new Error("Solana not loaded");
-    }
-
-    
-
     // Bridge Algo xAlgo from Algorand to Solana
     private async bridgeAlgoToxAlgo (quote: Quote) {
-      await this.loadVariables()
   
       let startingBalance = await solana?.getTokenBalance(quote.toAddress, solMainnetAssets.xALGO?.symbol);
       let bridged = await algorand?.bridge(quote.fromWallet, algoMainnetAssets.ALGO?.symbol, Chains.SOL,quote.toAddress, solMainnetAssets.xALGO?.symbol, Number(quote.amountIn));
       let newBalance = await solana?.waitForTokenBalanceChange(quote.toAddress, "xAlgo", Number(startingBalance),90);
-      return {startingBalance, bridged, newBalance};
+      if (bridged == true) {
+        return {quote, status:BRIDGE_STATUS.SUCCESS}
+      }
+     else  {
+      return {quote, status:BRIDGE_STATUS.FAILED}
+     }
+     
     }
 
     // Bridge xAlgo to Algo from solana to Algorand
     private async bridgexAlgoToAlgo (quote: Quote) {
-      await this.loadVariables()
 
      let startingBalance = await algorand?.getBalance(quote.toAddress);
      let bridged = await solana?.bridge(quote.fromWallet, solMainnetAssets.xALGO?.symbol, Chains.ALGO, quote.toAddress, algoMainnetAssets.ALGO.symbol, Number(quote.amountIn));
      let newBalance =    await algorand?.waitForBalanceChange(quote.toAddress, Number(startingBalance),90);
 
-     return {startingBalance, bridged, newBalance};
+     if (bridged == true) {
+      return {quote, status:BRIDGE_STATUS.SUCCESS}
+    }
+   else  {
+    return {quote, status:BRIDGE_STATUS.FAILED}
+   }
     }
 
     // Bridge Sol to xsol from Solana to Algorand
     private async bridgeSolToxSol (quote: Quote) {
-      await this.loadVariables()
 
      let startingBalance = await algorand?.getTokenBalance(quote.toAddress, algoMainnetAssets.xSOL.symbol);
      let bridged = await solana?.bridge(quote.fromWallet, solMainnetAssets.SOLANA?.symbol, Chains.ALGO, quote.toAddress, algoMainnetAssets.xSOL.symbol, Number(quote.amountIn));
      let newBalance = await algorand?.waitForTokenBalanceChange(quote.toAddress, "xSOL", Number(startingBalance),90)
+
+     if (bridged == true) {
+      return {quote, status:BRIDGE_STATUS.SUCCESS}
+    }
+   else  {
+    return {quote, status:BRIDGE_STATUS.FAILED}
+   }
     }
     
     //Bridge xSol to sol from Algorand to Solana
@@ -254,26 +258,31 @@ export class GlitterBridgeProvider implements BaseBridgeProvider {
       let bridged = await algorand?.bridge(quote.fromWallet, algoMainnetAssets.xSOL.symbol, Chains.SOL, quote.toAddress, solMainnetAssets.SOLANA?.symbol, Number(quote.amountIn));
       let newBalance = await solana?.waitForBalanceChange(quote.toAddress, Number(startingBalance),90);
 
-      return {startingBalance, bridged, newBalance};  
+      if (bridged == true) {
+        return {quote, status:BRIDGE_STATUS.SUCCESS}
+      }
+     else  {
+      return {quote, status:BRIDGE_STATUS.FAILED}
+     }
     }
 
 
-    public async moveAsset(quote: Quote) {
+    public async moveAsset(quote: Quote):Promise<Update> {
       if(quote.assetName == algoMainnetAssets.ALGO?.symbol){
-        await  this.bridgeAlgoToxAlgo(quote)
+       return  this.bridgeAlgoToxAlgo(quote)
       }
 
       else if (quote.assetName == solMainnetAssets.xALGO?.symbol){
-        await this.bridgexAlgoToAlgo(quote)
+        return this.bridgexAlgoToAlgo(quote)
       }
 
       else if (quote.assetName ==  solMainnetAssets.SOLANA?.symbol){
-        await this.bridgeSolToxSol(quote)
+        return this.bridgeSolToxSol(quote)
       }
 
-      else if (quote.assetName == algoMainnetAssets.xSOL.symbol) {
-        await this.bridgexAlgoToAlgo(quote)
-      }
+      else {
+        return this.bridgexAlgoToAlgo(quote)
+      } 
 
     }
         
