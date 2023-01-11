@@ -177,7 +177,7 @@ export class GlitterBridgeProvider implements BaseBridgeProvider {
             const USDaRelease = await this.getPrice(algoMainnetAssets.USDCa?.symbol)
 
             return {
-              ...quoteRequest,
+                ...quoteRequest,
                 assetName: solMainnetAssets.USDCs?.symbol,
                 fromChainName: Chains.ALGO,
                 toChainName: Chains.SOL,
@@ -258,7 +258,22 @@ export class GlitterBridgeProvider implements BaseBridgeProvider {
     }
 
 
-    public  moveAsset(quote: any) {
+    public async moveAsset(quote: Quote) {
+      if(quote.assetName == algoMainnetAssets.ALGO?.symbol){
+        await  this.bridgeAlgoToxAlgo(quote)
+      }
+
+      else if (quote.assetName == solMainnetAssets.xALGO?.symbol){
+        await this.bridgexAlgoToAlgo(quote)
+      }
+
+      else if (quote.assetName ==  solMainnetAssets.SOLANA?.symbol){
+        await this.bridgeSolToxSol(quote)
+      }
+
+      else if (quote.assetName == algoMainnetAssets.xSOL.symbol) {
+        await this.bridgexAlgoToAlgo(quote)
+      }
 
     }
         
