@@ -39,7 +39,7 @@ export type Quote<FromWallet = any, ToWallet = any> = {
     toChainName: string,
     toWallet: ToWallet,
     toWalletType:string,
-    amountIn: string,
+    amountIn: string ,
     amountOut: string | number,
     gasFeeEstimate: string,
     timeEstimate?: string,

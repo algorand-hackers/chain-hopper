@@ -2,12 +2,25 @@ import { Assets, Chains } from "../../config";
 import { BridgeId, NetworkType, Quote, QuoteRequest, Update } from "../../types";
 import { BaseBridgeProvider } from "../baseBridgeProvider";
 import { getNonAlgorandChain } from "../utils";
+import { GlitterBridgeSDK, BridgeNetworks, GlitterNetworks } from 'glitter-bridge-sdk';
+const path = require('path');
+const util = require('util');
+const fs = require('fs');
 
 const solMainnetAssets = Assets.Mainnet.SOL;
-const solTestnetAssets = Assets.Testnet.SOL;
 const algoMainnetAssets = Assets.Mainnet.ALGO;
+const solTestnetAssets = Assets.Testnet.SOL;
 const algoTestnetAssets = Assets.Testnet.ALGO;
 const baseURL =  'https://api.glitterfinance.org/api'
+
+const sdk = new GlitterBridgeSDK()
+            .setEnvironment(GlitterNetworks.mainnet)
+            .connect([BridgeNetworks.algorand, BridgeNetworks.solana]);
+
+const algorandAccounts = sdk.algorand?.accounts;
+const solanaAccounts = sdk.solana?.accounts;
+const algorand = sdk.algorand;
+const solana = sdk.solana;
 
 export class GlitterBridgeProvider implements BaseBridgeProvider {
 
@@ -30,7 +43,7 @@ export class GlitterBridgeProvider implements BaseBridgeProvider {
 
 
     public supportedChains(network: NetworkType) { 
-        return [Chains.SOL];
+         return [Chains.SOL];
     }
 
     public supportedAssetsByChain(chain: string, network: NetworkType) {
@@ -195,6 +208,55 @@ export class GlitterBridgeProvider implements BaseBridgeProvider {
         return await this._getQuote(quoteRequest)
 
     }
+
+    private async loadVariables () {
+      if (!algorandAccounts) throw new Error("Algorand Accounts not loaded");
+            if (!solanaAccounts) throw new Error("Solana Accounts not loaded");
+            if (!algorand) throw new Error("Algorand not loaded");
+            if (!solana) throw new Error("Solana not loaded");
+    }
+
+    
+
+    // Bridge Algo xAlgo from Algorand to Solana
+    private async bridgeAlgoToxAlgo (quote: Quote) {
+      await this.loadVariables()
+  
+      let startingBalance = await solana?.getTokenBalance(quote.toAddress, solMainnetAssets.xALGO?.symbol);
+      let bridged = await algorand?.bridge(quote.fromWallet, algoMainnetAssets.ALGO?.symbol, Chains.SOL,quote.toAddress, solMainnetAssets.xALGO?.symbol, Number(quote.amountIn));
+      let newBalance = await solana?.waitForTokenBalanceChange(quote.toAddress, "xAlgo", Number(startingBalance),90);
+      return {startingBalance, bridged, newBalance};
+    }
+
+    // Bridge xAlgo to Algo from solana to Algorand
+    private async bridgexAlgoToAlgo (quote: Quote) {
+      await this.loadVariables()
+
+     let startingBalance = await algorand?.getBalance(quote.toAddress);
+     let bridged = await solana?.bridge(quote.fromWallet, solMainnetAssets.xALGO?.symbol, Chains.ALGO, quote.toAddress, algoMainnetAssets.ALGO.symbol, Number(quote.amountIn));
+     let newBalance =    await algorand?.waitForBalanceChange(quote.toAddress, Number(startingBalance),90);
+
+     return {startingBalance, bridged, newBalance};
+    }
+
+    // Bridge Sol to xsol from Solana to Algorand
+    private async bridgeSolToxSol (quote: Quote) {
+      await this.loadVariables()
+
+     let startingBalance = await algorand?.getTokenBalance(quote.toAddress, algoMainnetAssets.xSOL.symbol);
+     let bridged = await solana?.bridge(quote.fromWallet, solMainnetAssets.SOLANA?.symbol, Chains.ALGO, quote.toAddress, algoMainnetAssets.xSOL.symbol, Number(quote.amountIn));
+     let newBalance = await algorand?.waitForTokenBalanceChange(quote.toAddress, "xSOL", Number(startingBalance),90)
+    }
+    
+    //Bridge xSol to sol from Algorand to Solana
+    private async bridgexSolToSol (quote: Quote) {
+      let startingBalance = await solana?.getBalance(quote.toAddress);
+      let bridged = await algorand?.bridge(quote.fromWallet, algoMainnetAssets.xSOL.symbol, Chains.SOL, quote.toAddress, solMainnetAssets.SOLANA?.symbol, Number(quote.amountIn));
+      let newBalance = await solana?.waitForBalanceChange(quote.toAddress, Number(startingBalance),90);
+
+      return {startingBalance, bridged, newBalance};  
+    }
+
 
     public  moveAsset(quote: any) {
 
