@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import { Box, Flex, Button, Text, Icon, Image } from "@chakra-ui/react";
+import { Box, Flex, Button, Text, Icon, Image, useDisclosure } from "@chakra-ui/react";
 import {GiHamburgerMenu} from "react-icons/gi"
-import { useDisclosure } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import Applogo from "../asset/Applogo.svg"
 import wallet from "../asset/wallet.svg"
@@ -10,23 +9,20 @@ import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import MobileNavbar from './MobileNavbar';
 import ConnectWallet from '../components/ConnectWallet/ConnectWallet';
 import metamask from "../asset/metamask.svg"
+import { useAccount } from 'wagmi';
 
 
-const Navbar = ({ isConnect, setIsConnect }) => {
-    const { getDisclosureProps, getButtonProps, isOpen, onOpen, onClose } = useDisclosure()
-    // const [isConnect, setIsConnect] = useState(true)
+const Navbar = () => {
+
+    const { isOpen, onOpen, onClose } = useDisclosure()
     const [isMenu, setIsMenu] = useState(false)
+    const [isConnect, setIsConnect] = useState(true)
+    const { address, isConnected } = useAccount();
 
-    const buttonProps = getButtonProps()
-    const disclosureProps = getDisclosureProps()
 
     const connectWallet = () => {
-        // onOpen()
-        setIsConnect(false)
-    }
-
-    const disConnectWallet = () => {
-        setIsConnect(true)
+        onOpen()
+        // setIsConnect(false)
     }
 
   return (
@@ -55,11 +51,10 @@ const Navbar = ({ isConnect, setIsConnect }) => {
                     <Btn text="connect wallet" />
                 </Box>
                 ):(
-                <Flex  onClick={disConnectWallet} gap={2} align="center"  display={{base:"none", md:"flex"}}>
+                <Flex gap={2} align="center"  display={{base:"none", md:"flex"}}>
                     <Image src={metamask} w={"20px"} h={"20px"} alt="wallet" />
                     <Text>0x1725...5d8136</Text>
                     <MdOutlineKeyboardArrowDown className='w-[30px] h-[30px]'/>
-
                 </Flex>
             )}
 

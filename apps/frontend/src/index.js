@@ -6,15 +6,25 @@ import theme from "./theme";
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
+import { WagmiConfig, createClient } from 'wagmi';
+import { getDefaultProvider } from 'ethers';
+
+const client = createClient({
+  autoConnect: true,
+  provider: getDefaultProvider()
+});
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <WagmiConfig client={client}>
     <BrowserRouter>
       <ChakraProvider theme={theme}>
         <App />
       </ChakraProvider>
     </BrowserRouter>
+    </WagmiConfig>
   </React.StrictMode>
 );
 

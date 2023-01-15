@@ -6,30 +6,31 @@ import Home from './pages/Home';
 import Navbar from './constant/Navbar';
 import Sidebar from './constant/Sidebar';
 import Bridge from './pages/Bridge/Bridge';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // import { useColorMode } from "@chakra-ui/color-mode"
 
 function App() {
-  const [isConnect, setIsConnect] = useState(true)
 
-  
-
+  // const [isConnect, setIsConnect] = useState(true)
   return (
-    <div>
-      <Box >
-        <Navbar isConnect={isConnect} setIsConnect={setIsConnect} />
+    <>
+      <Box>
+        <Navbar />
         <Box display="flex" >
           <Box>
             <Sidebar />
           </Box>
           <Box h="90vh" bg="bg2" w={{base:"100%", md:"100%", lg:"100%"}}>
+             <ToastContainer />
             <Routes>
-              <Route index path="/"  element={<Home isConnect={isConnect} setIsConnect={setIsConnect} />} />
-              <Route path='/bridge' element={<Bridge  isConnect={isConnect} />} />
+              <Route index path="/"  element={<Home  />} />
+              <Route path='/bridge' element={<Bridge  />} />
             </Routes>
           </Box>
         </Box>
       </Box>
-    </div>
+    </>
   );
 }
 

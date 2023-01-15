@@ -4,6 +4,7 @@ import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import Images_Icons from '../../constant/icons-images';
 
 const SelectNetwork = ({ selected, setSelected, tokenIcon, setTokenIcon, BackgroundColor }) => {
+
   const { wrapperSelect, buttonSelect, optionContent, optionContentChild } =
     useSelectNetworkStyles();
 
@@ -28,15 +29,13 @@ const SelectNetwork = ({ selected, setSelected, tokenIcon, setTokenIcon, Backgro
     }
   ]
 
-
-
   return (
     <Flex  bg={BackgroundColor} {...wrapperSelect}>
       <Flex {...buttonSelect} justifyContent="space-between" align="center"
         onClick={e => setIsActive(!isActive)}
       >
         <Flex>
-          {icon && <Image src={tokenIcon} mr={'10px'} />}
+          {icon && <Image src={tokenIcon} w={"25px"} h={"25px"} mr={'10px'} />}
           <Text>{selected}</Text>
         </Flex>
         <MdOutlineKeyboardArrowDown />
@@ -67,7 +66,7 @@ const SelectNetwork = ({ selected, setSelected, tokenIcon, setTokenIcon, Backgro
                 setIcon(true)
               }}
             >
-              <Image src={option.img} mr={'10px'} />
+              <Image src={option.img} w={"25px"} h={"25px"} mr={'10px'} />
               {option.token}
             </Flex>
             ))}

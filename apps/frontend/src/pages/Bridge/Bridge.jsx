@@ -31,6 +31,7 @@ import Withdrawer from '../../components/Withdrawer';
 // );
 
 const Bridge = ({ isConnect }) => {
+  
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const connectWallet = () => {
@@ -120,7 +121,7 @@ const Bridge = ({ isConnect }) => {
                     {!walletConnected ? (
                       <>
                         <Box onClick={connectWallet}>
-                          <Btn2 text="Connect" />
+                          <Btn2 text="Connect Wallet" />
                         </Box>
                       </>
                     ) : (

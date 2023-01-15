@@ -20,6 +20,7 @@ import {
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
 import { networks, crypto } from '../../constant/networksJSON';
+import { nanoid } from "nanoid";
 // const crypto = [
 //   {
 //     id: 1,
@@ -120,6 +121,7 @@ const CryptoModal = ({ isOpen, onClose, setSelectToken, setWalletIcon, setIsTran
                 d="flex"
                 justifyContent="space-between"
                 alignItems="center"
+                key={c.nanoid}
                 mb={5}
                 cursor="pointer"
                 onClick={e => {
