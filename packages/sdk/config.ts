@@ -1,16 +1,16 @@
 import { BaseBridgeProvider } from "./src/baseBridgeProvider"
 import { GlitterBridgeProvider } from "./src/glitterBridgeProvider"
 import { WormHoleBridgeProvider } from "./src/wormholeBridgeProvider"
-import { Asset, NetworkType } from "./types"
+import { Asset, BridgeId, NetworkType } from "./types"
 
-export const BRIDGES: Record<string, new() => BaseBridgeProvider> = {
-    'WormHole': WormHoleBridgeProvider,
-    'Glitter': GlitterBridgeProvider
+export const BRIDGE_PROVIDERS: Record<BridgeId, new() => BaseBridgeProvider> = {
+    [BridgeId.WormHole]: WormHoleBridgeProvider,
+    [BridgeId.Glitter]: GlitterBridgeProvider
 }
 
 export const Chains = {
-    SOL: "Solana",
-    ALGO: "Algorand",
+    SOL: "solana",
+    ALGO: "algorand",
     ETH: "Ethereum"
 }
 
@@ -26,16 +26,16 @@ export const SOLANA_WALLETS = {Phantom: 'Phantom', Solflare: 'Solflare'}
 export const Assets: Record<string, Record<string,Record<string, Asset>>> = {
     Mainnet: {
         SOL:{
-            xALGO: {symbol: 'xALGO', description: 'Wrapped ALGO on Solana', address: '', decimals: 5},
+            xALGO: {symbol: 'xalgo', description: 'Wrapped ALGO on Solana', address: '', decimals: 5},
         
-            SOLANA: {symbol: 'SOL', description: 'Native Solana on Solana', address: '', decimals: 5},
+            SOLANA: {symbol: 'sol', description: 'Native Solana on Solana', address: '', decimals: 5},
     
             USDCs: {symbol: 'USDCs', description: "USDC on Solana", address: '', decimals: 5}
         },
         ALGO:{
-            ALGO: {symbol: 'ALGO', description: 'Native ALGO on Algorand', address: '', decimals: 5},
+            ALGO: {symbol: 'algo', description: 'Native ALGO on Algorand', address: '', decimals: 5},
     
-            xSOL: {symbol: 'xSOL', description: 'Wrapped Sol on Algorand', address: '', decimals: 5},
+            xSOL: {symbol: 'xsol', description: 'Wrapped Sol on Algorand', address: '', decimals: 5},
     
             USDCa: {symbol: 'USDCs', description: "USDC on Solana", address: '', decimals: 5},
     
@@ -47,16 +47,16 @@ export const Assets: Record<string, Record<string,Record<string, Asset>>> = {
     },
     Testnet:  {
         SOL:{
-            xALGO: {symbol: 'xALGO', description: 'Wrapped ALGO on Solana', address: '', decimals: 5},
+            xALGO: {symbol: 'xalgo', description: 'Wrapped ALGO on Solana', address: '', decimals: 5},
         
-            SOLANA: {symbol: 'SOL', description: 'Native Solana on Solana', address: '', decimals: 5},
+            SOLANA: {symbol: 'sol', description: 'Native Solana on Solana', address: '', decimals: 5},
     
             USDCs: {symbol: 'USDCs', description: "USDC on Solana", address: '', decimals: 5}
         },
         ALGO:{
-            ALGO: {symbol: 'ALGO', description: 'Native ALGO on Algorand', address: '', decimals: 5},
+            ALGO: {symbol: 'algo', description: 'Native ALGO on Algorand', address: '', decimals: 5},
     
-            xSOL: {symbol: 'xSOL', description: 'Wrapped Sol on Algorand', address: '', decimals: 5},
+            xSOL: {symbol: 'xsol', description: 'Wrapped Sol on Algorand', address: '', decimals: 5},
     
             USDCa: {symbol: 'USDCs', description: "USDC on Solana", address: '', decimals: 5},
     

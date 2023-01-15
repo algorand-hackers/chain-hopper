@@ -22,8 +22,9 @@ import TransactionModal from '../../components/TransactionModal/TransactionModal
 import Btn2 from '../../components/UI/Btn2';
 import ConnectWallet from '../../components/ConnectWallet/ConnectWallet';
 
-import { networks } from '../../constant/networksJSON'
-import wallet from "../../asset/ETH - Ethereum Token.png"
+import { networks } from '../../constant/networksJSON';
+import wallet from '../../asset/ETH - Ethereum Token.png';
+import Withdrawer from '../../components/Withdrawer';
 
 // const NetworkSelector = lazy(
 //   () => import("../../components/NetworkSelector")
@@ -48,10 +49,10 @@ const Bridge = ({ isConnect }) => {
   const [walletIcon, setWalletIcon] = useState(wallet);
   // This is for the connect button on the component to start it
   const [walletConnected, setWalletConnected] = useState(false);
-  // This useState is to display the transaction histroy before making transaction 
+  // This useState is to display the transaction histroy before making transaction
   const [isTransac, setIsTransac] = useState(false);
-  // transre button 
-  const [tranferBtn, setTranferBtn] = useState(false)
+  // transre button
+  const [tranferBtn, setTranferBtn] = useState(false);
 
   //   const networkData = networks.map((data) => {
   //   return { id: nanoid(), ...data };
@@ -68,7 +69,8 @@ const Bridge = ({ isConnect }) => {
           color="dark"
           borderRadius={'16px'}
           flexDir={'column'}
-          padding={'10px'}
+          paddingX={'10px'}
+          pt="10px"
         >
           {/* ----------------------------------- TOP BUTTON TAB  [DEPOSIT & WITHDRAW] --------------------------------------------- */}
           <Tabs variant="unstyled">
@@ -110,6 +112,7 @@ const Bridge = ({ isConnect }) => {
                       <SelectNetwork
                         selected={selected}
                         setSelected={setSelected}
+                        BackgroundColor="#fff"
                         tokenIcon={tokenIcon}
                         setTokenIcon={setTokenIcon}
                       />
@@ -127,11 +130,11 @@ const Bridge = ({ isConnect }) => {
 
                     {!walletConnected ? (
                       <>
-                      <div></div>
+                        <div></div>
                       </>
                     ) : (
-                      <Flex zIndex={1} mt={'20px'}>
-                        <SelectToken 
+                      <Flex zIndex={1} mt={'-1px'}>
+                        <SelectToken
                           networks={networks}
                           setSelectToken={setSelectToken}
                           selectToken={selectToken}
@@ -168,38 +171,70 @@ const Bridge = ({ isConnect }) => {
                         color="dark"
                         borderRadius={'9.11545px'}
                         flexDir={'column'}
-                        //  padding={"10px"}
                       ></Box>
                     </Flex>
 
                     {/* -------------------- TOKEN ROUTE DETAILS ---------------------- */}
 
-                   {isTransac && <TokenRoute />}
+                    {isTransac && <TokenRoute />}
                   </Flex>
+                  <Box
+                    as="button"
+                    bg="linear-gradient(90deg, #4A48FF 0%, #2996FF 100%)"
+                    w="100%"
+                    h="49.65px"
+                    color="white"
+                    borderRadius={'9.11545px'}
+                    onClick={() => setTranferBtn(true)}
+                  >
+                    Transfer
+                  </Box>
+                  {tranferBtn && <TransactionLoader />}
                 </Suspense>
               </TabPanel>
+
+              {/* ----------------------------------- Withdraw --------------------------------------------- */}
+
               <TabPanel>
-                <p>two!</p>
+                <Withdrawer
+                  selected={selected}
+                  setSelected={setSelected}
+                  tokenIcon={tokenIcon}
+                  setTokenIcon={setTokenIcon}
+                  // ConnectWallet Props
+
+                  walletIcon={walletIcon}
+                  setWalletConnected={setWalletConnected}
+                  setWalletIcon={setWalletIcon}
+                  isOpen={isOpen}
+                  onOpen={onOpen}
+                  onClose={onClose}
+
+                  // Select Token
+
+                  networks={networks}
+                  setSelectToken={setSelectToken}
+                  selectToken={selectToken}
+                  
+                  setIsTransac={setIsTransac}
+
+                  // connect to wallet
+
+                  walletConnected={walletConnected}
+
+                  // Transfer useState
+                  tranferBtn={tranferBtn}
+                  setTranferBtn={setTranferBtn}
+                />
+
+               
               </TabPanel>
             </TabPanels>
           </Tabs>
 
           {/* -------------------- TRANSFER BUTTON ---------------------- */}
-          <Box
-            as="button"
-            bg="linear-gradient(90deg, #4A48FF 0%, #2996FF 100%)"
-            w="100%"
-            h="49.65px"
-            color="white"
-            borderRadius={'9.11545px'}
-            onClick={() => setTranferBtn(true)}
-          >
-            Transfer
-          </Box>
         </Box>
         {/* ----------------------------------- TRANSACTION lOADER --------------------------------------------- */}
-
-        {tranferBtn && <TransactionLoader />}
       </Stack>
     </Flex>
   );

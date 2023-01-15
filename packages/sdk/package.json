@@ -29,6 +29,10 @@
     "@certusone/wormhole-sdk": "^0.9.8",
     "@randlabs/myalgo-connect": "^1.4.2",
     "algosdk": "^1.15.0",
+    "glitter-bridge-sdk": "^1.0.0",
+    "glitter-bridge-algorand": "^1.0.0",
+    "glitter-bridge-solana": "^1.0.0",
+    "glitter-bridge-common": "^1.0.0",
     "ethers": "^5.7.2"
   }
 }

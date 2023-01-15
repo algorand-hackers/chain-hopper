@@ -16,10 +16,10 @@ const SelectToken = ({ setSelectToken, walletIcon, selectToken, setWalletIcon, s
   const [icon, setIcon] = useState(false);
 
   return (
-    <Flex  rounded={'lg'} w="100%" h="fit-content" gap={3} border="2px #E5E5E5 solid" >
+    <Flex  rounded={'lg'} w="100%" h="fit-content" gap={3}  borderBottomRadius={0} border="2px #E5E5E5 solid" >
       <Flex 
         w="100%"  
-        h="40px" 
+        h="50px" 
       >
         <Flex
           onClick={() => setIsOpen(true)}

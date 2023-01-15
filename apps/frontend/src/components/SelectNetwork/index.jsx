@@ -3,7 +3,7 @@ import { Flex, Stack, Text, Image, Box, Img } from '@chakra-ui/react';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import Images_Icons from '../../constant/icons-images';
 
-const SelectNetwork = ({ selected, setSelected, tokenIcon, setTokenIcon }) => {
+const SelectNetwork = ({ selected, setSelected, tokenIcon, setTokenIcon, BackgroundColor }) => {
 
   const { wrapperSelect, buttonSelect, optionContent, optionContentChild } =
     useSelectNetworkStyles();
@@ -30,7 +30,7 @@ const SelectNetwork = ({ selected, setSelected, tokenIcon, setTokenIcon }) => {
   ]
 
   return (
-    <Flex  {...wrapperSelect}>
+    <Flex  bg={BackgroundColor} {...wrapperSelect}>
       <Flex {...buttonSelect} justifyContent="space-between" align="center"
         onClick={e => setIsActive(!isActive)}
       >
