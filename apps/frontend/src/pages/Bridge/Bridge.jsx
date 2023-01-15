@@ -30,6 +30,7 @@ import wallet from "../../asset/ETH - Ethereum Token.png"
 // );
 
 const Bridge = ({ isConnect }) => {
+  
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const connectWallet = () => {
@@ -117,7 +118,7 @@ const Bridge = ({ isConnect }) => {
                     {!walletConnected ? (
                       <>
                         <Box onClick={connectWallet}>
-                          <Btn2 text="Connect" />
+                          <Btn2 text="Connect Wallet" />
                         </Box>
                       </>
                     ) : (

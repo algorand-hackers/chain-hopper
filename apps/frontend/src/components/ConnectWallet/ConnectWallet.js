@@ -3,23 +3,18 @@ import {
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalHeader,
-  ModalFooter,
   ModalBody,
-  ModalCloseButton,
-  Button,
   Box,
   Flex,
   Text,
   Image,
-  Circle,
-  Progress,
-  Spacer,
-  Icon,
 } from '@chakra-ui/react';
 import metamask from '../../asset/metamask.svg';
 import coinbase from '../../asset/coinbase.svg';
 import walletConnect from '../../asset/walletConnect.svg';
+import { toast } from 'react-toastify';
+// import {PeraWalletConnect} from "@perawallet/connect"
+import { nanoid } from "nanoid";
 
 const wallet = [
   {
@@ -37,37 +32,9 @@ const wallet = [
     name: 'WalletConnect',
     image: walletConnect,
   },
-  {
-    id: 4,
-    name: 'MetaMask',
-    image: metamask,
-  },
-  {
-    id: 5,
-    name: 'Coinbase',
-    image: coinbase,
-  },
-  {
-    id: 6,
-    name: 'WalletConnect',
-    image: walletConnect,
-  },
-  {
-    id: 7,
-    name: 'MetaMask',
-    image: metamask,
-  },
-  {
-    id: 8,
-    name: 'Coinbase',
-    image: coinbase,
-  },
-  {
-    id: 9,
-    name: 'WalletConnect',
-    image: walletConnect,
-  },
 ];
+
+// const peraWallet = new PeraWalletConnect();
 
 const ConnectWallet = ({
   walletIcon,
@@ -78,19 +45,89 @@ const ConnectWallet = ({
   onOpen,
   setWalletConnected,
   onClose,
+  setWalletAddress
 }) => {
 
-  const [isActive, setIsActive] = useState(false);
-  const [icon, setIcon] = useState(false);
+  // const [isActive, setIsActive] = useState(false);
+  // const [icon, setIcon] = useState(false);
+  // const [walletAddress, setWalletAddress] = useState("")
+  
+  // Store account address which is connected dApp with Pera Wallet
+  // const [accountAddress, setAccountAddress] = (useState < string) | (null > null);
+  //  // Check app is connected with Pera Wallet
+	// const isConnectedToPeraWallet = !!accountAddress;
+  
+   //useEffect for Pera Wallet
+  // useEffect(() => {
+  //   // Reconnect to the session when the component is mounted
+  //   peraWallet.reconnectSession().then((accounts) => {
+  //     // Setup the disconnect event listener
+  //     peraWallet.connector?.on("disconnect", handleDisconnectWalletClick);
 
-  const connectWallet = () => {
-    onClose()
-    setWalletConnected(true)
-    // setIsConnect(false)
+  //     if (accounts.length) {
+  //       setAccountAddress(accounts[0]);
+  //     }
+  //   });
+  // }, []);
+
+  const connectWalletMetamask = async () => {
+   if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
+     try {
+          /* Metamask is installed */
+          const accounts = await window.ethereum.request({
+               method: "eth_requestAccounts"
+          });
+          setWalletAddress(accounts[0]);
+          console.log(accounts[0]);
+     } catch (err) {
+          console.error(err.messages);
+     }
+  } else {
+    /* Metamask is not installed */
+    console.log("Please install Metamask");
+     toast.warning('Please install Metamask', {
+     position: toast.POSITION.TOP_CENTER, 
+     autoClose: 5000
+    });
+  }
+  onClose()
 }
+
+  // function handleConnectWalletClick() {
+  //   peraWallet
+  //     .connect()
+  //     .then((newAccounts) => {
+  //       // Setup the disconnect event listener
+  //       peraWallet.connector?.on("disconnect", handleDisconnectWalletClick);
+
+  //       setAccountAddress(newAccounts[0]);
+  //     })
+  //     .reject((error) => {
+  //       // You MUST handle the reject because once the user closes the modal, peraWallet.connect() promise will be rejected.
+  //       // For the async/await syntax you MUST use try/catch
+  //       if (error?.data?.type !== "CONNECT_MODAL_CLOSED") {
+  //         // log the necessary errors
+  //         console.log(error);
+  //          toast.error('error connecting to Pera wallet', {
+  //          position: toast.POSITION.TOP_CENTER, 
+  //          autoClose: 5000
+  //         });
+  //       }
+  //     });
+  // }
+
+//   function handleDisconnectWalletClick() {
+// 	peraWallet.disconnect();
+// 	setAccountAddress(null);
+// }
+
+
   return (
     <Modal onClose={onClose} isOpen={isOpen} isCentered>
-      <ModalOverlay />
+      <ModalOverlay 
+        bg = 'blackAlpha.100'
+        backdropFilter = 'blur(6px) hue-rotate(90deg)'
+      />
       <ModalContent
         rounded="18px"
         w={{ base: '90%', md: '500px', lg: '500px' }}
@@ -117,28 +154,53 @@ const ConnectWallet = ({
             mt={8}
             mb="10px"
           >
-            {wallet?.map((item) => (
+            {/* {wallet?.map((item) => ( */}
               <Flex
                 direction={'column'}
-                onClick={connectWallet}
+                onClose={onClose}
+                onClick={connectWalletMetamask}
+                _hover={{ bg: '#3D68FF', borderRadius: '16px', color: "white" }}
                 align="center"
                 as="button"
-                key={item.id}
+                // key={item.nanoid}
                 w="30%"
                 mb={8}
+                p={4}
               >
-                <Image src={item.image} />
+                <Image src={metamask} />
                 <Box>
                   <Text mt="4px" textAlign={'left'} fontSize="16px">
-                    {item.name}
+                   Metamask
                   </Text>
                 </Box>
               </Flex>
-            ))}
+               
+               {/* -------------------- Pera Wallet */}
+              {/* <Flex
+                direction={'column'}
+                onClick={
+                  isConnectedToPeraWallet ? handleDisconnectWalletClick : handleConnectWalletClick
+                }
+                _hover={{ bg: '#3D68FF', borderRadius: '16px', color: "white" }}
+                align="center"
+                as="button"
+                // key={item.nanoid}
+                w="30%"
+                mb={8}
+                p={4}
+              >
+                <Image src={metamask} />
+                <Box>
+                  <Text mt="4px" textAlign={'left'} fontSize="16px">
+                   Pera Wallet
+                  </Text>
+                </Box>
+              </Flex> */}
+            {/* ))} */}
           </Flex>
         </ModalBody>
       </ModalContent>
-    </Modal>
+   </Modal>
   );
 };
 
