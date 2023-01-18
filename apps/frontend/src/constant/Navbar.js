@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Box, Flex, Button, Text, Icon, Image, useDisclosure } from "@chakra-ui/react";
 import {GiHamburgerMenu} from "react-icons/gi"
 import { Link } from 'react-router-dom';
@@ -10,7 +10,8 @@ import MobileNavbar from './MobileNavbar';
 import ConnectWallet from '../components/ConnectWallet/ConnectWallet';
 import metamask from "../asset/metamask.svg"
 import { useAccount } from 'wagmi';
-
+import { TransactionContext } from "../context/TransactionContext";
+import { shortenAddress } from "../utils/shortenedAddress";
 
 const Navbar = () => {
 
@@ -18,12 +19,12 @@ const Navbar = () => {
     const [isMenu, setIsMenu] = useState(false)
     const [isConnect, setIsConnect] = useState(true)
     const { address, isConnected } = useAccount();
-
-
-    const connectWallet = () => {
-        onOpen()
-        // setIsConnect(false)
+    const { currentAccount, connectWallet } = useContext(TransactionContext);
+    const connectWallets = () => {
+      onOpen()
     }
+
+   
 
   return (
     <Flex  h="100px">
@@ -46,14 +47,14 @@ const Navbar = () => {
                     Contact us
                 </Link>
             </Flex>
-            {isConnect ? (
-                <Box onClick={connectWallet} display={{base:"none", md:"block"}}>
+            {!currentAccount ? (
+                <Box onClick={connectWallets} display={{base:"none", md:"block"}}>
                     <Btn text="connect wallet" />
                 </Box>
                 ):(
                 <Flex gap={2} align="center"  display={{base:"none", md:"flex"}}>
                     <Image src={metamask} w={"20px"} h={"20px"} alt="wallet" />
-                    <Text>0x1725...5d8136</Text>
+                    <Text>{shortenAddress(currentAccount)}</Text>
                     <MdOutlineKeyboardArrowDown className='w-[30px] h-[30px]'/>
                 </Flex>
             )}
@@ -61,7 +62,7 @@ const Navbar = () => {
 
             {/* Connect Wallet  */}
 
-            {/* <ConnectWallet isOpen={isOpen} onOpen={onOpen} onClose={onClose} /> */}
+            <ConnectWallet isOpen={isOpen} onOpen={onOpen} onClose={onClose} currentAccount={currentAccount} connectWallet={connectWallet} />
 
             {/* Mobile Harmburger */}
 
