@@ -87,6 +87,7 @@ export const TransactionsProvider = ({ children }) => {
   useEffect(() => {
     checkIfWalletIsConnect();
   }, []);
+  
   return (
     <TransactionContext.Provider
       value={{

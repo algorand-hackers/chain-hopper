@@ -15,7 +15,6 @@ const Home = () => {
 
   // const { colorMode, toggleColorMode } = useColorMode()
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [isConnect, setIsConnect] = useState(false)
   const { address, isConnected } = useAccount();
 
   const [walletAddress, setWalletAddress] = useState('');
