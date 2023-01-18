@@ -12,10 +12,8 @@ import {
 import metamask from '../../asset/metamask.svg';
 import coinbase from '../../asset/coinbase.svg';
 import walletConnect from '../../asset/walletConnect.svg';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 // import {PeraWalletConnect} from "@perawallet/connect"
-// import { nanoid } from "nanoid";
-import { TransactionContext } from "../../context/TransactionContext";
 
 
 const wallet = [
@@ -42,14 +40,9 @@ const ConnectWallet = ({
   currentAccount,
   connectWallet,
   walletIcon,
-  setWalletIcon,
-  setSelectWallet,
-  selectWallet,
   isOpen,
   onOpen,
-  setWalletConnected,
   onClose,
-  setWalletAddress
 }) => {
 
   // const [isActive, setIsActive] = useState(false);
@@ -108,8 +101,10 @@ const ConnectWallet = ({
   return (
     <Modal onClose={onClose} isOpen={isOpen} isCentered>
       <ModalOverlay 
-        bg = 'blackAlpha.100'
-        backdropFilter = 'blur(6px) hue-rotate(90deg)'
+        bg='none'
+        backdropFilter='auto'
+        backdropInvert='20%'
+        backdropBlur='2px'
       />
       <ModalContent
         rounded="18px"
