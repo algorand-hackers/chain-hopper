@@ -8,6 +8,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
 import { WagmiConfig, createClient } from 'wagmi';
 import { getDefaultProvider } from 'ethers';
+import { TransactionsProvider } from "./context/TransactionContext";
 
 const client = createClient({
   autoConnect: true,
@@ -18,6 +19,7 @@ const client = createClient({
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+     <TransactionsProvider>
     <WagmiConfig client={client}>
     <BrowserRouter>
       <ChakraProvider theme={theme}>
@@ -25,6 +27,7 @@ root.render(
       </ChakraProvider>
     </BrowserRouter>
     </WagmiConfig>
+    </TransactionsProvider>
   </React.StrictMode>
 );
 
