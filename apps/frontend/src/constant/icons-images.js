@@ -9,6 +9,8 @@ const metamasklogo = require("../asset/Group.png");
 const copylogo = require("../asset/Media.png");
 const algologo = require("../asset/algo.png");
 const disconnectlogo = require("../asset/disconnect.png");
+const myalgologo = require("../asset/myAlgo.png");
+const MetamaskLogo = require("../asset/metamask.svg");
 
 const Images_Icons = {
      ethereumLogo,
@@ -18,7 +20,9 @@ const Images_Icons = {
      metamasklogo,
      copylogo,
      algologo,
-     disconnectlogo
+     disconnectlogo,
+     myalgologo,
+     MetamaskLogo,
 };
 
 export default Images_Icons;
