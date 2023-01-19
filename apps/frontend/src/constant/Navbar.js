@@ -45,12 +45,13 @@ const Navbar = () => {
     };
 
      const copyAddressToClipboard = () => {
-     copy(copyAddress);
+     copyAddress(copyAddress);
        toast.success('address copied successfully to clipboard', {
          position: toast.POSITION.TOP_RIGHT, 
          autoClose: 3000
        });
    };
+   
 
   return (
     <Flex  h="100px">
