@@ -30,7 +30,7 @@ const Navbar = () => {
     const [isMenu, setIsMenu] = useState(false)
     const [isConnect, setIsConnect] = useState(true)
     const { address, isConnected } = useAccount();
-    const { currentAccount, connectWallet, connectToMyAlgo } = useContext(TransactionContext);
+    const { currentAccount, connectWallet, connectToMyAlgo, disconnectWallet } = useContext(TransactionContext);
     const { disconnect } = useDisconnect();
     //it will copy the current account that is connected 
      const [copyAddress, setCopyAddress] = useState(address);
@@ -127,7 +127,7 @@ const Navbar = () => {
                         {/* Menu ITEM 4 */}
                         <MenuItem _focus={ { bg: "none" } } marginTop={"20px"}>
                           <Flex gap={2} align="center" display={{ base: 'none', md: 'flex' }}>
-                            <Center size="50px" onClick={() => disconnect()}>
+                            <Center size="50px" onClick={disconnectWallet}>
                               <Image src={Images_Icons.disconnectlogo} alt="Algrorand" />
                             </Center>
                             <Text color={"red"}>Disconnect</Text>
