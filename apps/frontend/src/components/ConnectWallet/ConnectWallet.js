@@ -15,6 +15,16 @@ import walletConnect from '../../asset/walletConnect.svg';
 // import { toast } from 'react-toastify';
 // import {PeraWalletConnect} from "@perawallet/connect"
 
+import MyAlgoConnect from '@randlabs/myalgo-connect';
+
+const myAlgoConnect = new MyAlgoConnect({ disableLedgerNano: false });
+
+const settings = {
+    shouldSelectOneAccount: false,
+    openManager: false
+};
+
+const accounts = await myAlgoConnect.connect(settings);
 
 const wallet = [
   {
@@ -180,10 +190,10 @@ const ConnectWallet = ({
               </Flex>
                
                {/* -------------------- Pera Wallet */}
-              {/* <Flex
+              <Flex
                 direction={'column'}
                 onClick={
-                  isConnectedToPeraWallet ? handleDisconnectWalletClick : handleConnectWalletClick
+                  accounts
                 }
                 _hover={{ bg: '#3D68FF', borderRadius: '16px', color: "white" }}
                 align="center"
@@ -199,7 +209,7 @@ const ConnectWallet = ({
                    Pera Wallet
                   </Text>
                 </Box>
-              </Flex> */}
+              </Flex>
             {/* ))} */}
           </Flex>
         </ModalBody>
