@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-
 import { toast } from 'react-toastify';
-
 import { ethers } from 'ethers';
+import MyAlgoConnect from '@randlabs/myalgo-connect';
 
 export const TransactionContext = React.createContext();
 
@@ -79,10 +78,36 @@ export const TransactionsProvider = ({ children }) => {
       window.location.reload();
     } catch (error) {
       console.log(error);
-
-      throw new Error('No ethereum object');
+       throw new Error('No ethereum object');
     }
   };
+
+  // --------------------------- My Aglo Wallet Context functions -----------------------------
+
+ const myAlgoConnect = new MyAlgoConnect({ disableLedgerNano: false });
+
+   const settings = {
+       shouldSelectOneAccount: false,
+       openManager: false
+   };
+
+  async function connectToMyAlgo() {
+     try {
+       const accounts = await myAlgoConnect.connect(settings);
+      //  console.log(accounts)
+      //  setCurrentAccount(accounts[0].toString())
+       const addresses = accounts.map(account => account.address);
+      //  console.log(addresses.toString())
+       setCurrentAccount(addresses[0].toString())
+    
+     } catch (err) {
+       console.error(err);
+       toast.error('something went wrong... issue might be your network', {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000
+      });
+     }
+   }
 
   useEffect(() => {
     checkIfWalletIsConnect();
@@ -93,6 +118,7 @@ export const TransactionsProvider = ({ children }) => {
       value={{
         currentAccount,
         connectWallet,
+        connectToMyAlgo,
       }}
     >
       {children}

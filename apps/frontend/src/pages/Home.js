@@ -28,7 +28,7 @@ const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { address, isConnected } = useAccount();
   const { disconnect } = useDisconnect();
-  const { currentAccount, connectWallet } = useContext(TransactionContext);
+  const { currentAccount, connectWallet, connectToMyAlgo } = useContext(TransactionContext);
   //it will copy the current account that is connected 
   const [copyAddress, setCopyAddress] = useState(address);
 
@@ -55,7 +55,7 @@ const Home = () => {
         <Box w={{base:"100%", md:"100%", lg:"85%"}} mt="6rem" mx="auto">
             <Text w={{base:"100%", md:"100%", lg:"554px"}} mb={2} fontSize={{base:"2.2rem", md:"34px", lg:"38.8px"}} fontWeight="700" className='leading-[46px] font-[syne]'> Effortlessly connect different blockchains with Chainhopper </Text>
             <Text className='leading-[24px] font-[syne]' mb={5}>Are you tired of juggling multiple bridge solutions to transfer your assets between different blockchains? Our bridge aggregator simplifies the process by curating the best route for you. Simply specify your source and destination chains, and we'll handle the rest</Text>
-            {!currentAccount ? (
+            {!currentAccount  ? (
                 <Box onClick={connectWallets} display={{base:"none", md:"block"}}>
                     <Btn text="connect wallet" />
                 </Box>
@@ -120,7 +120,14 @@ const Home = () => {
         </Box>
         <CryptoModal/>
         <Text mb={3}>© {copyRightYear}</Text>
-        <ConnectWallet isOpen={isOpen} onOpen={onOpen} onClose={onClose} currentAccount={currentAccount} connectWallet={connectWallet} />
+        <ConnectWallet 
+          isOpen={isOpen} 
+          onOpen={onOpen} 
+          onClose={onClose} 
+          currentAccount={currentAccount} 
+          connectWallet={connectWallet} 
+          connectToMyAlgo={connectToMyAlgo}
+          />
     
     </Flex>
   )

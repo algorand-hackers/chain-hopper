@@ -13,36 +13,27 @@ import metamask from '../../asset/metamask.svg';
 import coinbase from '../../asset/coinbase.svg';
 import walletConnect from '../../asset/walletConnect.svg';
 // import { toast } from 'react-toastify';
+import Images_Icons from '../../constant/icons-images';
 // import {PeraWalletConnect} from "@perawallet/connect"
+// import MyAlgoConnect from '@randlabs/myalgo-connect';
 
-import MyAlgoConnect from '@randlabs/myalgo-connect';
-
-const myAlgoConnect = new MyAlgoConnect({ disableLedgerNano: false });
-
-const settings = {
-    shouldSelectOneAccount: false,
-    openManager: false
-};
-
-const accounts = await myAlgoConnect.connect(settings);
-
-const wallet = [
-  {
-    id: 1,
-    name: 'MetaMask',
-    image: metamask,
-  },
-  {
-    id: 2,
-    name: 'Coinbase',
-    image: coinbase,
-  },
-  {
-    id: 3,
-    name: 'WalletConnect',
-    image: walletConnect,
-  },
-];
+// const wallet = [
+//   {
+//     id: 1,
+//     name: 'MetaMask',
+//     image: metamask,
+//   },
+//   {
+//     id: 2,
+//     name: 'Coinbase',
+//     image: coinbase,
+//   },
+//   {
+//     id: 3,
+//     name: 'WalletConnect',
+//     image: walletConnect,
+//   },
+// ];
 
 // const peraWallet = new PeraWalletConnect();
 
@@ -50,6 +41,7 @@ const ConnectWallet = ({
   currentAccount,
   connectWallet,
   walletIcon,
+  connectToMyAlgo,
   isOpen,
   onOpen,
   onClose,
@@ -57,7 +49,6 @@ const ConnectWallet = ({
 
   // const [isActive, setIsActive] = useState(false);
   // const [icon, setIcon] = useState(false);
-  // const [walletAddress, setWalletAddress] = useState("")
   
   // Store account address which is connected dApp with Pera Wallet
   // const [accountAddress, setAccountAddress] = (useState < string) | (null > null);
@@ -77,33 +68,6 @@ const ConnectWallet = ({
   //   });
   // }, []);
   // const {  connectWallet } = useContext(TransactionContext);
-
-//   const connectWalletMetamask = async () => {
-    
-    
-//    if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
-//     console.log("clicked metamask")
-//      try {
-//           /* Metamask is installed */
-//           const accounts = await window.ethereum.request({
-//                method: "eth_requestAccounts"
-//           });
-//           setWalletAddress(accounts[0]);
-//           console.log("this is the address")
-//           console.log(accounts[0]);
-//      } catch (err) {
-//           console.error(err.messages);
-//      }
-//   } else {
-//     /* Metamask is not installed */
-//     console.log("Please install Metamask");
-//      toast.warning('Please install Metamask', {
-//      position: toast.POSITION.TOP_CENTER, 
-//      autoClose: 5000
-//     });
-//   }
-//   onClose()
-// }
 
   // function handleConnectWalletClick() {
   //   peraWallet
@@ -133,6 +97,28 @@ const ConnectWallet = ({
 // 	setAccountAddress(null);
 // }
 
+  // const myAlgoConnect = new MyAlgoConnect({ disableLedgerNano: false });
+
+  //  const settings = {
+  //      shouldSelectOneAccount: false,
+  //      openManager: false
+  //  };
+
+  //  async function connectToMyAlgo() {
+  //    try {
+  //      const accounts = await myAlgoConnect.connect(settings);
+  //      console.log(accounts)
+  //      const addresses = accounts.map(account => account.address);
+  //      console.log(addresses)
+    
+  //    } catch (err) {
+  //      console.error(err);
+  //      toast.error('something went wrong', {
+  //       position: toast.POSITION.TOP_RIGHT,
+  //       autoClose: 2000
+  //     });
+  //    }
+  //  }
 
   return (
     <Modal onClose={onClose} isOpen={isOpen} isCentered>
@@ -171,6 +157,9 @@ const ConnectWallet = ({
             {/* {wallet?.map((item) => ( */}
               <Flex
                 direction={'column'}
+                display="flex"
+                justify="center"
+                alignItems="center"
                 onClose={onClose}
                 onClick={connectWallet}
                 _hover={{ bg: '#3D68FF', borderRadius: '16px', color: "white" }}
@@ -189,12 +178,37 @@ const ConnectWallet = ({
                 </Box>
               </Flex>
                
-               {/* -------------------- Pera Wallet */}
+               {/* -------------------- My Algo Wallet ------------------------ */}
               <Flex
                 direction={'column'}
-                onClick={
-                  accounts
-                }
+                display="flex"
+                justify="center"
+                alignItems="center"
+                onClose={onClose}
+                onClick={connectToMyAlgo}
+                _hover={{ bg: '#3D68FF', borderRadius: '16px', color: "white" }}
+                align="center"
+                as="button"
+                // key={item.nanoid}
+                w="30%"
+                mb={8}
+                p={4}
+              >
+                <Image src={Images_Icons.myalgologo} />
+                <Box>
+                  <Text mt="4px" textAlign={'left'} fontSize="16px">
+                   MyAlgo
+                  </Text>
+                </Box>
+              </Flex>
+
+              {/* -------------------- Pera Wallet ------------------------ */}
+              <Flex
+                direction={'column'}
+                display="flex"
+                justify="center"
+                alignItems="center"
+                // onClick={}
                 _hover={{ bg: '#3D68FF', borderRadius: '16px', color: "white" }}
                 align="center"
                 as="button"
@@ -206,7 +220,7 @@ const ConnectWallet = ({
                 <Image src={metamask} />
                 <Box>
                   <Text mt="4px" textAlign={'left'} fontSize="16px">
-                   Pera Wallet
+                  Coming 
                   </Text>
                 </Box>
               </Flex>

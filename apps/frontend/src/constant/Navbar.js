@@ -30,7 +30,7 @@ const Navbar = () => {
     const [isMenu, setIsMenu] = useState(false)
     const [isConnect, setIsConnect] = useState(true)
     const { address, isConnected } = useAccount();
-    const { currentAccount, connectWallet } = useContext(TransactionContext);
+    const { currentAccount, connectWallet, connectToMyAlgo } = useContext(TransactionContext);
     const { disconnect } = useDisconnect();
     //it will copy the current account that is connected 
      const [copyAddress, setCopyAddress] = useState(address);
@@ -139,7 +139,14 @@ const Navbar = () => {
 
             {/* Connect Wallet  */}
 
-            <ConnectWallet isOpen={isOpen} onOpen={onOpen} onClose={onClose} currentAccount={currentAccount} connectWallet={connectWallet} />
+            <ConnectWallet 
+            isOpen={isOpen} 
+            onOpen={onOpen} 
+            onClose={onClose} 
+            currentAccount={currentAccount} 
+            connectWallet={connectWallet}  
+            connectToMyAlgo={connectToMyAlgo}
+            />
 
             {/* Mobile Harmburger */}
 
