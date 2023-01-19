@@ -14,7 +14,7 @@ import coinbase from '../../asset/coinbase.svg';
 import walletConnect from '../../asset/walletConnect.svg';
 import { toast } from 'react-toastify';
 // import {PeraWalletConnect} from "@perawallet/connect"
-// import { nanoid } from "nanoid";
+import { nanoid } from "nanoid";
 import { TransactionContext } from "../../context/TransactionContext";
 
 
@@ -75,6 +75,32 @@ const ConnectWallet = ({
   // }, []);
   // const {  connectWallet } = useContext(TransactionContext);
 
+//   const connectWalletMetamask = async () => {
+    
+    
+//    if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
+//     console.log("clicked metamask")
+//      try {
+//           /* Metamask is installed */
+//           const accounts = await window.ethereum.request({
+//                method: "eth_requestAccounts"
+//           });
+//           setWalletAddress(accounts[0]);
+//           console.log("this is the address")
+//           console.log(accounts[0]);
+//      } catch (err) {
+//           console.error(err.messages);
+//      }
+//   } else {
+//     /* Metamask is not installed */
+//     console.log("Please install Metamask");
+//      toast.warning('Please install Metamask', {
+//      position: toast.POSITION.TOP_CENTER, 
+//      autoClose: 5000
+//     });
+//   }
+//   onClose()
+// }
 
   // function handleConnectWalletClick() {
   //   peraWallet
