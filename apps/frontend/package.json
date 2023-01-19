@@ -10,6 +10,7 @@
     "@emotion/styled": "^11.10.5",
     "@material-tailwind/react": "^1.2.5",
     "@perawallet/connect": "^1.0.7",
+    "@randlabs/myalgo-connect": "^1.4.2",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
