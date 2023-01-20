@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { ethers } from 'ethers';
 import MyAlgoConnect from '@randlabs/myalgo-connect';
-
+import Web3 from 'web3';
 export const TransactionContext = React.createContext();
 
 const { ethereum } = window;
@@ -57,6 +57,9 @@ export const TransactionsProvider = ({ children }) => {
            }
         } else {
           /* Metamask is not installed */
+          if(sessionStorage.getItem("wallet")){
+            setCurrentAccount(sessionStorage.getItem("wallet"));
+          }
          
            toast.warning('Please install Metamask', {
            position: toast.POSITION.TOP_CENTER, 
@@ -75,12 +78,20 @@ export const TransactionsProvider = ({ children }) => {
       });
 
       setCurrentAccount(accounts[0]);
-      window.location.reload();
+      sessionStorage.setItem("wallet", accounts[0]);
+      // window.location.reload();
     } catch (error) {
       console.log(error);
        throw new Error('No ethereum object');
     }
   };
+
+  const disconnectWallet = async () => {
+    setCurrentAccount("");
+    sessionStorage.clear();
+    // window.location.reload();
+  }
+
 
   // --------------------------- My Aglo Wallet Context functions -----------------------------
 
@@ -119,6 +130,7 @@ export const TransactionsProvider = ({ children }) => {
         currentAccount,
         connectWallet,
         connectToMyAlgo,
+        disconnectWallet,
       }}
     >
       {children}

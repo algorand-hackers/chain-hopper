@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { Box, Flex, Button, Text, Icon, Image, useDisclosure,
     MenuItem,
     Menu,
@@ -30,7 +30,7 @@ const Navbar = () => {
     const [isMenu, setIsMenu] = useState(false)
     const [isConnect, setIsConnect] = useState(true)
     const { address, isConnected } = useAccount();
-    const { currentAccount, connectWallet, connectToMyAlgo } = useContext(TransactionContext);
+    const { currentAccount, connectWallet, connectToMyAlgo, disconnectWallet } = useContext(TransactionContext);
     const { disconnect } = useDisconnect();
     //it will copy the current account that is connected 
      const [copyAddress, setCopyAddress] = useState(address);
@@ -40,17 +40,23 @@ const Navbar = () => {
       onOpen()
     }
  
-     const handleCopyAddress = (e) => {
-       setCopyAddress(e.target.value);
-    };
-
+    useEffect(() => {
+      onClose()
+      
+    }, [currentAccount])
+    
+    
+    
      const copyAddressToClipboard = () => {
-     copy(copyAddress);
+
+     copy(currentAccount);
        toast.success('address copied successfully to clipboard', {
          position: toast.POSITION.TOP_RIGHT, 
          autoClose: 3000
        });
    };
+
+   
 
   return (
     <Flex  h="100px">
@@ -102,7 +108,7 @@ const Navbar = () => {
                         {/* Menu ITEM 2 */}
                         <MenuItem _focus={ { bg: "none" } }>
                         <Flex gap={3} align="center" display={{ base: 'none', md: 'flex' }}>
-                          <Text value={copyAddress} onChange={handleCopyAddress}>{shortenAddress(currentAccount)}</Text>
+                          <Text value={copyAddress} >{shortenAddress(currentAccount)}</Text>
                           <Flex gap={2} align="center" onClick={copyAddressToClipboard}>
                             <Text color={'#3774FF'} fontWeight={500}>
                               Copy address
@@ -126,7 +132,7 @@ const Navbar = () => {
                         {/* Menu ITEM 4 */}
                         <MenuItem _focus={ { bg: "none" } } marginTop={"20px"}>
                           <Flex gap={2} align="center" display={{ base: 'none', md: 'flex' }}>
-                            <Center size="50px" onClick={() => disconnect()}>
+                            <Center size="50px" onClick={() => disconnectWallet()}>
                               <Image src={Images_Icons.disconnectlogo} alt="Algrorand" />
                             </Center>
                             <Text color={"red"}>Disconnect</Text>
