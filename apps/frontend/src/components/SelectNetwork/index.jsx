@@ -15,18 +15,18 @@ const SelectNetwork = ({ selected, setSelected, tokenIcon, setTokenIcon, Backgro
       token:"Ethereum",
       img: Images_Icons.ethereumLogo
     }, 
-    {
-      token:"BNB Chain",
-      img: Images_Icons.bnbLogo
-    },
-    {
-      token:"Polygon",
-      img: Images_Icons.polygonLogo
-    }, 
-    {
-      token:"Avalanche",
-      img: Images_Icons.avalancheLogo
-    }
+    // {
+    //   token:"BNB Chain",
+    //   img: Images_Icons.bnbLogo
+    // },
+    // {
+    //   token:"Polygon",
+    //   img: Images_Icons.polygonLogo
+    // }, 
+    // {
+    //   token:"Avalanche",
+    //   img: Images_Icons.avalancheLogo
+    // }
   ]
 
   return (
