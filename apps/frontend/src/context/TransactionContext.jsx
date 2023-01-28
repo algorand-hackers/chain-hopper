@@ -57,8 +57,8 @@ export const TransactionsProvider = ({ children }) => {
            }
         } else {
           /* Metamask is not installed */
-          if(sessionStorage.getItem("wallet")){
-            setCurrentAccount(sessionStorage.getItem("wallet"));
+          if(localStorage.getItem("wallet")){
+            setCurrentAccount(localStorage.getItem("wallet"));
           }
          
            toast.warning('Please install Metamask', {
@@ -78,7 +78,7 @@ export const TransactionsProvider = ({ children }) => {
       });
 
       setCurrentAccount(accounts[0]);
-      sessionStorage.setItem("wallet", accounts[0]);
+      localStorage.setItem("wallet", accounts[0]);
       // window.location.reload();
     } catch (error) {
       console.log(error);
@@ -88,7 +88,7 @@ export const TransactionsProvider = ({ children }) => {
 
   const disconnectWallet = async () => {
     setCurrentAccount("");
-    sessionStorage.clear();
+    localStorage.clear();
     // window.location.reload();
   }
 

@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState } from 'react';
+import { lazy, Suspense, useState, useEffect, useContext } from 'react';
 import {
   Flex,
   Box,
@@ -21,23 +21,32 @@ import TransactionLoader from '../../components/TransactionLoader';
 import TransactionModal from '../../components/TransactionModal/TransactionModal';
 import Btn2 from '../../components/UI/Btn2';
 import ConnectWallet from '../../components/ConnectWallet/ConnectWallet';
-
+import Algo from '../../asset/AlgorandIcon.svg';
 import { networks } from '../../constant/networksJSON';
 import wallet from '../../asset/ETH - Ethereum Token.png';
 import Withdrawer from '../../components/Withdrawer';
-
+import { Eth } from '../../asset';
+import { getEtherBalance } from '../../context/main';
+import { TransactionContext } from "../../context/TransactionContext";
 // const NetworkSelector = lazy(
 //   () => import("../../components/NetworkSelector")
 // );
 
 const Bridge = ({ isConnect }) => {
-  
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const [pinTokenBalance, setpinTokenBalance] = useState(0);
+ 
   const connectWallet = () => {
     onOpen();
     // setIsConnect(false)
   };
+  const { currentAccount, connectToMyAlgo, disconnectWallet } = useContext(TransactionContext);
+
+  useEffect(()=>{
+      getEtherBalance(currentAccount, setpinTokenBalance).then(data=>{console.log(pinTokenBalance)})
+   
+  } )
+  
 
   const { root, fontsm } = useBridgeStyles();
 
@@ -108,7 +117,7 @@ const Bridge = ({ isConnect }) => {
                     </Text>
 
                     {/* ------------------- SELECT NETWORK -------------------- */}
-                    <Flex zIndex={2} mt={'10px'}>
+                    {/* <Flex zIndex={2} mt={'10px'}>
                       <SelectNetwork
                         selected={selected}
                         setSelected={setSelected}
@@ -116,9 +125,26 @@ const Bridge = ({ isConnect }) => {
                         tokenIcon={tokenIcon}
                         setTokenIcon={setTokenIcon}
                       />
-                    </Flex>
+                    </Flex> */}
 
-                    {!walletConnected ? (
+                    <Box
+                      border="1px solid #E2E8F0"
+                      w={'100%'}
+                      borderTopRightRadius="10px"
+                      borderTopLeftRadius="10px"
+                     mt={4}
+                      p={4}
+                    >
+                      <Flex justifyContent="space-between" >
+                        <Flex>
+                        <Image src={Eth} />
+                        <Text pt="4px" ml={2}>Ethereum Chain</Text>
+                        </Flex>
+                        <Text><span className="text-[#A0AEC0] mr-2 text-xs">Balance:</span>{pinTokenBalance}</Text>
+                      </Flex>
+                    </Box>
+
+                    {/* {!walletConnected ? (
                       <>
                         <Box onClick={connectWallet}>
                           <Btn2 text="Connect Wallet" />
@@ -132,29 +158,29 @@ const Bridge = ({ isConnect }) => {
                       <>
                         <div></div>
                       </>
-                    ) : (
-                      <Flex zIndex={1} mt={'-1px'}>
-                        <SelectToken
-                          networks={networks}
-                          setSelectToken={setSelectToken}
-                          selectToken={selectToken}
-                          walletIcon={walletIcon}
-                          setWalletIcon={setWalletIcon}
-                          setIsTransac={setIsTransac}
-                        />
-                      </Flex>
-                    )}
+                    ) : ( */}
+                    <Flex zIndex={1} mt={'-1px'}>
+                      <SelectToken
+                        networks={networks}
+                        setSelectToken={setSelectToken}
+                        selectToken={selectToken}
+                        walletIcon={walletIcon}
+                        setWalletIcon={setWalletIcon}
+                        setIsTransac={setIsTransac}
+                      />
+                    </Flex>
+                    {/* )} */}
 
                     {/* Connect Wallet  */}
 
-                    <ConnectWallet
+                    {/* <ConnectWallet
                       walletIcon={walletIcon}
                       setWalletConnected={setWalletConnected}
                       setWalletIcon={setWalletIcon}
                       isOpen={isOpen}
                       onOpen={onOpen}
                       onClose={onClose}
-                    />
+                    /> */}
 
                     {/* ------------------------ BRIDGING ---------------------- */}
 
@@ -167,11 +193,20 @@ const Bridge = ({ isConnect }) => {
                         bg={'#EFF6FF'}
                         w="100%"
                         h="36px"
-                        pt="4px"
+                        
+                        p={6}
                         color="dark"
                         borderRadius={'9.11545px'}
                         flexDir={'column'}
-                      ></Box>
+                      >
+                         <Flex justifyContent="space-between" alignItems="center" mt="-15px">
+                        <Flex>
+                        <Image src={Algo} />
+                        <Text pt="4px" ml={2}>Algorand Chain</Text>
+                        </Flex>
+                        <Text><span className="text-[#A0AEC0] mr-2 text-xs">Balance:</span>0.00000000</Text>
+                      </Flex>
+                      </Box>
                     </Flex>
 
                     {/* -------------------- TOKEN ROUTE DETAILS ---------------------- */}
@@ -209,25 +244,19 @@ const Bridge = ({ isConnect }) => {
                   isOpen={isOpen}
                   onOpen={onOpen}
                   onClose={onClose}
-
                   // Select Token
 
                   networks={networks}
                   setSelectToken={setSelectToken}
                   selectToken={selectToken}
-                  
                   setIsTransac={setIsTransac}
-
                   // connect to wallet
 
                   walletConnected={walletConnected}
-
                   // Transfer useState
                   tranferBtn={tranferBtn}
                   setTranferBtn={setTranferBtn}
                 />
-
-               
               </TabPanel>
             </TabPanels>
           </Tabs>

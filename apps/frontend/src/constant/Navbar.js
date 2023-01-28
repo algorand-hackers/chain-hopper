@@ -122,11 +122,23 @@ const Navbar = () => {
                         <MenuDivider />
                         { /* Menu ITEM 3 */}
                         <MenuItem _focus={ { bg: "none" } }>
-                          <Flex gap={2} align="center" display={{ base: 'none', md: 'flex' }}>
-                            <Center size="50px">
-                              <Image src={Images_Icons.algologo} alt="Algorand" />
-                             </Center>
-                            <Text>View on Algoexplorer</Text>
+                          <Flex gap={2} align="center" direction="column" display={{ base: 'none', md: 'flex' }}>
+                            <Flex pr="10px">
+                              <Image src={Images_Icons.algologo} alt="Algorand"   />
+                              <a href={`https://algoexplorer.io/address/${currentAccount}`} isExternal>
+                             
+                            <Text ml="10px">View on Algoexplorer</Text>
+                            </a>
+                             </Flex>
+                             
+                            <Flex mt={4} pr="20px" >
+                              <Image src={Images_Icons.EtherscanLogo} alt="Ethereum"  w="30px" h="30px" />
+                              <a href={`https://etherscan.io/address/${currentAccount}`} isExternal>
+                             
+                             <Text ml="10px">View on Etherscan</Text>
+                             </a>
+                             </Flex>
+                           
                           </Flex>
                         </MenuItem>
                         {/* Menu ITEM 4 */}
