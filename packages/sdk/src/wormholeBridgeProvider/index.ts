@@ -1,12 +1,12 @@
-import { bridge, ChainId, ChainName, CHAINS, CHAIN_ID_ALGORAND, CONTRACTS, ethers_contracts, getEmitterAddressAlgorand, getEmitterAddressEth, getGovernorIsVAAEnqueued, getIsTransferCompletedAlgorand, getIsTransferCompletedEth, getSignedVAA, hexToUint8Array, parseSequenceFromLogAlgorand, parseSequenceFromLogEth, redeemOnAlgorand, redeemOnEth, redeemOnEthNative, transferFromAlgorand, transferFromEthNative, tryNativeToHexString, tryNativeToUint8Array, uint8ArrayToHex } from "@certusone/wormhole-sdk";
-import { nativeStringToHexAlgorand, TransactionSignerPair } from "@certusone/wormhole-sdk/lib/cjs/algorand";
-import { ethers, Signer } from "ethers";
-import { getAlgorandHost, ALGORAND_WALLETS, Assets, BRIDGE_STATUS, Chains, BRIDGE_PROVIDERS, ALGORAND_WAIT_FOR_CONFIRMATIONS, getWormHoleRpchost } from "../../config";
-import { NetworkType, Quote, QuoteRequest, Update } from "../../types";
+import { ChainId, ChainName, CHAINS, CONTRACTS, getEmitterAddressAlgorand, getEmitterAddressEth, getGovernorIsVAAEnqueued, getIsTransferCompletedAlgorand, getIsTransferCompletedEth, getSignedVAA, hexToUint8Array, parseSequenceFromLogAlgorand, parseSequenceFromLogEth, redeemOnAlgorand, redeemOnEthNative, transferFromAlgorand, transferFromEthNative, tryNativeToHexString } from "@certusone/wormhole-sdk";
+import { TransactionSignerPair } from "@certusone/wormhole-sdk/lib/cjs/algorand";
+import { ethers } from "ethers";
+import { ALGORAND_WALLETS, Assets, BRIDGE_STATUS, Chains, ALGORAND_WAIT_FOR_CONFIRMATIONS, getWormHoleRpchost } from "../config";
+import { NetworkType, Quote, QuoteRequest, Update } from "../types";
 import { BaseBridgeProvider } from "../baseBridgeProvider";
 import { getNonAlgorandChain } from "../utils";
 import { AlgorandUpdate, EthereumUpdate, GetSignedVAAWithRetryResult, WormHoleUpdate } from "./types";
-import {Algodv2, assignGroupID, waitForConfirmation } from 'algosdk';
+import {assignGroupID, waitForConfirmation } from 'algosdk';
 import { parseEther, parseUnits } from "ethers/lib/utils";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
 import { getAlgoClient } from "../factory/algoClient";
@@ -25,11 +25,11 @@ export class WormHoleBridgeProvider implements BaseBridgeProvider  {
             [Chains.ETH]: [[ethMainnetAssets.ETH.symbol, algoMainnetAssets.WETH.symbol]]
         },
         [NetworkType.TESTNET]: {
-            [Chains.ETH]: [[ethMainnetAssets.ETH.symbol, algoMainnetAssets.WETH.symbol]]
+            [Chains.ETH]: [[ethTestnetAssets.ETH.symbol, algoTestnetAssets.WETH.symbol]]
         }
     }
 
-    public supportedChains(network: NetworkType) { 
+    public supportedChains(_network: NetworkType) { 
         return [Chains.ETH];
     }
 
@@ -52,7 +52,7 @@ export class WormHoleBridgeProvider implements BaseBridgeProvider  {
         return null;
     }
 
-    public moveAsset(quote: Quote)  {
+    public async moveAsset(quote: Quote): Promise<Update>  {
         if(quote.fromChainName == Chains.ALGO) 
             return this.moveAssetFromAlgorand(quote);
 
@@ -61,19 +61,19 @@ export class WormHoleBridgeProvider implements BaseBridgeProvider  {
             case Chains.ETH: 
                 return this.moveAssetFromEthereum(quote);
             default:
-                break;
+                throw Error('Invalid chain');
         }
     }
 
 
-    public performNextStep(update: Update) {
+    public async performNextStep(update: Update) {
         switch(update.quote.fromChainName){
             case Chains.ETH:
-                return this.performNextEthereumStep(update as EthereumUpdate);
+                return this.performNextEthereumStep(update as unknown as EthereumUpdate);
             case Chains.ALGO:
-                return this.performNextAlgorandStep(update as AlgorandUpdate);
+                return this.performNextAlgorandStep(update as unknown as AlgorandUpdate);
             default:
-                return null;
+                throw Error('Invalid Chain');
         }
     }
 
@@ -142,9 +142,9 @@ export class WormHoleBridgeProvider implements BaseBridgeProvider  {
         return signedTxns;
     }
 
-    private signUsingPeraWallet() {
+    // private signUsingPeraWallet() {
 
-    }
+    // }
 
     private async moveAssetFromEthereum(quote: Quote<ethers.providers.JsonRpcSigner>): Promise<EthereumUpdate> {
 

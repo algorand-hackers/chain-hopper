@@ -1,6 +1,5 @@
-import { Bridge } from "@certusone/wormhole-sdk/lib/cjs/ethers-contracts";
-import { BRIDGE_PROVIDERS } from "../../config";
-import { BridgeId } from "../../types";
+import { BRIDGE_PROVIDERS } from "../config";
+import { BridgeId } from "../types";
 import { BaseBridgeProvider } from "../baseBridgeProvider";
 
 const bridgeProviderCache: {[bridgeId in BridgeId]?: BaseBridgeProvider} = {};
