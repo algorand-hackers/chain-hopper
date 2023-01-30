@@ -1,5 +1,5 @@
-import { Assets, Chains, BRIDGE_STATUS } from "../../config";
-import { BridgeId, NetworkType, Quote, QuoteRequest, Update } from "../../types";
+import { Assets, Chains, BRIDGE_STATUS } from "../config";
+import { BridgeId, NetworkType, Quote, QuoteRequest, Update } from "../types";
 import { BaseBridgeProvider } from "../baseBridgeProvider";
 import { getNonAlgorandChain } from "../utils";
 import { GlitterBridgeSDK, BridgeNetworks, GlitterNetworks } from 'glitter-bridge-sdk';
@@ -84,8 +84,8 @@ export class GlitterBridgeProvider implements BaseBridgeProvider {
 
     }
         
-    public  performNextStep(update: any) {
-
+    public  performNextStep(_update: any): Promise<Update> {
+      throw Error('Not Implemented');
     }
 
     private async getFee (asset: any) {

@@ -1,6 +1,5 @@
 import { TransactionSignerPair } from "@certusone/wormhole-sdk/lib/cjs/algorand";
-import { Update } from "../../types";
-import {Algodv2} from 'algosdk';
+import { Update } from "../types";
 
 export interface WormHoleUpdate<T> extends Update {
     bridge: string,

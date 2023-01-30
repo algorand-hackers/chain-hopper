@@ -1,7 +1,6 @@
 // Combine the  supported  assets of all bridge providers and return it. This function is
 
-import { BRIDGE_PROVIDERS } from "../config";
-import { BridgeId, NetworkType, Quote, QuoteRequest, Update } from "../types";
+import { BridgeId, NetworkType, Quote, QuoteRequest, Update } from "./types";
 import { getBridgeProvider } from "./factory/bridgeProvider";
 
 export function allSupportedChains(network: NetworkType): string[] {
@@ -35,12 +34,12 @@ export async function getQuotes(quoteRequest: QuoteRequest): Promise<Quote[]> {
     return quotes;
 }
 
-export function moveAsset(quote: Quote): Update {
-    return getBridgeProvider(quote.bridgeId)?.moveAsset(quote);
+export async function moveAsset(quote: Quote): Promise<Update> {
+    return getBridgeProvider(quote.bridgeId)?.moveAsset(quote)!;
 }
 
-export function performNextStep(update: Update): Update {
-    return getBridgeProvider(update.quote.bridgeId)?.performNextStep(update);
+export async function performNextStep(update: Update): Promise<Update> {
+    return getBridgeProvider(update.quote.bridgeId)?.performNextStep(update)!;
 }
 
 // ... Add other functions that frontend will need to call without using a specific bridge provider
