@@ -9,6 +9,8 @@ import { BrowserRouter } from "react-router-dom";
 import { WagmiConfig, createClient } from 'wagmi';
 import { getDefaultProvider } from 'ethers';
 import { TransactionsProvider } from "./context/TransactionContext";
+import { Buffer } from 'buffer';
+window.Buffer = Buffer;
 
 const client = createClient({
   autoConnect: true,

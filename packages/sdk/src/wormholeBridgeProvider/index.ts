@@ -11,7 +11,6 @@ import { parseEther, parseUnits } from "ethers/lib/utils";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
 import { getAlgoClient } from "../factory/algoClient";
 
-
 const ethMainnetAssets = Assets.Mainnet.ETH;
 const ethTestnetAssets = Assets.Testnet.ETH;
 const algoMainnetAssets = Assets.Mainnet.ALGO;

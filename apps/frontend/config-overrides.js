@@ -1,22 +1,77 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-// const webpack = require("webpack");
+const { ProvidePlugin } = require("webpack");
 
-// module.exports = function override(config) {
-//   const fallback = config.resolve.fallback || {};
-
-//   Object.assign(fallback, {
-//     crypto: require.resolve("crypto-browserify"),
-//     stream: require.resolve("stream-browserify")
-//   });
-//   config.resolve.fallback = fallback;
-//   // ignore warning about source map of perawallet/connect
-
-//   config.ignoreWarnings = [/Failed to parse source map/]
-//   config.plugins = (config.plugins || []).concat([
-//     new webpack.ProvidePlugin({
-//       process: "process/browser",
-//       Buffer: ["buffer", "Buffer"]
-//     })
-//   ]);
-//   return config;
-// };
+module.exports = function override(config, env) {
+  return {
+    ...config,
+    module: {
+      ...config.module,
+      rules: [
+        ...config.module.rules,
+        {
+          test: /\.m?js$/,
+          resolve: {
+            fullySpecified: false, // disable the behavior
+          },
+        },
+        {
+          test: /\.js$/,
+          enforce: "pre",
+          use: ["source-map-loader"],
+          resolve: {
+            fullySpecified: false,
+          }
+        },
+        {
+          test: /\.wasm$/,
+          type: "webassembly/async",
+        },
+      ],
+    },
+    plugins: [
+      ...config.plugins,
+      new ProvidePlugin({
+        Buffer: ["buffer", "Buffer"],
+        process: "process/browser",
+      }),
+    ],
+    resolve: {
+      ...config.resolve,
+      fallback: {
+        assert: "assert",
+        buffer: "buffer",
+        console: "console-browserify",
+        constants: "constants-browserify",
+        crypto: "crypto-browserify",
+        domain: "domain-browser",
+        events: "events",
+        fs: false,
+        http: "stream-http",
+        https: "https-browserify",
+        os: "os-browserify/browser",
+        path: "path-browserify",
+        punycode: "punycode",
+        process: "process/browser",
+        querystring: "querystring-es3",
+        stream: "stream-browserify",
+        _stream_duplex: "readable-stream/duplex",
+        _stream_passthrough: "readable-stream/passthrough",
+        _stream_readable: "readable-stream/readable",
+        _stream_transform: "readable-stream/transform",
+        _stream_writable: "readable-stream/writable",
+        readline: false,
+        string_decoder: "string_decoder",
+        sys: "util",
+        timers: "timers-browserify",
+        tty: "tty-browserify",
+        url: "url",
+        util: "util",
+        vm: "vm-browserify",
+        zlib: "browserify-zlib",
+      },
+    },
+    experiments: {
+      asyncWebAssembly: true,
+    },
+    ignoreWarnings: [/Failed to parse source map/],
+  };
+};

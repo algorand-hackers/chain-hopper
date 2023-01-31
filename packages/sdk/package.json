@@ -4,13 +4,14 @@
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
+  "type":"module",
   "sideEffects": false,
   "license": "MIT",
   "files": [
     "dist/**"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsup src/index.ts --format esm,cjs --dts --external react --platform=browser",
     "dev": "tsc -w",
     "lint": "TIMING=1 eslint \"src/**/*.{ts,tsx,js,jsx}\" --fix",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
@@ -28,11 +29,10 @@
   "dependencies": {
     "@certusone/wormhole-sdk": "^0.9.8",
     "@randlabs/myalgo-connect": "^1.4.2",
-    "algosdk": "^1.15.0",
+    "ethers": "^5.7.2",
     "glitter-bridge-sdk": "^1.0.0",
     "glitter-bridge-algorand": "^1.0.0",
     "glitter-bridge-solana": "^1.0.0",
-    "glitter-bridge-common": "^1.0.0",
-    "ethers": "^5.7.2"
+    "glitter-bridge-common": "^1.0.0"
   }
 }
