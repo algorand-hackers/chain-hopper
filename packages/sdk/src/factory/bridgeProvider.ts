@@ -1,6 +1,6 @@
-import { BRIDGE_PROVIDERS } from "../config";
 import { BridgeId } from "../types";
 import { BaseBridgeProvider } from "../baseBridgeProvider";
+import { BRIDGE_PROVIDERS } from "../config/bridgeProviders";
 
 const bridgeProviderCache: {[bridgeId in BridgeId]?: BaseBridgeProvider} = {};
 

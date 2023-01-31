@@ -1,12 +1,4 @@
-import { BaseBridgeProvider } from "./baseBridgeProvider"
-import { GlitterBridgeProvider } from "./glitterBridgeProvider"
-import { WormHoleBridgeProvider } from "./wormholeBridgeProvider"
-import { Asset, BridgeId, NetworkType } from "./types"
-
-export const BRIDGE_PROVIDERS: Record<BridgeId, new() => BaseBridgeProvider> = {
-    [BridgeId.WormHole]: WormHoleBridgeProvider,
-    [BridgeId.Glitter]: GlitterBridgeProvider
-}
+import { Asset, NetworkType } from "../types"
 
 export const Chains = {
     SOL: "solana",

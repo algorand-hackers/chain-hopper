@@ -2,10 +2,8 @@ import { Assets, Chains, BRIDGE_STATUS } from "../config";
 import { BridgeId, NetworkType, Quote, QuoteRequest, Update } from "../types";
 import { BaseBridgeProvider } from "../baseBridgeProvider";
 import { getNonAlgorandChain } from "../utils";
-import { GlitterBridgeSDK, BridgeNetworks, GlitterNetworks } from 'glitter-bridge-sdk';
-const path = require('path');
-const util = require('util');
-const fs = require('fs');
+import { GlitterBridgeSDK } from 'glitter-bridge-sdk';
+
 
 const solMainnetAssets = Assets.Mainnet.SOL;
 const algoMainnetAssets = Assets.Mainnet.ALGO;
@@ -13,9 +11,7 @@ const solTestnetAssets = Assets.Testnet.SOL;
 const algoTestnetAssets = Assets.Testnet.ALGO;
 const baseURL =  'https://api.glitterfinance.org/api'
 
-const sdk = new GlitterBridgeSDK()
-            .setEnvironment(GlitterNetworks.mainnet)
-            .connect([BridgeNetworks.algorand, BridgeNetworks.solana]);
+const sdk = new GlitterBridgeSDK();
 
 const algorand = sdk.algorand;
 const solana = sdk.solana;
@@ -277,7 +273,7 @@ export class GlitterBridgeProvider implements BaseBridgeProvider {
  }
   }
   
-  //Bridge xSol to sol from Algorand to Solana
+  // Bridge xSol to sol from Algorand to Solana
   private async bridgexSolToSol (quote: Quote) {
     let startingBalance = await solana?.getBalance(quote.toAddress);
     let bridged = await algorand?.bridge(quote.fromWallet, algoMainnetAssets.xSOL.symbol, Chains.SOL, quote.toAddress, solMainnetAssets.SOLANA?.symbol, Number(quote.amountIn));

@@ -21,6 +21,8 @@ import {
 import { SearchIcon } from '@chakra-ui/icons';
 import { networks, crypto } from '../../constant/networksJSON';
 import { nanoid } from "nanoid";
+import {allSupportedChains} from '@chain-hopper/sdk';
+alert(JSON.stringify(allSupportedChains()));
 // const crypto = [
 //   {
 //     id: 1,
