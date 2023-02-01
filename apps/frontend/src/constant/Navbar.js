@@ -43,16 +43,16 @@ const Navbar = () => {
     useEffect(() => {
       onClose()
       
-    }, [currentAccount])
+    }, [currentAccount, connectWallet, connectToMyAlgo])
     
     
     
      const copyAddressToClipboard = () => {
 
      copy(currentAccount);
-       toast.success('address copied successfully to clipboard', {
+       toast.success(' Address copied to clipboard', {
          position: toast.POSITION.TOP_RIGHT, 
-         autoClose: 3000
+         autoClose: 2000
        });
    };
 
@@ -143,8 +143,10 @@ const Navbar = () => {
                         </MenuItem>
                         {/* Menu ITEM 4 */}
                         <MenuItem _focus={ { bg: "none" } } marginTop={"20px"}>
-                          <Flex gap={2} align="center" display={{ base: 'none', md: 'flex' }}>
-                            <Center size="50px" onClick={() => disconnectWallet()}>
+                          <Flex gap={2} align="center" display={{ base: 'none', md: 'flex' }}
+                          onClick={() => disconnectWallet()}
+                          >
+                            <Center size="50px">
                               <Image src={Images_Icons.disconnectlogo} alt="Algrorand" />
                             </Center>
                             <Text color={"red"}>Disconnect</Text>
