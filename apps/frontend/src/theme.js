@@ -10,9 +10,11 @@ const colors = {
   btnBg: "linear-gradient(90deg, #4A48FF 0%, #2996FF 100%)",
 };
 
+const config = {
+  initialColorMode: 'light',
+  useSystemColorMode: "false",
+}
 
-
-
-const theme = extendTheme({ colors })
+const theme = extendTheme({ colors, config })
 
 export default theme

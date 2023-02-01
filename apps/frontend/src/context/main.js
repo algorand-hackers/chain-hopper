@@ -2,12 +2,9 @@
 import { ethers, Wallet } from "ethers"
 import abi from "./abi";
 
-
-
 // Stating the constants needed in this application
 const rpcUrl = "https://eth-mainnet.g.alchemy.com/v2/X6ZbuunfiCSmLDfVARGxggzu5KAbwy35";
 const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
-
 
 
 export const createWallet = async () => {
@@ -19,7 +16,6 @@ export const createWallet = async () => {
         mnemonic: wallet.mnemonic.phrase
     }
 }
-
 
 export const saveWalletDetails = async (address, privateKey, mnemonic) => {
     await localStorage.setItem("w_address", address);

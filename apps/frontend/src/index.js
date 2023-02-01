@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider, ColorModeScript } from '@chakra-ui/react'
+
 import theme from "./theme";
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -11,6 +12,7 @@ import { getDefaultProvider } from 'ethers';
 import { TransactionsProvider } from "./context/TransactionContext";
 import { Buffer } from 'buffer';
 window.Buffer = Buffer;
+// import ThemeContextWrapper from './context/ThemeContextWrapper';
 
 const client = createClient({
   autoConnect: true,
@@ -21,14 +23,15 @@ const client = createClient({
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-     <TransactionsProvider>
-    <WagmiConfig client={client}>
-    <BrowserRouter>
+   <TransactionsProvider>
+     <WagmiConfig client={client}>
+     <BrowserRouter>
       <ChakraProvider theme={theme}>
+       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
         <App />
       </ChakraProvider>
     </BrowserRouter>
-    </WagmiConfig>
+     </WagmiConfig>
     </TransactionsProvider>
   </React.StrictMode>
 );

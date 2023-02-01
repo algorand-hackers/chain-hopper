@@ -1,21 +1,17 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { GrTransaction } from "react-icons/gr"
-import { Box, Flex, Text, Image, Button, Icon } from '@chakra-ui/react';
-import wallet from '../asset/walleticon.svg';
-import Bridge from '../asset/bridge.svg';
-import bridgeLight from '../asset/bridgeLight.svg';
+import { Box, Flex, Text, Image, Icon, useColorMode } from '@chakra-ui/react';
 import Swap from '../asset/swap.svg';
 import Watchlist from '../asset/watchlist.svg';
 import Settings from '../asset/setting.svg';
-import darkmode from '../asset/darkmode.svg';
+import Images_Icons from '../constant/icons-images';
 import faq from '../asset/faq.svg';
 import notification from '../asset/notification.svg';
 
 
 const Sidebar = () => {
     // const [active, setActive] = useState(true);
-
+    const { colorMode, toggleColorMode } = useColorMode()
 
   return (
     <Box  w={{base:"0", md:"230px", lg:"257px"}} display={{base:"none", md:"block"}} h="547px">
@@ -27,8 +23,12 @@ const Sidebar = () => {
       >
         
           <div className="flex">
-            <Image color="dark" h="25px" src={wallet} alt="logo" />
-            <Text ml="3" fontWeight="500" color="dark">
+            {colorMode == 'light' ? (
+                    <Image color="dark" h="25px" src={Images_Icons.WalletLogo} alt="logo" />
+                  ) : (
+                    <Image color="dark" h="25px" src={Images_Icons.walletLogo} alt="logo" /> 
+                  ) }
+            <Text ml="3" fontWeight="500">
               Portfolio
             </Text>
           </div>
@@ -52,7 +52,11 @@ const Sidebar = () => {
                 to="/bridge"
                 className="px-3 py-2 rounded-[5px] flex mx-auto "
             >
-                <Icon boxSize={6} as={GrTransaction} />
+                {colorMode == 'light' ? (
+                    <Image color="dark" h="25px" src={Images_Icons.bridgeLogo1} alt="logo" /> 
+                  ) : (
+                    <Image color="dark" h="25px" src={Images_Icons.bridgeLogo} alt="logo" /> 
+                  ) }
                 <Text ml="6" fontWeight="500">
                 Bridge
                 </Text>
@@ -60,7 +64,11 @@ const Sidebar = () => {
             </Box>
             <Box mx="auto" my="2" >
             <div className="px-3 py-2 rounded-[5px] flex mx-auto ">
-            <Image color="dark" h="25px" src={Swap} alt="logo" />
+               {colorMode == 'light' ? (
+                    <Image color="dark" h="25px" src={Swap} alt="logo" />
+                  ) : (
+                    <Image color="dark" h="25px" src={Images_Icons.SwapLogo} alt="logo" /> 
+                  ) }
                 <Text ml="4" fontWeight="500">
                 Swap
                 </Text>
@@ -68,7 +76,11 @@ const Sidebar = () => {
             </Box>
             <Box mx="auto" my="2">
             <div className="px-3 py-2 rounded-[5px] flex mx-auto ">
-                <Image color="dark" h="25px" src={Watchlist} alt="logo" />
+                {colorMode == 'light' ? (
+                    <Image color="dark" h="25px" src={Watchlist} alt="logo" />
+                  ) : (
+                    <Image color="dark" h="25px" src={Images_Icons.WatchlistLogo} alt="logo" /> 
+                  ) }
                 <Text ml="4" fontWeight="500">
                 Watchlist
                 </Text>
@@ -76,7 +88,11 @@ const Sidebar = () => {
             </Box>
             <Box mx="auto" my="2">
             <div className="px-3 py-2 rounded-[5px]  flex mx-auto ">
-                <Image color="dark" h="25px" src={Settings} alt="logo" />
+                {colorMode == 'light' ? (
+                    <Image color="dark" h="25px" src={Settings} alt="logo" />
+                  ) : (
+                    <Image color="dark" h="25px" src={Images_Icons.settingLogo} alt="logo" /> 
+                  ) }
                 <Text ml="4" fontWeight="500">
                 Settings
                 </Text>
@@ -86,8 +102,12 @@ const Sidebar = () => {
 
         <Box>            
             <Box mx="auto" my="2" >
-                <div className="px-3 py-2 rounded-[5px] flex mx-auto ">
-                    <Image color="dark" h="25px" src={darkmode} alt="logo" />
+                <div className="px-3 py-2 rounded-[5px] flex mx-auto" onClick={toggleColorMode}>
+                  {colorMode == 'light' ? (
+                    <Image color="dark" h="25px" src={Images_Icons.lightLogo} alt="logo" /> 
+                  ) : (
+                    <Image color="dark" h="25px" src={Images_Icons.lightMoonLogo} alt="logo" />
+                  ) }
                     <Text ml="4" fontWeight="500">
                     Appearance 
                     </Text>
@@ -95,7 +115,11 @@ const Sidebar = () => {
             </Box>
             <Box mx="auto" my="2" >
                 <div className="px-3 py-2 rounded-[5px] flex mx-auto ">
-                    <Image color="dark" h="25px" src={notification} alt="logo" />
+                    {colorMode == 'light' ? (
+                       <Image color="dark" h="25px" src={notification} alt="logo" />
+                       ) : (
+                         <Image color="dark" h="25px" src={Images_Icons.notificationLogo} alt="logo" /> 
+                       ) }
                     <Text ml="4" fontWeight="500">
                     What’s new
                     </Text>
@@ -103,7 +127,11 @@ const Sidebar = () => {
             </Box>
             <Box mx="auto" my="2" >
                 <div className="px-3 py-2 rounded-[5px] flex mx-auto ">
-                    <Image color="dark" h="25px" src={faq} alt="logo" />
+                    {colorMode == 'light' ? (
+                       <Image color="dark" h="25px" src={faq} alt="logo" />
+                       ) : (
+                         <Image color="dark" h="25px" src={Images_Icons.FAQLogo} alt="logo" /> 
+                       ) }
                     <Text ml="4" fontWeight="500">
                     FAQ
                     </Text>
