@@ -50,17 +50,17 @@ const Withdrawer = ({
         <Text mb="6px">From Algorand</Text>
         <Flex
           p={3}
-          rounded={'lg'}
           justify="space-between"
-          w="100%"
-          borderBottomRadius={0}
-          border="2px #E5E5E5 solid"
+          borderTopRightRadius="10px"
+          borderTopLeftRadius="10px"
+          border="1px solid #E2E8F0"
+          w={'100%'}
         >
-          <Flex gap={3}>
+          <Flex gap={2}>
             <Image src={Algo} alt="algo" />
-            <Text fontSize={'20px'}>Algorand Chain</Text>
+            <Text pt="4px" fontSize="17px">Algorand</Text>
           </Flex>
-          <Text color="#2D8EFF">Balance: 34,678,785 Algo</Text>
+          <Text color="#2D8EFF" pt="4px" fontSize="14px">Balance: 34,678,785 Algo</Text>
         </Flex>
         <Box mt="-1px">
           <SelectToken
@@ -78,7 +78,7 @@ const Withdrawer = ({
           <Text mb="6px" mt={'30px'}>
             To this network
           </Text>
-          <Box bg="bg2">
+          <Box bgColor="#EFF6FF" borderRadius="9.11545px">
           <SelectToken
             networks={networks}
             setSelectToken={setSelectToken}
@@ -91,7 +91,7 @@ const Withdrawer = ({
         </Box>
 
         {/* ------------------- Connect Wallet -------------------- */}
-
+{/* 
         {!walletConnected ? (
           <>
             <Box onClick={connectWallet}>
@@ -102,16 +102,16 @@ const Withdrawer = ({
           <Box mt={"-8px"} mb={6}>
             <TokenRoute />
           </Box>
-        )}
+        )} */}
 
-        <ConnectWallet
+        {/* <ConnectWallet
           walletIcon={walletIcon}
           setWalletConnected={setWalletConnected}
           setWalletIcon={setWalletIcon}
           isOpen={isOpen}
           onOpen={onOpen}
           onClose={onClose}
-        />
+        /> */}
 
         {/* ------------------- Transper Button -------------------- */}
 

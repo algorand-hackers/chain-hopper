@@ -132,7 +132,7 @@ const Bridge = ({ isConnect }) => {
                       w={'100%'}
                       borderTopRightRadius="10px"
                       borderTopLeftRadius="10px"
-                     mt={4}
+                      mt={4}
                       p={4}
                     >
                       <Flex justifyContent="space-between" >
@@ -171,17 +171,6 @@ const Bridge = ({ isConnect }) => {
                     </Flex>
                     {/* )} */}
 
-                    {/* Connect Wallet  */}
-
-                    {/* <ConnectWallet
-                      walletIcon={walletIcon}
-                      setWalletConnected={setWalletConnected}
-                      setWalletIcon={setWalletIcon}
-                      isOpen={isOpen}
-                      onOpen={onOpen}
-                      onClose={onClose}
-                    /> */}
-
                     {/* ------------------------ BRIDGING ---------------------- */}
 
                     <Flex flexDir={'column'} mt={'15px'} mb="10px">
@@ -193,13 +182,12 @@ const Bridge = ({ isConnect }) => {
                         bg={'#EFF6FF'}
                         w="100%"
                         h="36px"
-                        
                         p={6}
                         color="dark"
                         borderRadius={'9.11545px'}
                         flexDir={'column'}
                       >
-                         <Flex justifyContent="space-between" alignItems="center" mt="-15px">
+                        <Flex justifyContent="space-between" alignItems="center" mt="-15px">
                         <Flex>
                         <Image src={Algo} />
                         <Text pt="4px" ml={2}>Algorand Chain</Text>
