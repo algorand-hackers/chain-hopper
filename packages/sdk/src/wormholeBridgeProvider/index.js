@@ -9,11 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { CHAINS, CONTRACTS, getEmitterAddressAlgorand, getEmitterAddressEth, getGovernorIsVAAEnqueued, getIsTransferCompletedAlgorand, getIsTransferCompletedEth, getSignedVAA, hexToUint8Array, parseSequenceFromLogAlgorand, parseSequenceFromLogEth, redeemOnAlgorand, redeemOnEthNative, transferFromAlgorand, transferFromEthNative, tryNativeToHexString } from "@certusone/wormhole-sdk";
 import { ALGORAND_WALLETS, Assets, BRIDGE_STATUS, Chains, ALGORAND_WAIT_FOR_CONFIRMATIONS, getWormHoleRpchost } from "../config";
-import { NetworkType } from "../types";
+import { BridgeId, NetworkType } from "../types";
 import { getNonAlgorandChain } from "../utils";
 import { assignGroupID, waitForConfirmation } from 'algosdk';
 import { parseEther, parseUnits } from "ethers/lib/utils";
 import { getAlgoClient } from "../factory/algoClient";
+import { waitingTimes } from "./timeEstimates";
 const ethMainnetAssets = Assets.Mainnet.ETH;
 const ethTestnetAssets = Assets.Testnet.ETH;
 const algoMainnetAssets = Assets.Mainnet.ALGO;
@@ -45,7 +46,7 @@ export class WormHoleBridgeProvider {
             if (!this.supportedAssetsByChain(nonAlgorandChain, quoteRequest.network).includes(quoteRequest.assetName))
                 return null;
             // Get Quote ...
-            return null;
+            return Object.assign(Object.assign({}, quoteRequest), { amountOut: quoteRequest.amountIn, bridgeId: BridgeId.WormHole, timeEstimate: { send: waitingTimes[quoteRequest.fromChainName], receive: waitingTimes[quoteRequest.toChainName] } });
         });
     }
     moveAsset(quote) {

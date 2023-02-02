@@ -11,23 +11,43 @@ import {
   Spacer,
   Button,
   useDisclosure,
+  useColorMode,
 } from '@chakra-ui/react';
 import Expand from '../asset/Expand.svg';
 import TransactionModal from './TransactionModal/TransactionModal';
+import viewSVG from '../asset/viewSVG.svg';
+import Images_Icons from '../constant/icons-images';
 
 const TransactionLoader = () => {
+
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { colorMode } = useColorMode();
 
   return (
-    <Box w={{base:"80%", md:"400px", lg:"450px"}} className="absolute p-4 top-[430px] shadow-md rounded-[12.42px] right-[20px] h-fit-content bg-[white]">
+    <Box w={{base:"80%", md:"400px", lg:"450px"}} 
+     pos="absolute"
+     p={4}
+    //  top="430px"
+     rounded="12.42px"
+     boxShadow='2xl'
+     right="20px"
+     h="fit-content"
+     bg={ colorMode === 'light' ? 'white' : 'bg4'}  
+     >
       <Flex>
-        <Text fontSize="20px" fontWeight={'500'}>
+        <Text fontSize="20px" fontWeight={'500'} color={colorMode === 'light' ? "black" : "#F5F5F5"}>
           Bridging in progress
         </Text>
         <Spacer />
-        <Image onClick={onOpen} src={Expand} alt-="expand" />
+        {colorMode == 'light' ? (
+              <Image onClick={onOpen} src={Expand} alt-="expand" />
+            ) : (
+              <Image onClick={onOpen} src={viewSVG} alt-="expand" />
+             ) }
       </Flex>
-      <Text mb={3} mt={4} fontSize={'16px'} fontWeight="500">
+      <Text mb={3} mt={4} fontSize={'16px'} fontWeight="500"
+      color={colorMode === 'light' ? "black" : "#F5F5F5"}
+      >
         Estimated completion time 01:23PM WAT
       </Text>
       <Box w="100%" my="25px" pos="relative">
@@ -38,11 +58,15 @@ const TransactionLoader = () => {
         </Box>
         <Circle pos="absolute" right="0" bottom="-8px" size="20px" bg="#3A6EFF" />
       </Box>
-      <Flex bg="bg2" p={3} rounded="10px">
-        <Icon mt="4px" boxSize={6}  />
+      <Flex bg={ colorMode === 'light' ? "bg2" : "bg4"} p={3} rounded="10px">
+          {colorMode == 'light' ? (
+              <Icon mt="4px" boxSize={6}  />
+            ) : (
+               <Image color="dark" h="28px" src={Images_Icons.FALogo} alt="logo" /> 
+             ) }
         <Spacer />
 
-        <Text w="70%">
+        <Text w="70%" color={colorMode === 'light' ? "black" : "#F5F5F5"}>
           Switch to Algorand from you wallet to see your new funds.
         </Text>
         <Spacer />

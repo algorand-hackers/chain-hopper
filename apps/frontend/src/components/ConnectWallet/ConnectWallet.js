@@ -8,6 +8,7 @@ import {
   Flex,
   Text,
   Image,
+  useColorMode
 } from '@chakra-ui/react';
 import metamask from '../../asset/metamask.svg';
 import coinbase from '../../asset/coinbase.svg';
@@ -120,6 +121,8 @@ const ConnectWallet = ({
   //    }
   //  }
 
+  const { colorMode } = useColorMode();
+
   return (
     <Modal onClose={onClose} isOpen={isOpen} isCentered>
       <ModalOverlay 
@@ -130,11 +133,11 @@ const ConnectWallet = ({
       />
       <ModalContent
         rounded="18px"
-        w={{ base: '90%', md: '500px', lg: '500px' }}
+        w={{ base: '20%', md: '500px', lg: '500px' }}
       >
         <ModalBody
           rounded="18px"
-          bg="white"
+          bg={colorMode === 'light' ? '#FFFFFF' : 'bg6' }
           px={6}
           pt={6}
           w={{ base: '100%', md: '100%' }}
@@ -162,7 +165,9 @@ const ConnectWallet = ({
                 alignItems="center"
                 onClose={onClose}
                 onClick={connectWallet}
-                _hover={{ bg: '#3D68FF', borderRadius: '16px', color: "white" }}
+                _hover={ colorMode === 'light' ? { bg: '#EFF6FF', borderRadius: '16px', color: "black" } :
+                { bg: '#EFF6FF', borderRadius: '16px', color: "black" }
+                }
                 align="center"
                 as="button"
                 // key={item.nanoid}
@@ -186,7 +191,9 @@ const ConnectWallet = ({
                 alignItems="center"
                 onClose={onClose}
                 onClick={connectToMyAlgo}
-                _hover={{ bg: '#3D68FF', borderRadius: '16px', color: "white" }}
+                _hover={ colorMode === 'light' ? { bg: '#EFF6FF', borderRadius: '16px', color: "black" } :
+                { bg: '#EFF6FF', borderRadius: '16px', color: "black" }
+                }
                 align="center"
                 as="button"
                 // key={item.nanoid}
@@ -203,13 +210,13 @@ const ConnectWallet = ({
               </Flex>
 
               {/* -------------------- Pera Wallet ------------------------ */}
-              <Flex
+              {/* <Flex
                 direction={'column'}
                 display="flex"
                 justify="center"
                 alignItems="center"
                 // onClick={}
-                _hover={{ bg: '#3D68FF', borderRadius: '16px', color: "white" }}
+                _hover={{ bg: '#EFF6FF', borderRadius: '16px' }}
                 align="center"
                 as="button"
                 // key={item.nanoid}
@@ -223,7 +230,7 @@ const ConnectWallet = ({
                   Coming 
                   </Text>
                 </Box>
-              </Flex>
+              </Flex> */}
             {/* ))} */}
           </Flex>
         </ModalBody>
