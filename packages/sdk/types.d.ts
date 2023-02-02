@@ -25,14 +25,6 @@ export declare type QuoteRequest<FromWallet = any, ToWallet = any> = {
     toWalletType: string;
     network: NetworkType;
 };
-export interface TimeEstimate {
-    low: number;
-    high: number;
-}
-export interface GasFeeEstimate {
-    send?: string;
-    receive?: string;
-}
 export declare type Quote<FromWallet = any, ToWallet = any> = {
     assetName: string;
     fromAddress: string;
@@ -45,11 +37,8 @@ export declare type Quote<FromWallet = any, ToWallet = any> = {
     toWalletType: string;
     amountIn: string;
     amountOut: string | number;
-    gasFeeEstimate?: GasFeeEstimate;
-    timeEstimate?: {
-        send: TimeEstimate;
-        receive: TimeEstimate;
-    };
+    gasFeeEstimate: string;
+    timeEstimate?: string;
     bridgeId: BridgeId;
     network: NetworkType;
 };
