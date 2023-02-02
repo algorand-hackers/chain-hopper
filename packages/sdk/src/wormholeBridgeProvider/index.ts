@@ -2,7 +2,7 @@ import { ChainId, ChainName, CHAINS, CONTRACTS, getEmitterAddressAlgorand, getEm
 import { TransactionSignerPair } from "@certusone/wormhole-sdk/lib/cjs/algorand";
 import { ethers } from "ethers";
 import { ALGORAND_WALLETS, Assets, BRIDGE_STATUS, Chains, ALGORAND_WAIT_FOR_CONFIRMATIONS, getWormHoleRpchost } from "../config";
-import { NetworkType, Quote, QuoteRequest, Update } from "../types";
+import { BridgeId, NetworkType, Quote, QuoteRequest, Update } from "../types";
 import { BaseBridgeProvider } from "../baseBridgeProvider";
 import { getNonAlgorandChain } from "../utils";
 import { AlgorandUpdate, EthereumUpdate, GetSignedVAAWithRetryResult, WormHoleUpdate } from "./types";
@@ -10,6 +10,7 @@ import {assignGroupID, waitForConfirmation } from 'algosdk';
 import { parseEther, parseUnits } from "ethers/lib/utils";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
 import { getAlgoClient } from "../factory/algoClient";
+import { waitingTimes } from "./timeEstimates";
 
 const ethMainnetAssets = Assets.Mainnet.ETH;
 const ethTestnetAssets = Assets.Testnet.ETH;
@@ -48,7 +49,12 @@ export class WormHoleBridgeProvider implements BaseBridgeProvider  {
 
 
         // Get Quote ...
-        return null;
+        return {
+          ...quoteRequest,
+          amountOut: quoteRequest.amountIn,
+          bridgeId: BridgeId.WormHole,
+          timeEstimate: {send: waitingTimes[quoteRequest.fromChainName], receive: waitingTimes[quoteRequest.toChainName]}
+        };
     }
 
     public async moveAsset(quote: Quote): Promise<Update>  {
