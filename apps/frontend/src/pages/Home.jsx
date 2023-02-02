@@ -6,11 +6,11 @@ import { Box, Flex, Text, Image, useDisclosure,
     MenuList,
     MenuDivider,
     Center,
-    Spacer
+    Spacer,
+    useColorMode
 } from '@chakra-ui/react';
-import { useColorMode } from "@chakra-ui/color-mode"
-// import Btn from '../components/UI/Btn';
 import CryptoModal from '../components/CryptoModal';
+import Footer from '../components/Footer';
 // import ConnectWallet from '../components/ConnectWallet/ConnectWallet';
 // import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 // import metamask from "../asset/metamask.svg"
@@ -24,7 +24,7 @@ import CryptoModal from '../components/CryptoModal';
 
 const Home = () => {
 
-  // const { colorMode, toggleColorMode } = useColorMode()
+  const { colorMode  } = useColorMode()
   // const { isOpen, onOpen, onClose } = useDisclosure()
   // const { address, isConnected } = useAccount();
   // const { disconnect } = useDisconnect();
@@ -36,8 +36,6 @@ const Home = () => {
   //   onOpen()
   // }
   
-  let copyRightYear = new Date().getFullYear() + " ChainHooper ";
-
 //   const handleCopyAddress = (e) => {
 //     setCopyAddress(e.target.value);
 //  };
@@ -51,15 +49,21 @@ const Home = () => {
 // };
 
   return (
-    <Flex direction="column" justify="space-between"   h={{base:"90vh", md:"100%"}} px={5}>
+    <Flex direction="column" 
+      justify="space-between" 
+      bg={ colorMode === 'light' ? 'bg1' : 'bg3'}  
+      h={{base:"80vh", md:"100%"}} px={5}
+      >
         <Box w={{base:"100%", md:"100%", lg:"85%"}} mt="6rem" mx="auto">
-            <Text w={{base:"100%", md:"100%", lg:"554px"}} mb={2} fontSize={{base:"2.2rem", md:"34px", lg:"38.8px"}} fontWeight="700" className='leading-[46px] font-[syne]'> Effortlessly connect different blockchains with Chainhopper </Text>
+            <Text w={{base:"100%", md:"100%", lg:"554px"}} mb={2} fontSize={{base:"2.2rem", md:"34px", lg:"38.8px"}} fontWeight="700" className='leading-[46px] font-[syne]'> 
+            Effortlessly connect different blockchains with Chainhopper 
+            </Text>
             <Text className='leading-[26px] font-[syne]' mb={5} maxWidth="500px">
               Are you tired of juggling multiple bridge solutions to transfer your
-               assets between different blockchains? Our bridge aggregator simplifies 
-               the process by curating the best route for you. Simply specify your source
-                and destination chains, and we'll handle the rest.
-                </Text>
+              assets between different blockchains? Our bridge aggregator simplifies 
+              the process by curating the best route for you. Simply specify your source
+              and destination chains, and we'll handle the rest.
+             </Text>
             {/* {!currentAccount  ? ( */}
                 {/* <Box onClick={connectWallets} display={{base:"none", md:"block"}}>
                     <Btn text="connect wallet" />
@@ -123,8 +127,7 @@ const Home = () => {
                     </Menu> */}
             {/* )} */}
         </Box>
-        <CryptoModal/>
-        <Text mb={3}>© {copyRightYear}</Text>
+        <Footer />      
         {/* <ConnectWallet 
           isOpen={isOpen} 
           onOpen={onOpen} 
@@ -133,7 +136,6 @@ const Home = () => {
           connectWallet={connectWallet} 
           connectToMyAlgo={connectToMyAlgo}
           /> */}
-    
     </Flex>
   )
 }
