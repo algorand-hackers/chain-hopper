@@ -12,12 +12,10 @@ import {
   TabPanel,
   Image,
   useDisclosure,
+  useColorMode
 } from '@chakra-ui/react';
-import SelectNetwork from './SelectNetwork';
-import ConnectWallet from './ConnectWallet/ConnectWallet';
 import SelectToken from './SelectToken/selectToken';
 import Algo from '../asset/AlgorandIcon.svg';
-import Btn2 from './UI/Btn2';
 import TransactionLoader from './TransactionLoader';
 import TokenRoute from '../constant/TokenRoute';
 
@@ -40,14 +38,21 @@ const Withdrawer = ({
   tranferBtn,
   setTranferBtn,
 }) => {
+
   const connectWallet = () => {
     onOpen();
   };
 
+  const { colorMode } = useColorMode();
+
   return (
     <>
       <Box pt={3}>
-        <Text mb="6px">From Algorand</Text>
+        <Text mb="6px"
+         color={ colorMode === 'light' ? 'black' : 'white'} 
+         >
+          From Algorand
+        </Text>
         <Flex
           p={3}
           justify="space-between"
@@ -58,7 +63,11 @@ const Withdrawer = ({
         >
           <Flex gap={2}>
             <Image src={Algo} alt="algo" />
-            <Text pt="4px" fontSize="17px">Algorand</Text>
+            <Text pt="4px" fontSize="17px" 
+            color={ colorMode === 'light' ? 'black' : 'white'}
+            >
+              Algorand
+            </Text>
           </Flex>
           <Text color="#2D8EFF" pt="4px" fontSize="14px">Balance: 34,678,785 Algo</Text>
         </Flex>
@@ -75,10 +84,13 @@ const Withdrawer = ({
 
         {/* ------------------- SELECT NETWORK -------------------- */}
         <Box mb={4}>
-          <Text mb="6px" mt={'30px'}>
+          <Text mb="6px" mt={'30px'} color={ colorMode === 'light' ? 'black' : 'white'} >
             To this network
           </Text>
-          <Box bgColor="#EFF6FF" borderRadius="9.11545px">
+          <Box
+           bgColor= { colorMode === 'light' ? "#EFF6FF" : "#202020" } 
+           borderRadius="9.11545px"
+           >
           <SelectToken
             networks={networks}
             setSelectToken={setSelectToken}

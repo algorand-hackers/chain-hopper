@@ -28,7 +28,6 @@ const Navbar = () => {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [isMenu, setIsMenu] = useState(false)
-    const [isConnect, setIsConnect] = useState(true)
     const { address, isConnected } = useAccount();
     const { currentAccount, connectWallet, connectToMyAlgo, disconnectWallet } = useContext(TransactionContext);
     const { disconnect } = useDisconnect();
@@ -50,8 +49,8 @@ const Navbar = () => {
      const copyAddressToClipboard = () => {
 
      copy(currentAccount);
-       toast.success(' Address copied to clipboard', {
-         position: toast.POSITION.TOP_RIGHT, 
+       toast.success('The Address was copied to the clipboard', {
+         position: toast.POSITION.BOTTOM_RIGHT, 
          autoClose: 2000
        });
    };

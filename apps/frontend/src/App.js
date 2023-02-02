@@ -21,7 +21,7 @@ function App() {
           <Box>
             <Sidebar />
           </Box>
-          <Box h="90vh" bg="bg2" w={{base:"100%", md:"100%", lg:"100%"}}>
+          <Box h="85vh" bg="bg2" w={{base:"100%", md:"100%", lg:"100%"}}>
              <ToastContainer />
             <Routes>
               <Route index path="/"  element={<Home  />} />

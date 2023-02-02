@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { Flex, Input, Text, Image, Box, Img, useDisclosure } from '@chakra-ui/react';
+import { Flex, Input, Text, Image, Box, Img, useDisclosure, useColorMode } from '@chakra-ui/react';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import CryptoModal from '../CryptoModal';
 import { networks } from '../../constant/networksJSON'
 import wallet from "../../asset/ETH - Ethereum Token.png"
-// import Images_Icons from '../../constant/icons-images';
+import Images_Icons from '../../constant/icons-images';
 
 const SelectToken = ({ setSelectToken, walletIcon, selectToken, setWalletIcon, setIsTransac }) => {
+  
   const [isOpen, setIsOpen] = useState(false);
   const onClose = () => setIsOpen(false);
+
+  const { colorMode } = useColorMode();
   
     console.log(networks)
 
@@ -27,17 +30,37 @@ const SelectToken = ({ setSelectToken, walletIcon, selectToken, setWalletIcon, s
         <Flex
           onClick={() => setIsOpen(true)}
           align="center" 
-          borderRight="2px #E5E5E5 solid"
+          borderRight="1px #E5E5E5 solid"
           w="140px"
           mx="2px"
           cursor={"pointer"} 
         >
           <Image h="20px" w="20px" src={walletIcon}  />
-          <Text fontWeight="500" fontSize={"18px"} mx="2px" >{selectToken}</Text>
-          <MdOutlineKeyboardArrowDown className='w-[20px] h-[20px]' />
+          <Text fontWeight="500" fontSize={"18px"} mx="2px"
+           color={colorMode === 'light' ? 'dark' : 'white' }  
+           >
+            {selectToken}
+           </Text>
+          
+          {colorMode == 'light' ? (
+             <MdOutlineKeyboardArrowDown className='w-[20px] h-[20px]' />
+              ) : (
+            <Image color="dark" h="18px" src={Images_Icons.arrowDownLogo} alt="logo" /> 
+          ) }
         </Flex>
-        <Input bgColor="#fffff" rounded="0px" h="100%" px={3} variant='unstyled' placeholder='0' />
-        <Flex align="center" dir="row" justify="center" fontWeight={500} pl={3} mr={2}> <span> ~ </span> $242678</Flex>
+        <Input 
+         bgColor={colorMode === 'light' ? '#fffff' : 'bg4' }
+         color={colorMode === 'light' ? 'black' : 'white' }
+         rounded="0px" 
+         h="100%" px={3} 
+         variant='unstyled' 
+         placeholder='0' 
+         _placeholder={ colorMode === 'light' ? { color: '' } : { color: 'white'} }
+        />
+        <Flex align="center" dir="row" justify="center" 
+         fontWeight={500} pl={3} mr={2}
+         color={colorMode === 'light' ? 'dark' : 'white' }
+         > <span mr="5px"> ~ </span> $242678</Flex>
         
       </Flex>
 

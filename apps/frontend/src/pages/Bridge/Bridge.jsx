@@ -12,6 +12,7 @@ import {
   TabPanel,
   Image,
   useDisclosure,
+  useColorMode,
 } from '@chakra-ui/react';
 import SelectNetwork from '../../components/SelectNetwork';
 import SelectToken from '../../components/SelectToken/selectToken';
@@ -32,14 +33,16 @@ import { TransactionContext } from "../../context/TransactionContext";
 //   () => import("../../components/NetworkSelector")
 // );
 
-const Bridge = ({ isConnect }) => {
+const Bridge = () => {
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [pinTokenBalance, setpinTokenBalance] = useState(0);
- 
-  const connectWallet = () => {
-    onOpen();
-    // setIsConnect(false)
-  };
+   const { colorMode } = useColorMode();
+  // const connectWallet = () => {
+  //   onOpen();
+  //   // setIsConnect(false)
+  // };
+
   const { currentAccount, connectToMyAlgo, disconnectWallet } = useContext(TransactionContext);
 
   useEffect(()=>{
@@ -54,7 +57,7 @@ const Bridge = ({ isConnect }) => {
   const [selected, setSelected] = useState('Select Network');
   const [tokenIcon, setTokenIcon] = useState();
   // This is to select Token
-  const [selectToken, setSelectToken] = useState('Eth');
+  const [selectToken, setSelectToken] = useState('ETH');
   const [walletIcon, setWalletIcon] = useState(wallet);
   // This is for the connect button on the component to start it
   const [walletConnected, setWalletConnected] = useState(false);
@@ -68,10 +71,14 @@ const Bridge = ({ isConnect }) => {
   // });
 
   return (
-    <Flex flexDir={'column'} h="100%">
+    <Flex 
+      flexDir={'column'} 
+      h="100%"
+      bg={ colorMode === 'light' ? 'bg1' : 'bg3'}  
+      >
       <Stack {...root} maxW="1600px" mx="auto" pos="relative">
         <Box
-          bg="rgba(255, 255, 255, 0.97)"
+          bg={ colorMode === 'light' ? 'rgba(255, 255, 255, 0.97)' : 'bg4'}  
           w={{ base: '95%', md: '520px', lg: '590px' }}
           pos="relative"
           h="fit-content"
@@ -83,10 +90,14 @@ const Bridge = ({ isConnect }) => {
         >
           {/* ----------------------------------- TOP BUTTON TAB  [DEPOSIT & WITHDRAW] --------------------------------------------- */}
           <Tabs variant="unstyled">
-            <TabList padding="10px" bg={'#EDF2FA'} borderRadius={'9.11545px'}>
+            <TabList padding="10px" 
+             bg={ colorMode === 'light' ? '#EDF2FA' : 'bg5'}  
+             borderRadius={'9.11545px'}
+             >
               <Tab
-                _selected={{ color: 'black', bg: '#FFFFFF' }}
-                color="black"
+                // _selected={{ color: 'black', bg: '#FFFFFF' }}
+                _selected={ colorMode === 'light' ? { color: 'black', bg: '#FFFFFF' } : { color:'white', bg:'#3A6FFF' }  }
+                color={ colorMode === 'light' ? 'black' : 'white'}  
                 fontWeight={'500'}
                 w={'50%'}
                 px={2}
@@ -96,8 +107,8 @@ const Bridge = ({ isConnect }) => {
                 Deposit
               </Tab>
               <Tab
-                _selected={{ color: 'black', bg: '#FFFFFF' }}
-                color="black"
+                _selected={ colorMode === 'light' ? { color: 'black', bg: '#FFFFFF' } : { color:'white', bg:'#3A6FFF' }  }
+                color={ colorMode === 'light' ? 'black' : 'white'}  
                 fontWeight={'500'}
                 w={'50%'}
                 px={2}
@@ -112,7 +123,10 @@ const Bridge = ({ isConnect }) => {
               <TabPanel>
                 <Suspense fallback={<Spinner size="sm" />}>
                   <Flex flexDir={'column'} padding={'5px'}>
-                    <Text fontSize="14px" mb={-1}>
+                    <Text fontSize="14px" 
+                     mb={-1}
+                     color={ colorMode === 'light' ? 'black' : 'white'} 
+                    >
                       From the network
                     </Text>
 
@@ -138,9 +152,13 @@ const Bridge = ({ isConnect }) => {
                       <Flex justifyContent="space-between" >
                         <Flex>
                         <Image src={Eth} />
-                        <Text pt="4px" ml={2}>Ethereum Chain</Text>
+                        <Text pt="4px" ml={2}
+                         color={ colorMode === 'light' ? 'black' : 'white'} 
+                         >
+                          Ethereum Chain
+                         </Text>
                         </Flex>
-                        <Text><span className="text-[#A0AEC0] mr-2 text-xs">Balance:</span>{pinTokenBalance}</Text>
+                        <Text color={ colorMode === 'light' ? 'black' : 'white'} ><span className="text-[#A0AEC0] mr-2 text-xs">Balance:</span>{pinTokenBalance}</Text>
                       </Flex>
                     </Box>
 
@@ -174,12 +192,12 @@ const Bridge = ({ isConnect }) => {
                     {/* ------------------------ BRIDGING ---------------------- */}
 
                     <Flex flexDir={'column'} mt={'15px'} mb="10px">
-                      <Text {...fontsm} mb={2}>
+                      <Text {...fontsm} mb={2} color={ colorMode === 'light' ? 'black' : 'white'}>
                         To Algorand
                       </Text>
 
                       <Box
-                        bg={'#EFF6FF'}
+                        bg={ colorMode === 'light' ? '#EFF6FF' : '#232323'} 
                         w="100%"
                         h="36px"
                         p={6}
@@ -190,9 +208,16 @@ const Bridge = ({ isConnect }) => {
                         <Flex justifyContent="space-between" alignItems="center" mt="-15px">
                         <Flex>
                         <Image src={Algo} />
-                        <Text pt="4px" ml={2}>Algorand Chain</Text>
+                        <Text pt="4px" ml={2}
+                         color={ colorMode === 'light' ? 'black' : 'white'} 
+                         >
+                          Algorand Chain
+                         </Text>
                         </Flex>
-                        <Text><span className="text-[#A0AEC0] mr-2 text-xs">Balance:</span>0.00000000</Text>
+                        <Text color={ colorMode === 'light' ? 'black' : 'white'}>
+                          <span className="text-[#A0AEC0] mr-2 text-xs">
+                            Balance:</span>0.00000000
+                          </Text>
                       </Flex>
                       </Box>
                     </Flex>

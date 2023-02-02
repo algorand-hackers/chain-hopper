@@ -17,6 +17,7 @@ import {
   InputGroup,
   InputLeftElement,
   Spacer,
+  useColorMode,
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
 import { networks, crypto } from '../../constant/networksJSON';
@@ -68,6 +69,7 @@ const CryptoModal = ({ isOpen, onClose, setSelectToken, setWalletIcon, setIsTran
 
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredCrypto, setFilteredCrypto] = useState(crypto);
+  const { colorMode } = useColorMode();
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -88,8 +90,13 @@ const CryptoModal = ({ isOpen, onClose, setSelectToken, setWalletIcon, setIsTran
           w={{ base: '90vw', md: '30vw' }}
           borderRadius={16}
           p={'1%'}
+          bg={colorMode === 'light' ? '#FFFFFF' : 'bg6'}
         >
-          <ModalHeader color={'#404040'} fontWeight="600" fontSize={'18px'}>
+          <ModalHeader
+           color={colorMode === 'light' ? 'black' : 'white'}
+           fontWeight="600" 
+           fontSize={'18px'}
+           >
             Ethereum network tokens
           </ModalHeader>
           <ModalCloseButton mt={5} />
@@ -111,8 +118,9 @@ const CryptoModal = ({ isOpen, onClose, setSelectToken, setWalletIcon, setIsTran
               //     setSearchValue(e.target.value);
               // }}
               onChange={handleSearch}
+              color={colorMode === 'light' ? 'black' : 'white' }
               placeholder="Search token name.."
-              _placeholder={{ color: 'black' }}
+              _placeholder={ colorMode === 'light' ? { color: '' } : { color: 'white'}}
               borderRadius="9.11545px"
               borderWidth="0"
             />
@@ -136,11 +144,17 @@ const CryptoModal = ({ isOpen, onClose, setSelectToken, setWalletIcon, setIsTran
                 <Flex>
                   <Image src={c?.imageUrl} w="48px" h="48px" mr={5} />
                   <Box>
-                    <Text fontWeight={'700'}>{c.symbol}</Text>
-                    <Text color="#404040">{c.name}</Text>
+                    <Text fontWeight={'700'} 
+                      color={colorMode === 'light' ? 'black' : 'white'}
+                      >
+                        {c.symbol}
+                      </Text>
+                    <Text
+                     color={colorMode === 'light' ? '#404040' : 'white'}
+                     >{c.name}</Text>
                   </Box>
                 </Flex>
-                <Text color="#404040" fontSize="lg">
+                <Text color={colorMode === 'light' ? '#404040' : 'white'}  fontSize="lg">
                   {' '}
                   {c.amount}
                 </Text>
