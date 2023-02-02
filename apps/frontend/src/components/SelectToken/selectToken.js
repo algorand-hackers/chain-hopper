@@ -12,11 +12,14 @@ const SelectToken = ({ setSelectToken, walletIcon, selectToken, setWalletIcon, s
   
     console.log(networks)
 
-  const [isActive, setIsActive] = useState(false);
-  const [icon, setIcon] = useState(false);
-
   return (
-    <Flex  rounded={'lg'} w="100%" h="fit-content" gap={3}  borderBottomRadius={0} border="2px #E5E5E5 solid" >
+    <Flex 
+    w="100%" 
+    h="fit-content" 
+    gap={2}  
+    borderBottomRadius={10} 
+    border="1px solid #E2E8F0" 
+    >
       <Flex 
         w="100%"  
         h="50px" 
@@ -31,23 +34,23 @@ const SelectToken = ({ setSelectToken, walletIcon, selectToken, setWalletIcon, s
         >
           <Image h="20px" w="20px" src={walletIcon}  />
           <Text fontWeight="500" fontSize={"18px"} mx="2px" >{selectToken}</Text>
-          <MdOutlineKeyboardArrowDown className='w-[30px] h-[30px]' />
+          <MdOutlineKeyboardArrowDown className='w-[20px] h-[20px]' />
         </Flex>
-        <Input bg="bg2" rounded="0px" h="100%" px={3} variant='unstyled' placeholder='0' />
+        <Input bgColor="#fffff" rounded="0px" h="100%" px={3} variant='unstyled' placeholder='0' />
         <Flex align="center" dir="row" justify="center" fontWeight={500} pl={3} mr={2}> <span> ~ </span> $242678</Flex>
         
       </Flex>
 
       {/* -------------------- THE SELECT OPTION DROPDOWN NETWORK AVAILABLE ---------------------- */}
-    <CryptoModal
-        isOpen={isOpen}
-        onClose={onClose}
-        setSelectToken={setSelectToken} 
-        walletIcon={walletIcon} 
-        setWalletIcon={setWalletIcon}
-        setIsTransac={setIsTransac}
-    />
-    </Flex>
+        <CryptoModal
+            isOpen={isOpen}
+            onClose={onClose}
+            setSelectToken={setSelectToken} 
+            walletIcon={walletIcon} 
+            setWalletIcon={setWalletIcon}
+            setIsTransac={setIsTransac}
+        />
+        </Flex>
   );
 };
 
