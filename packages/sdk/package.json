@@ -33,6 +33,7 @@
     "glitter-bridge-sdk": "^1.0.0",
     "glitter-bridge-algorand": "^1.0.0",
     "glitter-bridge-solana": "^1.0.0",
-    "glitter-bridge-common": "^1.0.0"
+    "glitter-bridge-common": "^1.0.0",
+    "algosdk": "^1.15.0"
   }
 }
