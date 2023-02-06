@@ -1,5 +1,5 @@
 //@ts-nocheck
-import {Algodv2 } from '@certusone/wormhole-sdk';
+import {Algodv2 } from 'algosdk';
 import { NetworkType } from "../../types";
 
 let algoClientCache: Record<NetworkType, Algodv2> = {};
