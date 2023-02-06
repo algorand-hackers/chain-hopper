@@ -22,10 +22,10 @@ import {
 import { SearchIcon } from '@chakra-ui/icons';
 import { networks, crypto } from '../../constant/networksJSON';
 import { nanoid } from "nanoid";
-import {allSupportedChains,supportedAssetsByChain} from '@chain-hopper/sdk';
-
-// alert(JSON.stringify(allSupportedChains()));
-
+import {allSupportedChains, supportedAssetsByChain} from '@chain-hopper/sdk';
+import { NetworkType } from '@chain-hopper/sdk/types';
+const chains = allSupportedChains();
+alert(JSON.stringify(supportedAssetsByChain(chains[0], NetworkType.TESTNET)));
 
 
 const CryptoModal = ({ isOpen, onClose, setSelectToken, setWalletIcon, setIsTransac }) => {

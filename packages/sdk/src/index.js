@@ -21,8 +21,9 @@ export function allSupportedChains(network) {
 export function supportedAssetsByChain(chain, network) {
     let assets = new Set();
     Object.values(BridgeId).forEach(bridgeId => {
-        var _a;
-        (_a = getBridgeProvider(bridgeId)) === null || _a === void 0 ? void 0 : _a.supportedAssetsByChain(chain, network).forEach((asset) => assets.add(asset));
+        const bridgeProvider = getBridgeProvider(bridgeId);
+        if (bridgeProvider === null || bridgeProvider === void 0 ? void 0 : bridgeProvider.supportedChains(network).includes(chain))
+            bridgeProvider === null || bridgeProvider === void 0 ? void 0 : bridgeProvider.supportedAssetsByChain(chain, network).forEach((asset) => assets.add(asset));
     });
     return Array.from(assets);
 }

@@ -17,7 +17,9 @@ export function supportedAssetsByChain(chain: string, network: NetworkType): str
     let assets = new Set();
 
     Object.values(BridgeId).forEach(bridgeId => {
-        getBridgeProvider(bridgeId)?.supportedAssetsByChain(chain, network).forEach((asset) => assets.add(asset));
+        const bridgeProvider = getBridgeProvider(bridgeId);
+        if(bridgeProvider?.supportedChains(network).includes(chain))
+            bridgeProvider?.supportedAssetsByChain(chain, network).forEach((asset) => assets.add(asset));
     })
 
     return Array.from(assets) as string[];
