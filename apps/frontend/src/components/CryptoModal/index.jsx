@@ -24,8 +24,6 @@ import { networks, crypto } from '../../constant/networksJSON';
 import { nanoid } from "nanoid";
 import {allSupportedChains, supportedAssetsByChain} from '@chain-hopper/sdk';
 import { NetworkType } from '@chain-hopper/sdk/types';
-const chains = allSupportedChains();
-alert(JSON.stringify(supportedAssetsByChain(chains[0], NetworkType.TESTNET)));
 
 
 const CryptoModal = ({ isOpen, onClose, setSelectToken, setWalletIcon, setIsTransac }) => {
@@ -33,7 +31,7 @@ const CryptoModal = ({ isOpen, onClose, setSelectToken, setWalletIcon, setIsTran
   // const onClose = () => setIsOpen(false);
 
   const chains = allSupportedChains();
-alert(JSON.stringify(supportedAssetsByChain(chains[0], NetworkType.TESTNET)));
+// alert(JSON.stringify(supportedAssetsByChain(chains[1], NetworkType.MAINNET)));
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredCrypto, setFilteredCrypto] = useState(crypto);
   const { colorMode } = useColorMode();
