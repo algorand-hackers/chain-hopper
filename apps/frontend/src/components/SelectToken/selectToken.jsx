@@ -10,6 +10,7 @@ import { TransactionContext } from "../../context/TransactionContext";
 const SelectToken = ({ setSelectToken, walletIcon, selectToken, setWalletIcon, setIsTransac }) => {
   const [pinTokenBalance, setpinTokenBalance] = useState(0);
   const { currentAccount, connectToMyAlgo, disconnectWallet } = useContext(TransactionContext);
+  const onClick = () => console.log(pinTokenBalance);
 
   useEffect(()=>{
       getEtherBalance(currentAccount, setpinTokenBalance).then(data=>{console.log(pinTokenBalance)})
@@ -67,7 +68,7 @@ const SelectToken = ({ setSelectToken, walletIcon, selectToken, setWalletIcon, s
         <Flex align="center" dir="row" justify="center" 
          fontWeight={500} pl={3} mr={2}
          color={colorMode === 'light' ? 'dark' : 'white' }
-         > <span mr="5px">  </span> <Text onClick={pinTokenBalance} color="blue">MAX</Text></Flex>
+         > <span mr="5px">  </span> <Text onClick={onClick} cursor="pointer" color="blue">MAX</Text></Flex>
         
       </Flex>
 
