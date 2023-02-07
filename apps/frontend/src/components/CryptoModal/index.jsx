@@ -24,52 +24,14 @@ import { networks, crypto } from '../../constant/networksJSON';
 import { nanoid } from "nanoid";
 import {allSupportedChains, supportedAssetsByChain} from '@chain-hopper/sdk';
 import { NetworkType } from '@chain-hopper/sdk/types';
-const chains = allSupportedChains();
-alert(JSON.stringify(supportedAssetsByChain(chains[0], NetworkType.TESTNET)));
 
-// const crypto = [
-//   {
-//     id: 1,
-//     name: 'ethereum',
-//     symbol: 'ETH',
-//     amount: '0.8',
-//     imageUrl: 'https://cryptologos.cc/logos/ethereum-eth-logo.png',
-//   },
-//   {
-//     id: 2,
-//     name: 'xrp',
-//     symbol: 'XRP',
-//     amount: '23,060.45',
-//     imageUrl: 'https://cryptologos.cc/logos/xrp-xrp-logo.png?v=002',
-//   },
-//   {
-//     id: 3,
-//     name: 'usdt',
-//     symbol: 'USDT',
-//     amount: '104.29',
-//     imageUrl: 'https://cryptologos.cc/logos/tether-usdt-logo.png?v=002',
-//   },
-
-//   {
-//     id: 4,
-//     name: 'aave',
-//     symbol: 'AAVE',
-//     amount: '20.82',
-//     imageUrl: 'https://cryptologos.cc/logos/aave-aave-logo.png?v=024',
-//   },
-//   {
-//     id: 5,
-//     name: 'uniswap',
-//     symbol: 'UNI',
-//     amount: '0.8',
-//     imageUrl: 'https://cryptologos.cc/logos/uniswap-uni-logo.png?v=024',
-//   },
-// ];
 
 const CryptoModal = ({ isOpen, onClose, setSelectToken, setWalletIcon, setIsTransac }) => {
   // const [isOpen, setIsOpen] = useState(false);
   // const onClose = () => setIsOpen(false);
 
+  const chains = allSupportedChains();
+// alert(JSON.stringify(supportedAssetsByChain(chains[1], NetworkType.MAINNET)));
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredCrypto, setFilteredCrypto] = useState(crypto);
   const { colorMode } = useColorMode();

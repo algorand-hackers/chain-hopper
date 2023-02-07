@@ -1,13 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Flex, Input, Text, Image, Box, Img, useDisclosure, useColorMode } from '@chakra-ui/react';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import CryptoModal from '../CryptoModal';
 import { networks } from '../../constant/networksJSON'
 import wallet from "../../asset/ETH - Ethereum Token.png"
 import Images_Icons from '../../constant/icons-images';
-
+import { getEtherBalance } from '../../context/main';
+import { TransactionContext } from "../../context/TransactionContext";
 const SelectToken = ({ setSelectToken, walletIcon, selectToken, setWalletIcon, setIsTransac }) => {
-  
+  const [pinTokenBalance, setpinTokenBalance] = useState(0);
+  const { currentAccount, connectToMyAlgo, disconnectWallet } = useContext(TransactionContext);
+
+  useEffect(()=>{
+      getEtherBalance(currentAccount, setpinTokenBalance).then(data=>{console.log(pinTokenBalance)})
+   
+  } )
   const [isOpen, setIsOpen] = useState(false);
   const onClose = () => setIsOpen(false);
 
@@ -60,7 +67,7 @@ const SelectToken = ({ setSelectToken, walletIcon, selectToken, setWalletIcon, s
         <Flex align="center" dir="row" justify="center" 
          fontWeight={500} pl={3} mr={2}
          color={colorMode === 'light' ? 'dark' : 'white' }
-         > <span mr="5px"> ~ </span> $242678</Flex>
+         > <span mr="5px">  </span> <Text onClick={pinTokenBalance} color="blue">MAX</Text></Flex>
         
       </Flex>
 

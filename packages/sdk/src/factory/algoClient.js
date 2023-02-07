@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { Algodv2 } from '@certusone/wormhole-sdk';
+import { Algodv2 } from 'algosdk';
 let algoClientCache = {};
 export function getAlgoClient(network) {
     if (algoClientCache[network])
