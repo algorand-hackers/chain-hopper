@@ -26,6 +26,7 @@ const FAQLogo = require("../asset/FAQSVG.png");
 const arrowDownLogo = require("../asset/arrowDown.png");
 const wormholeSVG = require("../asset/wormholeSVG.png");
 const FALogo = require("../asset/FASVG.png");
+const SOLANALogo = require("../asset/solana.png")
 
 const Images_Icons = {
      ethereumLogo,
@@ -52,7 +53,8 @@ const Images_Icons = {
      bridgeLogo1,
      arrowDownLogo,
      wormholeSVG,
-     FALogo
+     FALogo,
+     SOLANALogo,
 };
 
 export default Images_Icons;

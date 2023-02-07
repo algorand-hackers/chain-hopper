@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Flex, Stack, Text, Image, Box, Img } from '@chakra-ui/react';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import Images_Icons from '../../constant/icons-images';
-
+import {allSupportedChains} from '@chain-hopper/sdk';
 const SelectNetwork = ({ selected, setSelected, tokenIcon, setTokenIcon, BackgroundColor }) => {
 
   const { wrapperSelect, buttonSelect, optionContent, optionContentChild } =
@@ -12,21 +12,15 @@ const SelectNetwork = ({ selected, setSelected, tokenIcon, setTokenIcon, Backgro
   const [icon, setIcon] = useState(false);
   const options = [
     {
-      token:"Ethereum",
+      token:"Ethereum chain",
       img: Images_Icons.ethereumLogo
     }, 
-    // {
-    //   token:"BNB Chain",
-    //   img: Images_Icons.bnbLogo
-    // },
-    // {
-    //   token:"Polygon",
-    //   img: Images_Icons.polygonLogo
-    // }, 
-    // {
-    //   token:"Avalanche",
-    //   img: Images_Icons.avalancheLogo
-    // }
+    {
+      token:"SOLANA Chain",
+      img: Images_Icons.SOLANALogo
+    },
+   
+   
   ]
 
   return (
