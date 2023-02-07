@@ -12,6 +12,7 @@ import {GiHamburgerMenu} from "react-icons/gi"
 import { Link } from 'react-router-dom';
 import Applogo from "../asset/Applogo.svg"
 import wallet from "../asset/wallet.svg"
+import phantomLogo from '../asset/phantomLogo.svg'
 import Btn from '../components/UI/Btn';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import MobileNavbar from './MobileNavbar';
@@ -23,13 +24,23 @@ import { TransactionContext } from "../context/TransactionContext";
 import Images_Icons from '../constant/icons-images';
 import { toast } from 'react-toastify';
 import copy from 'copy-to-clipboard';
+import { ethers } from 'ethers';
 
 const Navbar = () => {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [isMenu, setIsMenu] = useState(false)
     const { address, isConnected } = useAccount();
-    const { currentAccount, connectWallet, connectToMyAlgo, disconnectWallet } = useContext(TransactionContext);
+    const { currentAccount, connectWallet, connectToMyAlgo, 
+         disconnectWallet, 
+         connectPhantom,
+          name, 
+          walletImage,
+          etherscan,
+          algoscan,
+          solanascan
+        } = useContext(TransactionContext);
+
     const { disconnect } = useDisconnect();
     //it will copy the current account that is connected 
      const [copyAddress, setCopyAddress] = useState(address);
@@ -42,10 +53,8 @@ const Navbar = () => {
     useEffect(() => {
       onClose()
       
-    }, [currentAccount, connectWallet, connectToMyAlgo])
-    
-    
-    
+    }, [currentAccount, connectWallet, connectToMyAlgo, connectPhantom ])
+  
      const copyAddressToClipboard = () => {
 
      copy(currentAccount);
@@ -89,7 +98,8 @@ const Navbar = () => {
                         py={2}
                       >
                       <Flex gap={2} align="center"  display={{base:"none", md:"flex"}}>
-                          <Image src={metamask} w={"20px"} h={"20px"} alt="wallet" />
+                          {/* <Image src={metamask} w={"20px"} h={"20px"} alt="wallet" /> */}
+                          <Image boxSize="20px" src={walletImage} alt="" />
                           <Text>{shortenAddress(currentAccount)}</Text>
                         <MdOutlineKeyboardArrowDown className='w-[20px] h-[20px]'/>
                       </Flex> 
@@ -98,9 +108,10 @@ const Navbar = () => {
                         { /* Menu ITEM 1 */}
                       <MenuItem _focus={ { bg: "none" } }>
                         <Flex gap={4} align="center" display={{ base: 'none', md: 'flex' }}>
-                         <Text fontWeight={500}>Connected to Metamask</Text>
-                          <Center size='40px' bgColor="#F1F1F1">
-                           <Image src={Images_Icons.metamasklogo} alt="metamask" />
+                          {/* name is coming from useTransactions Context */}
+                         <Text fontWeight={500}>Connected to {name}</Text>
+                          <Center size='20px' bgColor="#F1F1F1">
+                           <Image boxSize="25px" src={walletImage} alt="" />
                           </Center>
                         </Flex>
                         </MenuItem>
@@ -122,21 +133,50 @@ const Navbar = () => {
                         { /* Menu ITEM 3 */}
                         <MenuItem _focus={ { bg: "none" } }>
                           <Flex gap={2} align="center" direction="column" display={{ base: 'none', md: 'flex' }}>
-                            <Flex pr="10px">
-                              <Image src={Images_Icons.algologo} alt="Algorand"   />
-                              <a href={`https://algoexplorer.io/address/${currentAccount}`} isExternal>
+                            {algoscan ? (
+                                  <Flex pr="10px">
+                                  <Image src={Images_Icons.algologo} alt="Algorand"   />
+                                  <a href={`https://algoexplorer.io/address/${currentAccount}`} isExternal target="_blank">
+                                 
+                                <Text ml="10px">View on {algoscan}</Text>
+                                </a>
+                                 </Flex>
+                            ) : (
+                              <Flex pr="10px"></Flex>
+                            )}
+
+                         {!etherscan ? (
+                                <Flex pr="10px" ></Flex> 
+                            ) : (
+                              <Flex pr="10px" >
+                              <Image src={Images_Icons.EtherscanLogo} alt="Ethereum"  w="30px" h="30px" />
+                              <a href={`https://etherscan.io/address/${currentAccount}`} isExternal target="_blank">
                              
-                            <Text ml="10px">View on Algoexplorer</Text>
-                            </a>
-                             </Flex>
+                             <Text ml="10px">View on {etherscan}</Text>
+                             </a>
+                             </Flex> 
+                            )}
+                            
+                         {!solanascan ? (
+                                <Flex pr="10px" >
+                               </Flex> 
+                            ) : (
+                              <Flex pr="10px" >
+                              <Image src={phantomLogo} alt="Solana"  w="30px" h="30px" />
+                              <a href={`https://explorer.solana.com/address/${currentAccount}`} isExternal target="_blank">
                              
-                            <Flex mt={4} pr="20px" >
+                             <Text ml="10px">View on {solanascan}</Text>
+                             </a>
+                             </Flex> 
+                            )}
+                            
+                            {/* <Flex mt={4} pr="20px" >
                               <Image src={Images_Icons.EtherscanLogo} alt="Ethereum"  w="30px" h="30px" />
                               <a href={`https://etherscan.io/address/${currentAccount}`} isExternal>
                              
                              <Text ml="10px">View on Etherscan</Text>
                              </a>
-                             </Flex>
+                             </Flex> */}
                            
                           </Flex>
                         </MenuItem>
@@ -165,6 +205,7 @@ const Navbar = () => {
             currentAccount={currentAccount} 
             connectWallet={connectWallet}  
             connectToMyAlgo={connectToMyAlgo}
+            connectPhantom={connectPhantom}
             />
 
             {/* Mobile Harmburger */}
