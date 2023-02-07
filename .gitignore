@@ -30,6 +30,11 @@ dist
 .cache
 .turbo
 
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+**.d.ts
+**.d.ts.map
+packages/sdk/src/**/**.js
