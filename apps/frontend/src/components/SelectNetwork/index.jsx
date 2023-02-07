@@ -1,9 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Flex, Stack, Text, Image, Box, Img } from '@chakra-ui/react';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import Images_Icons from '../../constant/icons-images';
 import {allSupportedChains} from '@chain-hopper/sdk';
 const SelectNetwork = ({ selected, setSelected, tokenIcon, setTokenIcon, BackgroundColor }) => {
+  const [allSupportedChains_, _setAallSupportedChains] = useState("")
+
+   
+  useEffect(() =>{
+    _setAallSupportedChains(allSupportedChains())
+ })
+
 
   const { wrapperSelect, buttonSelect, optionContent, optionContentChild } =
     useSelectNetworkStyles();
@@ -47,23 +54,28 @@ const SelectNetwork = ({ selected, setSelected, tokenIcon, setTokenIcon, Backgro
           }}
         >
           <Box>
-            {options?.map((option, index) => (
+            
               <Flex
-              key={option.token}
+              // key={option.token}
               {...optionContentChild}
               _hover={{ bg: '#F7F7F8', borderRadius: '5.3183px' }}
               p={'5px'}
               onClick={e => {
-                setSelected(option.token)
-                setTokenIcon(option.img)
+                // setSelected(allSupportedChains_)
+                // setTokenIcon(option.img)
                 setIsActive(false)
                 setIcon(true)
               }}
             >
-              <Image src={option.img} w={"25px"} h={"25px"} mr={'10px'} />
-              {option.token}
+              <Box >
+              <Image src={Images_Icons.ethereumLogo} w={"25px"} h={"25px"} mr={'10px'} />
+              <Image src={Images_Icons.SOLANALogo} w={"25px"} h={"25px"} mr={'10px'} />
+              </Box>
+             <Box direction>
+            {allSupportedChains_}
+            </Box>
             </Flex>
-            ))}
+          
           
           </Box>
         </Stack>

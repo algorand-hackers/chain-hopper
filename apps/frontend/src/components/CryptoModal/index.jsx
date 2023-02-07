@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Modal,
   ModalOverlay,
@@ -29,8 +29,15 @@ import { NetworkType } from '@chain-hopper/sdk/types';
 const CryptoModal = ({ isOpen, onClose, setSelectToken, setWalletIcon, setIsTransac }) => {
   // const [isOpen, setIsOpen] = useState(false);
   // const onClose = () => setIsOpen(false);
-
+ const [allSupportedChains_, _setAallSupportedChains] = useState("")
+ 
+ 
+   useEffect(() =>{
+      _setAallSupportedChains(allSupportedChains())
+   })
+ 
   const chains = allSupportedChains();
+  //  console.log(chains,"okay")
 // alert(JSON.stringify(supportedAssetsByChain(chains[1], NetworkType.MAINNET)));
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredCrypto, setFilteredCrypto] = useState(crypto);
@@ -63,6 +70,7 @@ const CryptoModal = ({ isOpen, onClose, setSelectToken, setWalletIcon, setIsTran
            fontSize={'18px'}
            >
             Ethereum network tokens
+           
           </ModalHeader>
           <ModalCloseButton mt={5} />
           <InputGroup

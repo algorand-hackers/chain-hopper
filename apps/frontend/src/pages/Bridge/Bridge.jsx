@@ -164,7 +164,7 @@ const [chain, setChain] = useState('')
                       </Flex>
                     </Box>
 
-                    {/* {!walletConnected ? (
+                    {!walletConnected ? (
                       <>
                         <Box onClick={connectWallet}>
                           <Btn2 text="Connect Wallet" />
@@ -178,7 +178,7 @@ const [chain, setChain] = useState('')
                       <>
                         <div></div>
                       </>
-                    ) : ( */}
+                    ) : (
                     <Flex zIndex={1} mt={'-1px'}>
                       <SelectToken
                         networks={networks}
