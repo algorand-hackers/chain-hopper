@@ -300,6 +300,6 @@ export class GlitterBridgeProvider implements BaseBridgeProvider {
     let bal = await solana?.getBalance(quote.toAddress); 
     return bal;
   }
-
+  
     
 }
