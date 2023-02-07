@@ -43,6 +43,8 @@ const Bridge = () => {
   //   // setIsConnect(false)
   // };
 
+const [chain, setChain] = useState('')
+
   const { currentAccount, connectToMyAlgo, disconnectWallet } = useContext(TransactionContext);
 
   useEffect(()=>{
@@ -127,11 +129,11 @@ const Bridge = () => {
                      mb={-1}
                      color={ colorMode === 'light' ? 'black' : 'white'} 
                     >
-                      From the network
+                      From the chain
                     </Text>
 
                     {/* ------------------- SELECT NETWORK -------------------- */}
-                    {/* <Flex zIndex={2} mt={'10px'}>
+                    <Flex zIndex={2} mt={'10px'}>
                       <SelectNetwork
                         selected={selected}
                         setSelected={setSelected}
@@ -139,7 +141,7 @@ const Bridge = () => {
                         tokenIcon={tokenIcon}
                         setTokenIcon={setTokenIcon}
                       />
-                    </Flex> */}
+                    </Flex>
 
                     <Box
                       border="1px solid #E2E8F0"
