@@ -287,5 +287,19 @@ export class GlitterBridgeProvider implements BaseBridgeProvider {
    }
   }
 
+  // Returns the erc20 balance for an address on the algorand blockchain 
+
+  public async returnAlgoBalance (quote: Quote) {
+    let bal = await algorand?.getBalance(quote.toAddress); 
+    return bal;
+  }
+
+   // Returns the erc20 balance for an address on the solana blockchain 
+
+   public async returnSolBalance (quote: Quote) {
+    let bal = await solana?.getBalance(quote.toAddress); 
+    return bal;
+  }
+
     
 }
