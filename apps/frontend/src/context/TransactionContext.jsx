@@ -5,6 +5,7 @@ import MyAlgoConnect from '@randlabs/myalgo-connect';
 import metamaskLogoM from '../asset/metamask.svg'
 import myAlgoLogoM from '../asset/myAlgo.png';
 import phantomLogoM from '../asset/phantomLogo.svg';
+import Images_Icons from '../constant/icons-images';
 
 
 export const TransactionContext = React.createContext();
@@ -13,12 +14,21 @@ const { ethereum, solana } = window;
 
 export const TransactionsProvider = ({ children }) => {
 
-  const [currentAccount, setCurrentAccount] = useState('');
-  const [name, setName] = useState('');
-  const [walletImage, setWalletImage] = useState('');
-  const [etherscan, setEtherscan] = useState('');
+  const [otherChainAccount, setOtherChainAccount] = useState('');
+  const [algorandAccount, setAlgorandAccount] = useState('');
+  const [algorandWalletName, setAlgorandWalletName] = useState('');
+  const [otherWalletName, setOtherWalletName] = useState('');
+  const [algorandWalletImage, setAlgorandWalletImage] = useState('');
+  const [otherWalletImage, setOtherWalletImage] = useState('');
+  const [otherChainName, setOtherChainName] = useState('');
+  const [otherExplorerName, setOtheExplorerName] = useState('');
+  const [otherExplorerLogo, setOtherExplorerLogo] = useState('');
+  const [otherExplorerLogoAltText, setOtherExplorerLogoAltText] = useState('');
+
+
+
   const [algoscan, setAlgoscan] = useState('');
-  const [solanascan, setSolanasacan] = useState('');
+  const [otherScan, setOtherScan] = useState('');
 
   // const checkIfWalletIsConnect = async () => {
   //   // if (typeof window != "undefined" && typeof window.ethereum != "undefined"){
@@ -77,16 +87,20 @@ export const TransactionsProvider = ({ children }) => {
   //       }
   // };
 
-  const connectWallet = async () => {
+  const connectMetamask = async () => {
     try {
       if (ethereum) {
         const accounts = await ethereum.request({
           method: 'eth_requestAccounts',
         });
-        setCurrentAccount(accounts[0]);
-        setName("Metamask");
-        setWalletImage(metamaskLogoM);
-        setEtherscan('Etherscan');
+        setOtherChainAccount(accounts[0]);
+        setOtherWalletName("Metamask");
+        setOtherWalletImage(metamaskLogoM);
+        setOtherScan(`https://etherscan.io/address`);
+        setOtherChainName("ethereum");
+        setOtherExplorerLogo(Images_Icons.EtherscanLogo);
+        setOtherExplorerLogoAltText('Ethereum');
+        setOtheExplorerName("EtherScan");
         localStorage.setItem("wallet", accounts[0]);
         // window.location.reload();
       } else {
@@ -102,8 +116,12 @@ export const TransactionsProvider = ({ children }) => {
     }
   };
 
-  const disconnectWallet = async () => {
-    setCurrentAccount("");
+  const disconnectWallet = async (chain) => {
+    if(chain == 'algo') {
+      setAlgorandAccount("");
+    }else{
+      setOtherChainAccount("");
+    }
     localStorage.clear();
     toast.info('Disconnected Successfully', {
       position: toast.POSITION.TOP_CENTER, 
@@ -128,10 +146,10 @@ export const TransactionsProvider = ({ children }) => {
       //  setCurrentAccount(accounts[0].toString())
        const addresses = accounts.map(account => account.address);
       //  console.log(addresses.toString())
-       setCurrentAccount(addresses[0].toString())
-       setName("My Algo");
-       setWalletImage(myAlgoLogoM);
-       setAlgoscan('Algoexplorer');
+       setAlgorandAccount(addresses[0].toString())
+       setAlgorandWalletName("My Algo");
+       setAlgorandWalletImage(myAlgoLogoM);
+       setAlgoscan('https://algoexplorer.io/address');
      } catch (err) {
        console.error(err);
        toast.error('something went wrong... issue might be your network', {
@@ -174,13 +192,17 @@ export const TransactionsProvider = ({ children }) => {
             "public key",
             response.publicKey.toString()
           );
-          setCurrentAccount(response.publicKey.toString());
-          setName("Phantom");
-          setWalletImage(phantomLogoM);
-          setSolanasacan('SolanaScan');
+          setOtherChainAccount(response.publicKey.toString());
+          setOtherWalletName("Phantom");
+          setOtherWalletImage(phantomLogoM);
+          setOtherScan('https://explorer.solana.com/address');
+          setOtherChainName("solana");
+          setOtherExplorerLogo(phantomLogoM);
+          setOtherExplorerLogoAltText('Solana');
+          setOtheExplorerName("Solana Scan");
         } else {
           // alert("Please install phantom wallet");
-          toast.info('Please install phantom wallet (https://phantom.app/)', {
+          toast.info('Please install or unlock phantom wallet (https://phantom.app/)', {
             position: toast.POSITION.TOP_CENTER, 
             autoClose: 2000,
            });
@@ -197,16 +219,22 @@ export const TransactionsProvider = ({ children }) => {
   return (
     <TransactionContext.Provider
       value={{
-        currentAccount,
-        connectWallet,
+        algorandAccount,
+        otherChainAccount,
+        connectMetamask,
         connectToMyAlgo,
         disconnectWallet,
         connectPhantom,
-        name,
-        walletImage,
-        etherscan,
+        algorandWalletName,
+        otherWalletName,
+        algorandWalletImage,
+        otherWalletImage,
         algoscan,
-        solanascan
+        otherScan,
+        otherChainName,
+        otherExplorerLogo,
+        otherExplorerLogoAltText,
+        otherExplorerName
       }}
     >
       {children}
