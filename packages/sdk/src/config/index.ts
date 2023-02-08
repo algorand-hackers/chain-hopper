@@ -18,14 +18,14 @@ export const SOLANA_WALLETS = {Phantom: 'Phantom', Solflare: 'Solflare'}
 export const Assets: Record<string, Record<string,Record<string, Asset>>> = {
     Mainnet: {
         [Chains.SOL]:{
-            xALGO: {symbol: 'xALGO', description: 'Wrapped ALGO on Solana', address: 'xALGoH1zUfRmpCriy94qbfoMXHtK6NDnMKzT4Xdvgms', decimals: 6},
+            xALGO: {symbol: 'xALGO', description: 'Wrapped ALGO on Solana', address: 'xALGoH1zUfRmpCriy94qbfoMXHtK6NDnMKzT4Xdvgms', decimals: 18},
         
             SOL: {symbol: 'SOL', description: 'Native Solana on Solana', address: '', decimals: 9},
     
             USDCs: {symbol: 'USDCs', description: "USDC on Solana", address: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v', decimals: 6}
         },
         [Chains.ALGO]:{
-            ALGO: {symbol: 'ALGO', description: 'Native ALGO on Algorand', address: '', decimals: 5},
+            ALGO: {symbol: 'ALGO', description: 'Native ALGO on Algorand', address: '', decimals: 18},
     
             xSOL: {symbol: 'xSOL', description: 'Wrapped Sol on Algorand', address: '', decimals: 9},
     
@@ -39,14 +39,14 @@ export const Assets: Record<string, Record<string,Record<string, Asset>>> = {
     },
     Testnet:  {
         [Chains.SOL]:{
-            xALGO: {symbol: 'xALGO', description: 'Wrapped ALGO on Solana', address: '', decimals:6},
+            xALGO: {symbol: 'xALGO', description: 'Wrapped ALGO on Solana', address: '', decimals:18},
         
             SOL: {symbol: 'SOL', description: 'Native Solana on Solana', address: '', decimals: 9},
     
             USDCs: {symbol: 'USDCs', description: "USDC on Solana", address: 'CpMah17kQEL2wqyMKt3mZBdTnZbkbfx4nqmQMFDP5vwp', decimals: 6}
         },
         [Chains.ALGO]:{
-            ALGO: {symbol: 'ALGO', description: 'Native ALGO on Algorand', address: '', decimals: 5},
+            ALGO: {symbol: 'ALGO', description: 'Native ALGO on Algorand', address: '', decimals: 18},
     
             xSOL: {symbol: 'xSOL', description: 'Wrapped Sol on Algorand', address: '', decimals: 9},
     
