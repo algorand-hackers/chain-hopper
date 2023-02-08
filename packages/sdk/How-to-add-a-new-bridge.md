@@ -7,6 +7,6 @@ Currently only two bridges are integrated into the bridge aggregator. These are:
 
 - Craate a new class that extends and implements the functions of [BaseBridgeProvider](src/baseBridgeProvider/index.ts). 
 
-- Add the new bridge to enum BridgeId in [types](src/types.ts) and BRIDGE_PROVIDERS in [bridgeProviders.ts](src/config/bridgeProviders.ts)
+- Add the new bridge to enum BridgeId in [types](https://github.com/algorand-hackers/chain-hopper/blob/develop/packages/sdk/src/types.ts#:~:text=export%20enum%20BridgeId,%7D) and [BRIDGE_PROVIDERS](src/config/bridgeProviders.ts)
 
-- Add extra Chains, Wallets and Assets supported by the bridge to [config](src/config/index.ts)
+- Add extra [Chains](https://github.com/algorand-hackers/chain-hopper/blob/develop/packages/sdk/src/config/index.ts#:~:text=export%20const%20Chains,%7D), [Wallets](https://github.com/algorand-hackers/chain-hopper/blob/develop/packages/sdk/src/config/index.ts#:~:text=export%20const%20EVM_WALLETS,%27Solflare%27%7D) and Assets supported by the bridge to [config](src/config/index.ts)
