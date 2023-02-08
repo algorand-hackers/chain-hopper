@@ -1,8 +1,8 @@
 import { Asset, NetworkType } from "../types"
 
 export const Chains = {
-    SOL: "solana",
-    ALGO: "algorand",
+    SOL: "Solana",
+    ALGO: "Algorand",
     ETH: "Ethereum"
 }
 
@@ -17,44 +17,44 @@ export const SOLANA_WALLETS = {Phantom: 'Phantom', Solflare: 'Solflare'}
 
 export const Assets: Record<string, Record<string,Record<string, Asset>>> = {
     Mainnet: {
-        SOL:{
-            xALGO: {symbol: 'xalgo', description: 'Wrapped ALGO on Solana', address: '', decimals: 5},
+        [Chains.SOL]:{
+            xALGO: {symbol: 'xALGO', description: 'Wrapped ALGO on Solana', address: '', decimals: 5},
         
-            SOLANA: {symbol: 'sol', description: 'Native Solana on Solana', address: '', decimals: 5},
+            SOL: {symbol: 'SOL', description: 'Native Solana on Solana', address: '', decimals: 5},
     
             USDCs: {symbol: 'USDCs', description: "USDC on Solana", address: '', decimals: 5}
         },
-        ALGO:{
-            ALGO: {symbol: 'algo', description: 'Native ALGO on Algorand', address: '', decimals: 5},
+        [Chains.ALGO]:{
+            ALGO: {symbol: 'ALGO', description: 'Native ALGO on Algorand', address: '', decimals: 5},
     
-            xSOL: {symbol: 'xsol', description: 'Wrapped Sol on Algorand', address: '', decimals: 5},
+            xSOL: {symbol: 'xSOL', description: 'Wrapped Sol on Algorand', address: '', decimals: 5},
     
-            USDCa: {symbol: 'USDCs', description: "USDC on Solana", address: '', decimals: 5},
+            USDCa: {symbol: 'USDCa', description: "USDC on Algorand", address: '', decimals: 5},
     
             WETH: {symbol: 'WETH', description: "Wormhole Wrapped ether on algorand", address: '', decimals: 5} //@Todo insert correct address
         },
-        ETH:{
+        [Chains.ETH]:{
             ETH: {symbol: 'ETH', description: 'Native ETH on Ethereum', address: '', decimals: 5},
         }
     },
     Testnet:  {
-        SOL:{
-            xALGO: {symbol: 'xalgo', description: 'Wrapped ALGO on Solana', address: '', decimals: 5},
+        [Chains.SOL]:{
+            xALGO: {symbol: 'xALGO', description: 'Wrapped ALGO on Solana', address: '', decimals: 5},
         
-            SOLANA: {symbol: 'sol', description: 'Native Solana on Solana', address: '', decimals: 5},
+            SOL: {symbol: 'SOL', description: 'Native Solana on Solana', address: '', decimals: 5},
     
             USDCs: {symbol: 'USDCs', description: "USDC on Solana", address: '', decimals: 5}
         },
-        ALGO:{
-            ALGO: {symbol: 'algo', description: 'Native ALGO on Algorand', address: '', decimals: 5},
+        [Chains.ALGO]:{
+            ALGO: {symbol: 'ALGO', description: 'Native ALGO on Algorand', address: '', decimals: 5},
     
-            xSOL: {symbol: 'xsol', description: 'Wrapped Sol on Algorand', address: '', decimals: 5},
+            xSOL: {symbol: 'xSOL', description: 'Wrapped Sol on Algorand', address: '', decimals: 5},
     
-            USDCa: {symbol: 'USDCs', description: "USDC on Solana", address: '', decimals: 5},
+            USDCa: {symbol: 'USDCa', description: "USDC on Algorand", address: '', decimals: 5},
     
             WETH: {symbol: 'WETH', description: "Wormhole Wrapped ether on algorand", address: '', decimals: 5} //@Todo insert correct address
         },
-        ETH:{
+        [Chains.ETH]:{
             ETH: {symbol: 'ETH', description: 'Native ETH on Ethereum', address: '', decimals: 5},
         }
     }
