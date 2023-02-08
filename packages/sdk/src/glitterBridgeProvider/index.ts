@@ -5,10 +5,10 @@ import { getNonAlgorandChain } from "../utils";
 import { GlitterBridgeSDK } from 'glitter-bridge-sdk';
 
 
-const solMainnetAssets = Assets.Mainnet.SOL;
-const algoMainnetAssets = Assets.Mainnet.ALGO;
-const solTestnetAssets = Assets.Testnet.SOL;
-const algoTestnetAssets = Assets.Testnet.ALGO;
+const solMainnetAssets = Assets.Mainnet[Chains.SOL];
+const algoMainnetAssets = Assets.Mainnet[Chains.ALGO];
+const solTestnetAssets = Assets.Testnet[Chains.SOL];
+const algoTestnetAssets = Assets.Testnet[Chains.ALGO];
 const baseURL =  'https://api.glitterfinance.org/api'
 
 const sdk = new GlitterBridgeSDK();

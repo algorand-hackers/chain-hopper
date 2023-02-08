@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Flex, Stack, Text, Image, Box, Img } from '@chakra-ui/react';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import Images_Icons from '../../constant/icons-images';
-import {allSupportedChains} from '@chain-hopper/sdk';
+import {allSupportedChains, NetworkType, Chains} from '@chain-hopper/sdk';
 const SelectNetwork = ({ selected, setSelected, tokenIcon, setTokenIcon, BackgroundColor }) => {
 
   const { wrapperSelect, buttonSelect, optionContent, optionContentChild } =
@@ -10,18 +10,20 @@ const SelectNetwork = ({ selected, setSelected, tokenIcon, setTokenIcon, Backgro
 
   const [isActive, setIsActive] = useState(false);
   const [icon, setIcon] = useState(false);
-  const options = [
-    {
-      token:"Ethereum chain",
-      img: Images_Icons.ethereumLogo
-    }, 
-    {
-      token:"SOLANA Chain",
-      img: Images_Icons.SOLANALogo
-    },
-   
-   
-  ]
+  const  supportedChains = allSupportedChains(NetworkType.TESTNET)
+
+  const chainLogos = {
+    [Chains.ETH]: Images_Icons.ethereumLogo,
+    [Chains.SOL]: Images_Icons.SOLANALogo,
+  }
+
+  const options =  supportedChains.map(chain => {
+    return {
+      token: chain,
+      img: chainLogos[chain]
+    }
+  });
+
 
   return (
     <Flex  bg={BackgroundColor} {...wrapperSelect}>
