@@ -33,4 +33,4 @@ Yarn Workspaces enables us to "hoist" dependencies that are shared between packa
 - [How to add a new bridge](packages/sdk/How-to-add-a-new-bridge.md)
 - [Demo](https://www.figma.com/proto/C8DkuVao08iMz7xNCvHUea/ChainHooper?page-id=292%3A11879&node-id=298%3A26390&viewport=2773%2C-1033%2C0.19&scaling=min-zoom&starting-point-node-id=298%3A26390)
 - [Frontend Deployment](https://chains-frontend.vercel.app/)
-- [Figma design](https://www.figma.com/file/C8DkuVao08iMz7xNCvHUea/ChainHooper?node-id=0%3A1)
+- [Figma design](https://www.figma.com/proto/C8DkuVao08iMz7xNCvHUea/ChainHooper?page-id=292%3A11879&node-id=298%3A26390&viewport=2773%2C-1033%2C0.19&scaling=min-zoom&starting-point-node-id=298%3A26390)
