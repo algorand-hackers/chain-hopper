@@ -12,10 +12,10 @@ import MyAlgoConnect from "@randlabs/myalgo-connect";
 import { getAlgoClient } from "../factory/algoClient";
 import { waitingTimes } from "./timeEstimates";
 
-const ethMainnetAssets = Assets.Mainnet.ETH;
-const ethTestnetAssets = Assets.Testnet.ETH;
-const algoMainnetAssets = Assets.Mainnet.ALGO;
-const algoTestnetAssets = Assets.Testnet.ALGO;
+const ethMainnetAssets = Assets.Mainnet[Chains.ETH];
+const ethTestnetAssets = Assets.Testnet[Chains.ETH];
+const algoMainnetAssets = Assets.Mainnet[Chains.ALGO];
+const algoTestnetAssets = Assets.Testnet[Chains.ALGO];
 
 export class WormHoleBridgeProvider implements BaseBridgeProvider  {
 

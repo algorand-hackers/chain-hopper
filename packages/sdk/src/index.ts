@@ -2,6 +2,8 @@
 
 import { BridgeId, NetworkType, Quote, QuoteRequest, Update } from "./types";
 import { getBridgeProvider } from "./factory/bridgeProvider";
+export * from "./types";
+export {Chains} from  "./config/index";
 
 export function allSupportedChains(network: NetworkType): string[] {
     let chains = new Set();
