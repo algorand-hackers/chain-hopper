@@ -36,14 +36,12 @@ import Images_Icons from '../../constant/icons-images';
 // const peraWallet = new PeraWalletConnect();
 
 const ConnectWallet = ({
-  currentAccount,
-  connectWallet,
-  walletIcon,
+  algorandAccount,
+  otherChainAccount,
+  connectMetamask,
   connectToMyAlgo,
   connectPhantom,
-  phantom,
   isOpen,
-  onOpen,
   onClose,
 }) => {
 
@@ -84,33 +82,8 @@ const ConnectWallet = ({
             mb="10px"
           >
             {/* {wallet?.map((item) => ( */}
-              <Flex
-                direction={'column'}
-                display="flex"
-                justify="center"
-                alignItems="center"
-                onClose={onClose}
-                onClick={connectWallet}
-                _hover={ colorMode === 'light' ? { bg: '#EFF6FF', borderRadius: '16px', color: "black" } :
-                { bg: '#EFF6FF', borderRadius: '16px', color: "black" }
-                }
-                align="center"
-                as="button"
-                // key={item.nanoid}
-                w="30%"
-                mb={8}
-                p={4}
-              >
-                <Image src={metamask} />
-                <Box>
-                  <Text mt="4px" textAlign={'left'} fontSize="16px">
-                   Metamask
-                  </Text>
-                </Box>
-              </Flex>
-               
-               {/* -------------------- My Algo Wallet ------------------------ */}
-              <Flex
+              {/* -------------------- My Algo Wallet ------------------------ */}
+              {!algorandAccount && (<Flex
                 direction={'column'}
                 display="flex"
                 justify="center"
@@ -133,8 +106,35 @@ const ConnectWallet = ({
                    MyAlgo
                   </Text>
                 </Box>
-              </Flex>
+              </Flex>)}
 
+
+              {!!algorandAccount && !otherChainAccount && 
+              (<> <Flex
+                direction={'column'}
+                display="flex"
+                justify="center"
+                alignItems="center"
+                onClose={onClose}
+                onClick={connectMetamask}
+                _hover={ colorMode === 'light' ? { bg: '#EFF6FF', borderRadius: '16px', color: "black" } :
+                { bg: '#EFF6FF', borderRadius: '16px', color: "black" }
+                }
+                align="center"
+                as="button"
+                // key={item.nanoid}
+                w="30%"
+                mb={8}
+                p={4}
+              >
+                <Image src={metamask} />
+                <Box>
+                  <Text mt="4px" textAlign={'left'} fontSize="16px">
+                   Metamask
+                  </Text>
+                </Box>
+              </Flex>
+               
                  {/* -------------------- My Phantom Wallet ------------------------ */}
                  <Flex
                 direction={'column'}
@@ -159,7 +159,7 @@ const ConnectWallet = ({
                    Phantom
                   </Text>
                 </Box>
-              </Flex>
+              </Flex></>)}
 
               {/* -------------------- Pera Wallet ------------------------ */}
               {/* <Flex
