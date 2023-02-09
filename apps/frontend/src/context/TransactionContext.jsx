@@ -6,6 +6,8 @@ import metamaskLogoM from '../asset/metamask.svg'
 import myAlgoLogoM from '../asset/myAlgo.png';
 import phantomLogoM from '../asset/phantomLogo.svg';
 import Images_Icons from '../constant/icons-images';
+import { getSolBalance } from './main';
+import { NetworkType } from '@chain-hopper/sdk';
 
 
 export const TransactionContext = React.createContext();
@@ -66,6 +68,7 @@ export const TransactionsProvider = ({ children }) => {
 
   const disconnectWallet = async (chain) => {
     if(chain == 'algo') {
+      await getSolBalance(NetworkType.MAINNET, "d");
       setAlgorandAccount("");
     }else{
       setOtherChainAccount("");
