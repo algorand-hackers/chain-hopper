@@ -29,6 +29,7 @@ import Withdrawer from '../../components/Withdrawer';
 import { Eth } from '../../asset';
 import { getEtherBalance } from '../../context/main';
 import { TransactionContext } from "../../context/TransactionContext";
+import { Chains, NetworkType, supportedDepositAssetsByChain } from '@chain-hopper/sdk';
 // const NetworkSelector = lazy(
 //   () => import("../../components/NetworkSelector")
 // );
@@ -36,30 +37,30 @@ import { TransactionContext } from "../../context/TransactionContext";
 const Bridge = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [pinTokenBalance, setpinTokenBalance] = useState(0);
+  const [depositChainBalance, setDepositChainBalance] = useState(0);
+  const [withdrawalChainBalance, setWithdrawalChainBalance] = useState(0);
+
    const { colorMode } = useColorMode();
   // const connectWallet = () => {
   //   onOpen();
   //   // setIsConnect(false)
   // };
 
-const [chain, setChain] = useState('')
+  const { otherChainAccount} = useContext(TransactionContext);
 
-  const { currentAccount, connectToMyAlgo, disconnectWallet } = useContext(TransactionContext);
-
-  useEffect(()=>{
-      getEtherBalance(currentAccount, setpinTokenBalance).then(data=>{console.log(pinTokenBalance)})
-   
-  } )
   
 
   const { root, fontsm } = useBridgeStyles();
 
   // This is to select Network
-  const [selected, setSelected] = useState('Select Network');
+  const [selected, setSelected] = useState('Select');
+  const [selectedWithdrawToChain, setSelectedWithdrawToChain] = useState('Select');
+
   const [tokenIcon, setTokenIcon] = useState();
   // This is to select Token
-  const [selectToken, setSelectToken] = useState('ETH');
+  const [selectToken, setSelectToken] = useState('Select');
+  const [selectedTokenToWithdraw, setSelectedTokenToWithdraw] = useState('Select');
+
   const [walletIcon, setWalletIcon] = useState(wallet);
   // This is for the connect button on the component to start it
   const [walletConnected, setWalletConnected] = useState(false);
@@ -71,6 +72,21 @@ const [chain, setChain] = useState('')
   //   const networkData = networks.map((data) => {
   //   return { id: nanoid(), ...data };
   // });
+
+  useEffect(()=>{
+      if(selected === Chains.ETH)
+        getEtherBalance(otherChainAccount, setDepositChainBalance).then(data=>{console.log(depositChainBalance)});
+      else 
+        setDepositChainBalance(0);
+  },[selected]);
+
+  useEffect(()=>{
+    if(selectedWithdrawToChain === Chains.ETH)
+      getEtherBalance(otherChainAccount, setDepositChainBalance).then(data=>{console.log(depositChainBalance)});
+    else 
+      setWithdrawalChainBalance(0);
+  },[selectedWithdrawToChain]);
+
 
   return (
     <Flex 
@@ -160,7 +176,7 @@ const [chain, setChain] = useState('')
                           {selected} Chain
                          </Text>
                         </Flex>
-                        <Text color={ colorMode === 'light' ? 'black' : 'white'} ><span className="text-[#A0AEC0] mr-2 text-xs">Balance:</span>{pinTokenBalance}</Text>
+                        <Text color={ colorMode === 'light' ? 'black' : 'white'} ><span className="text-[#A0AEC0] mr-2 text-xs">Balance:</span>0.00005</Text>
                       </Flex>
                     </Box>
 
@@ -181,7 +197,9 @@ const [chain, setChain] = useState('')
                     ) : ( */}
                     <Flex zIndex={1} mt={'-1px'}>
                       <SelectToken
-                        networks={networks}
+                        tokens={supportedDepositAssetsByChain(selected,   NetworkType.TESTNET )}
+                        network={NetworkType.TESTNET}
+                        chain={selected}
                         setSelectToken={setSelectToken}
                         selectToken={selectToken}
                         walletIcon={walletIcon}
@@ -247,8 +265,11 @@ const [chain, setChain] = useState('')
 
               <TabPanel>
                 <Withdrawer
-                  selected={selected}
-                  setSelected={setSelected}
+                  otherChainBalance={withdrawalChainBalance}
+                  selected={selectedWithdrawToChain}
+                  setSelected={setSelectedWithdrawToChain}
+                  selectToken={selectedTokenToWithdraw}
+                  setSelectToken={setSelectedTokenToWithdraw}
                   tokenIcon={tokenIcon}
                   setTokenIcon={setTokenIcon}
                   // ConnectWallet Props
@@ -262,8 +283,6 @@ const [chain, setChain] = useState('')
                   // Select Token
 
                   networks={networks}
-                  setSelectToken={setSelectToken}
-                  selectToken={selectToken}
                   setIsTransac={setIsTransac}
                   // connect to wallet
 

@@ -12,7 +12,8 @@ export type Asset = {
     symbol: string,
     address: string,
     description: string,
-    decimals: number
+    decimals: number,
+    imageUrl: string
 }
 
 export type QuoteRequest<FromWallet = any, ToWallet = any> = {
