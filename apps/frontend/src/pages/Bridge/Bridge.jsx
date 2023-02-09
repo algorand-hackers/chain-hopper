@@ -39,6 +39,9 @@ const Bridge = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [depositTokenBalanceOnOtherChain, setDepositTokenBalanceOnOtherChain] = useState(0);
   const [withdrawalTokenBalanceOnOtherChain, setWithdrawalTokenBalanceOnOtherChain] = useState(0);
+  const [algoChainBalOfDepositToken, setAlgoChainBalOfDepositToken] = useState(5000);
+  const [algoChainBalOfWithdrawalToken, setAlgoChainBalOfWithdrawalToken] = useState(5000);
+
 
    const { colorMode } = useColorMode();
   // const connectWallet = () => {
@@ -208,6 +211,7 @@ const Bridge = () => {
                     ) : ( */}
                     <Flex zIndex={1} mt={'-1px'}>
                       <SelectToken
+                        selectTokenBalance={depositTokenBalanceOnOtherChain}
                         tokens={supportedDepositAssetsByChain(selected,   NetworkType.TESTNET )}
                         network={NetworkType.TESTNET}
                         chain={selected}
@@ -247,7 +251,7 @@ const Bridge = () => {
                         </Flex>
                         <Text color={ colorMode === 'light' ? 'black' : 'white'}>
                           <span className="text-[#A0AEC0] mr-2 text-xs">
-                            Balance:</span>0.00000000
+                            Balance:</span>{algoChainBalOfDepositToken}
                           </Text>
                       </Flex>
                       </Box>
@@ -277,6 +281,7 @@ const Bridge = () => {
               <TabPanel>
                 <Withdrawer
                   otherChainBalance={withdrawalTokenBalanceOnOtherChain}
+                  algoChainBalance={algoChainBalOfWithdrawalToken}
                   selected={selectedWithdrawToChain}
                   setSelected={setSelectedWithdrawToChain}
                   selectToken={selectedTokenToWithdraw}

@@ -24,6 +24,7 @@ import { Eth } from '../asset';
 
 const Withdrawer = ({
   otherChainBalance,
+  algoChainBalance,
   selected,
   setSelected,
   tokenIcon,
@@ -114,10 +115,11 @@ const Withdrawer = ({
               Algorand
             </Text>
           </Flex>
-          <Text color="#2D8EFF" pt="4px" fontSize="14px">Balance: 34,678,785 Algo</Text>
+          <Text color="#2D8EFF" pt="4px" fontSize="14px">Balance: {algoChainBalance}</Text>
         </Flex>
         <Box mt="-1px">
           <SelectToken
+            selectTokenBalance={algoChainBalance}
             tokens={supportedWithdrawAssetsByChain(selected,  NetworkType.TESTNET )}
             network={NetworkType.TESTNET}
             chain={selected}

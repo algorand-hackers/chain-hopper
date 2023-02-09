@@ -7,15 +7,14 @@ import wallet from "../../asset/ETH - Ethereum Token.png"
 import Images_Icons from '../../constant/icons-images';
 import { getEtherBalance } from '../../context/main';
 import { TransactionContext } from "../../context/TransactionContext";
-const SelectToken = ({ setSelectToken, walletIcon, selectToken, setWalletIcon, chain, network, tokens, isWithdrawal, setIsTransac }) => {
-  const [pinTokenBalance, setpinTokenBalance] = useState(0);
+const SelectToken = ({ setSelectToken, walletIcon, selectToken, setWalletIcon, chain, network, tokens, isWithdrawal, selectTokenBalance, setIsTransac }) => {
   const [value, setValue] = useState("");
   // const { currentAccount, connectToMyAlgo, disconnectWallet } = useContext(TransactionContext);
-  const onClick = () => setValue(pinTokenBalance);
-  // useEffect(()=>{
-  //     getEtherBalance(currentAccount, setpinTokenBalance).then(data=>{console.log(pinTokenBalance)})
-   
-  // } )
+  const onClick = () => {
+    alert('Cammer herer');
+    setValue(selectTokenBalance);
+  }
+
   const [isOpen, setIsOpen] = useState(false);
   const onClose = () => setIsOpen(false);
 
