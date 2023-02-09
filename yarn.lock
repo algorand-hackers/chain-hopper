@@ -5298,7 +5298,7 @@ algosdk@^1.15.0:
     tweetnacl "^1.0.3"
     vlq "^2.0.4"
 
-algosdk@latest:
+algosdk@^2.1.0, algosdk@latest:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/algosdk/-/algosdk-2.1.0.tgz#2d9538445a58f84d648836182f90985762715418"
   integrity sha512-KogpdRK3u7Efvw0FVduyFQEOwI+uGvMJmXUvzdmQJjK0hWhEYUl13X/X1QqNKwyEZjw2qutf9pf23UbNnBEAwA==
