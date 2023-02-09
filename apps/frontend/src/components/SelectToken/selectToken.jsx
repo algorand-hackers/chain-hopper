@@ -7,16 +7,23 @@ import wallet from "../../asset/ETH - Ethereum Token.png"
 import Images_Icons from '../../constant/icons-images';
 import { getEtherBalance } from '../../context/main';
 import { TransactionContext } from "../../context/TransactionContext";
-const SelectToken = ({ setSelectToken, walletIcon, selectToken, setWalletIcon, setIsTransac }) => {
+const SelectToken = ({ setSelectToken, walletIcon, selectToken, setWalletIcon, chain, network, tokens, isWithdrawal, setIsTransac }) => {
   const [pinTokenBalance, setpinTokenBalance] = useState(0);
   const [value, setValue] = useState("");
+<<<<<<< HEAD
   const { otherChainAccount, connectToMyAlgo, disconnectWallet } = useContext(TransactionContext);
   const onClick = () => setValue(pinTokenBalance);
 
   useEffect(()=>{
       getEtherBalance(otherChainAccount, setpinTokenBalance).then(data=>{console.log(pinTokenBalance)})
+=======
+  // const { currentAccount, connectToMyAlgo, disconnectWallet } = useContext(TransactionContext);
+  const onClick = () => setValue(pinTokenBalance);
+  // useEffect(()=>{
+  //     getEtherBalance(currentAccount, setpinTokenBalance).then(data=>{console.log(pinTokenBalance)})
+>>>>>>> 145f012a24158f07c03dd0b1ea0a08f065e034a2
    
-  } )
+  // } )
   const [isOpen, setIsOpen] = useState(false);
   const onClose = () => setIsOpen(false);
 
@@ -77,6 +84,10 @@ const SelectToken = ({ setSelectToken, walletIcon, selectToken, setWalletIcon, s
 
       {/* -------------------- THE SELECT OPTION DROPDOWN NETWORK AVAILABLE ---------------------- */}
         <CryptoModal
+            isWithdrawal={isWithdrawal}
+            tokens={tokens || []}
+            network={network}
+            chain={chain}
             isOpen={isOpen}
             onClose={onClose}
             setSelectToken={setSelectToken} 

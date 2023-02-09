@@ -12,20 +12,20 @@ import MyAlgoConnect from "@randlabs/myalgo-connect";
 import { getAlgoClient } from "../factory/algoClient";
 import { waitingTimes } from "./timeEstimates";
 
-const ethMainnetAssets = Assets.Mainnet[Chains.ETH];
-const ethTestnetAssets = Assets.Testnet[Chains.ETH];
-const algoMainnetAssets = Assets.Mainnet[Chains.ALGO];
-const algoTestnetAssets = Assets.Testnet[Chains.ALGO];
+const ethMainnetAssets = Assets[NetworkType.MAINNET][Chains.ETH];
+const ethTestnetAssets = Assets[NetworkType.TESTNET][Chains.ETH];
+const algoMainnetAssets = Assets[NetworkType.MAINNET][Chains.ALGO];
+const algoTestnetAssets = Assets[NetworkType.TESTNET][Chains.ALGO];
 
 export class WormHoleBridgeProvider implements BaseBridgeProvider  {
 
 
     readonly supportedAssetsMaps = {
         [NetworkType.MAINNET]: {
-            [Chains.ETH]: [[ethMainnetAssets.ETH.symbol, algoMainnetAssets.WETH.symbol]]
+            [Chains.ETH]: [[ethMainnetAssets.ETH.symbol, algoMainnetAssets.WETH_Wormhole.symbol]]
         },
         [NetworkType.TESTNET]: {
-            [Chains.ETH]: [[ethTestnetAssets.ETH.symbol, algoTestnetAssets.WETH.symbol]]
+            [Chains.ETH]: [[ethTestnetAssets.ETH.symbol, algoTestnetAssets.WETH_Wormhole.symbol]]
         }
     }
 
@@ -33,9 +33,13 @@ export class WormHoleBridgeProvider implements BaseBridgeProvider  {
         return [Chains.ETH];
     }
 
-    public supportedAssetsByChain(chain: string, network: NetworkType) {
+    public supportedDepositAssetsByChain(chain: string, network: NetworkType) {
         return this.supportedAssetsMaps[network][chain].map(assetMap => assetMap[0]);
     }
+
+    public supportedWithdrawAssetsByChain(chain: string, network: NetworkType) {
+      return this.supportedAssetsMaps[network][chain].map(assetMap => assetMap[1]);
+  }
 
     public async getQuote(quoteRequest: QuoteRequest): Promise<Quote | null> {
 
@@ -45,7 +49,10 @@ export class WormHoleBridgeProvider implements BaseBridgeProvider  {
         if(!this.supportedChains(quoteRequest.network).includes(nonAlgorandChain)) return null;
 
         // Check if asset is supported
-        if(!this.supportedAssetsByChain(nonAlgorandChain, quoteRequest.network).includes(quoteRequest.assetName)) return null;
+        const  supportedDepositAssets = this.supportedDepositAssetsByChain(nonAlgorandChain, quoteRequest.network);
+        const  supportedWithdrawAssets = this.supportedWithdrawAssetsByChain(nonAlgorandChain, quoteRequest.network);
+
+        if(!supportedDepositAssets.includes(quoteRequest.assetName) && !supportedWithdrawAssets.includes(quoteRequest.assetName)) return null;
 
 
         // Get Quote ...
@@ -85,7 +92,7 @@ export class WormHoleBridgeProvider implements BaseBridgeProvider  {
     private async moveAssetFromAlgorand(quote: Quote) {
 
         const bridges = this.getAlgorandBridges(quote.network);
-        const asset = quote.network == NetworkType.MAINNET ? Assets.Mainnet.ALGO[quote.assetName] : Assets.Testnet.ALGO[quote.assetName];
+        const asset = quote.network == NetworkType.MAINNET ? Assets[NetworkType.MAINNET][Chains.ALGO][quote.assetName] : Assets[NetworkType.TESTNET][Chains.ALGO][quote.assetName];
         const transferAmountParsed = parseUnits(quote.amountIn, asset.decimals );
         const feeParsed = parseUnits("0", asset.decimals);
 

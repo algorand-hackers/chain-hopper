@@ -14,7 +14,7 @@ yarn install
 - `yarn build` - Build all packages including the Bridge site
 - `yarn dev` - Run all packages locally
 - `yarn lint` - Lint all packages
-- `yarn changeset` - Generate a changeset
+- `yarn changeset-create` - Generate a changeset
 - `yarn clean` - Clean up all `node_modules` and `dist` folders (runs each package's clean script)
 
 ## Apps & Packages
@@ -29,3 +29,8 @@ This Turborepo includes the following packages and applications:
 Yarn Workspaces enables us to "hoist" dependencies that are shared between packages to the root `package.json`. This means smaller `node_modules` folders and a better local dev experience. To install a dependency for the entire monorepo, use the `-W` workspaces flag with `yarn add`.
 
 
+## Useful links
+- [How to add a new bridge](packages/sdk/How-to-add-a-new-bridge.md)
+- [Demo](https://www.figma.com/proto/C8DkuVao08iMz7xNCvHUea/ChainHooper?page-id=292%3A11879&node-id=298%3A26390&viewport=2773%2C-1033%2C0.19&scaling=min-zoom&starting-point-node-id=298%3A26390)
+- [Frontend Deployment](https://chains-frontend.vercel.app/)
+- [Figma design](https://www.figma.com/proto/C8DkuVao08iMz7xNCvHUea/ChainHooper?page-id=292%3A11879&node-id=298%3A26390&viewport=2773%2C-1033%2C0.19&scaling=min-zoom&starting-point-node-id=298%3A26390)
