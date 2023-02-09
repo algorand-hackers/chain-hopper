@@ -15,13 +15,25 @@ export function allSupportedChains(network: NetworkType): string[] {
     return Array.from(chains) as string[];
 }
 
-export function supportedAssetsByChain(chain: string, network: NetworkType): string[]  {
+export function supportedDepositAssetsByChain(chain: string, network: NetworkType): string[]  {
     let assets = new Set();
 
     Object.values(BridgeId).forEach(bridgeId => {
         const bridgeProvider = getBridgeProvider(bridgeId);
         if(bridgeProvider?.supportedChains(network).includes(chain))
-            bridgeProvider?.supportedAssetsByChain(chain, network).forEach((asset) => assets.add(asset));
+            bridgeProvider?.supportedDepositAssetsByChain(chain, network).forEach((asset) => assets.add(asset));
+    })
+
+    return Array.from(assets) as string[];
+}
+
+export function supportedWithdrawAssetsByChain(chain: string, network: NetworkType): string[]  {
+    let assets = new Set();
+
+    Object.values(BridgeId).forEach(bridgeId => {
+        const bridgeProvider = getBridgeProvider(bridgeId);
+        if(bridgeProvider?.supportedChains(network).includes(chain))
+            bridgeProvider?.supportedWithdrawAssetsByChain(chain, network).forEach((asset) => assets.add(asset));
     })
 
     return Array.from(assets) as string[];

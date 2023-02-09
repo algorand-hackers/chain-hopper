@@ -16,7 +16,7 @@ export const SOLANA_WALLETS = {Phantom: 'Phantom', Solflare: 'Solflare'}
 
 
 export const Assets: Record<string, Record<string,Record<string, Asset>>> = {
-    Mainnet: {
+    [NetworkType.MAINNET]: {
         [Chains.SOL]:{
             xALGO_Glitter: {symbol: 'xALGO_Glitter', description: 'Wrapped ALGO on Solana', address: 'xALGoH1zUfRmpCriy94qbfoMXHtK6NDnMKzT4Xdvgms', decimals: 18},
         
@@ -37,9 +37,9 @@ export const Assets: Record<string, Record<string,Record<string, Asset>>> = {
             ETH: {symbol: 'ETH', description: 'Native ETH on Ethereum', address: '', decimals: 18},
         }
     },
-    Testnet:  {
+    [NetworkType.TESTNET]:  {
         [Chains.SOL]:{
-            xALGO: {symbol: 'xALGO', description: 'Wrapped ALGO on Solana', address: '', decimals:18},
+            xALGO_Glitter: {symbol: 'xALGO_Glitter', description: 'Wrapped ALGO on Solana', address: '', decimals:18},
         
             SOL: {symbol: 'SOL', description: 'Native Solana on Solana', address: '', decimals: 9},
     
@@ -48,11 +48,11 @@ export const Assets: Record<string, Record<string,Record<string, Asset>>> = {
         [Chains.ALGO]:{
             ALGO: {symbol: 'ALGO', description: 'Native ALGO on Algorand', address: '', decimals: 18},
     
-            xSOL: {symbol: 'xSOL', description: 'Wrapped Sol on Algorand', address: '', decimals: 9},
+            xSOL_Glitter: {symbol: 'xSOL_Glitter', description: 'Wrapped Sol on Algorand', address: '', decimals: 9},
     
             USDCa: {symbol: 'USDCa', description: "USDC on Algorand", address: '113638050', decimals: 6},
     
-            WETH: {symbol: 'WETH', description: "Wormhole Wrapped ether on algorand", address: '', decimals: 18} //@Todo insert correct address
+            WETH_Wormhole: {symbol: 'WETH_Wormhole', description: "Wormhole Wrapped ether on algorand", address: '', decimals: 18} //@Todo insert correct address
         },
         [Chains.ETH]:{
             ETH: {symbol: 'ETH', description: 'Native ETH on Ethereum', address: '', decimals: 18},
