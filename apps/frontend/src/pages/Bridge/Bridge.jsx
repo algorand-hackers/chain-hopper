@@ -157,7 +157,7 @@ const [chain, setChain] = useState('')
                         <Text pt="4px" ml={2}
                          color={ colorMode === 'light' ? 'black' : 'white'} 
                          >
-                          Ethereum Chain
+                          {selected} Chain
                          </Text>
                         </Flex>
                         <Text color={ colorMode === 'light' ? 'black' : 'white'} ><span className="text-[#A0AEC0] mr-2 text-xs">Balance:</span>{pinTokenBalance}</Text>
