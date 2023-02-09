@@ -13,9 +13,16 @@ import Wormhole from "../asset/Wormhole.svg";
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import TokenRouteModal from '../components/TokenRouteModal/TokenRouteModal';
 import Images_Icons from './icons-images';
+import {getQuotes} from '@chain-hopper/sdk';
 
 
 const TokenRoute = () => {
+  const quotes = async () =>{
+    await getQuotes({amountIn:"0.0045", assetName:"eth", fromAddress:"0x20497f37a8169c8c9fa09411f8c2cfb7c90de5d1", fromChainName:"Ethereum", fromWallet:"Ethereum", fromWalletType:""})
+  }
+  console.log(quotes)
+
+
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { colorMode } = useColorMode();
 

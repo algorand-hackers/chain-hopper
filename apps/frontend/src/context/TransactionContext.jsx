@@ -13,7 +13,7 @@ export const TransactionContext = React.createContext();
 const { ethereum, solana } = window;
 
 export const TransactionsProvider = ({ children }) => {
-
+  const [algoBalance, setAlgoBalance] = useState(0);
   const [otherChainAccount, setOtherChainAccount] = useState('');
   const [algorandAccount, setAlgorandAccount] = useState('');
   const [algorandWalletName, setAlgorandWalletName] = useState('');
@@ -149,6 +149,7 @@ export const TransactionsProvider = ({ children }) => {
        setAlgorandAccount(addresses[0].toString())
        setAlgorandWalletName("My Algo");
        setAlgorandWalletImage(myAlgoLogoM);
+       setAlgoBalance(accounts[0].balance)
        setAlgoscan('https://algoexplorer.io/address');
      } catch (err) {
        console.error(err);
@@ -234,7 +235,8 @@ export const TransactionsProvider = ({ children }) => {
         otherChainName,
         otherExplorerLogo,
         otherExplorerLogoAltText,
-        otherExplorerName
+        otherExplorerName,
+        algoBalance
       }}
     >
       {children}

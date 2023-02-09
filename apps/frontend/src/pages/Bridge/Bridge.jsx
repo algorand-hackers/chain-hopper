@@ -45,10 +45,10 @@ const Bridge = () => {
 
 const [chain, setChain] = useState('')
 
-  const { currentAccount, connectToMyAlgo, disconnectWallet } = useContext(TransactionContext);
+  const { otherChainAccount, connectToMyAlgo, disconnectWallet, algoBalance } = useContext(TransactionContext);
 
   useEffect(()=>{
-      getEtherBalance(currentAccount, setpinTokenBalance).then(data=>{console.log(pinTokenBalance)})
+      getEtherBalance(otherChainAccount, setpinTokenBalance).then(data=>{console.log(pinTokenBalance)})
    
   } )
   
