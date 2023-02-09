@@ -20,26 +20,40 @@ import {
   useColorMode,
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
-import { networks, crypto } from '../../constant/networksJSON';
+import { networks } from '../../constant/networksJSON';
 import { nanoid } from "nanoid";
-import {allSupportedChains, supportedAssetsByChain} from '@chain-hopper/sdk';
+import {allSupportedChains, Assets, Chains, supportedAssetsByChain} from '@chain-hopper/sdk';
 import { NetworkType } from '@chain-hopper/sdk';
+import { useEffect } from 'react';
 
 
-const CryptoModal = ({ isOpen, onClose, setSelectToken, setWalletIcon, setIsTransac }) => {
+const CryptoModal = ({ isOpen, onClose, setSelectToken, setWalletIcon, setIsTransac, tokens, network, chain, isWithdrawal }) => {
   // const [isOpen, setIsOpen] = useState(false);
   // const onClose = () => setIsOpen(false);
+  const [crypto, setCrypto] = useState([]);
+
+  useEffect(() => {
+    const tokenDetailsChain =  isWithdrawal  ? Chains.ALGO : chain;
+    // alert(chain);
+    // alert(JSON.stringify(tokens))
+    // alert(JSON.stringify(Assets[network][tokenDetailsChain]));
+    // alert(JSON.stringify(tokens.map(token =>  Assets[tokenDetailsChain][chain][token])))
+    setCrypto(tokens.map(token =>  Assets[network][tokenDetailsChain][token]));
+  }, [tokens])
 
   const chains = allSupportedChains();
-// alert(JSON.stringify(supportedAssetsByChain(chains[1], NetworkType.MAINNET)));
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredCrypto, setFilteredCrypto] = useState(crypto);
+  const [filteredCrypto, setFilteredCrypto] = useState([]);
   const { colorMode } = useColorMode();
+
+  useEffect(() => {
+    setFilteredCrypto(crypto);
+  }, [crypto])
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
     setFilteredCrypto(
-      crypto.filter((c) => c.name.includes(searchTerm.toLocaleLowerCase))
+      crypto.filter((c) => c.symbol.toLocaleLowerCase().includes(e.target.value.toLocaleLowerCase()))
     );
   };
 
@@ -62,7 +76,7 @@ const CryptoModal = ({ isOpen, onClose, setSelectToken, setWalletIcon, setIsTran
            fontWeight="600" 
            fontSize={'18px'}
            >
-            Ethereum network tokens
+            {chain} tokens
           </ModalHeader>
           <ModalCloseButton mt={5} />
           <InputGroup
@@ -91,7 +105,7 @@ const CryptoModal = ({ isOpen, onClose, setSelectToken, setWalletIcon, setIsTran
             />
           </InputGroup>
           <ModalBody mt={5}>
-            {crypto?.map((c) => (
+            {filteredCrypto.length > 0 && filteredCrypto.map((c) => (
               <Flex
                 d="flex"
                 justifyContent="space-between"
@@ -116,12 +130,12 @@ const CryptoModal = ({ isOpen, onClose, setSelectToken, setWalletIcon, setIsTran
                       </Text>
                     <Text
                      color={colorMode === 'light' ? '#404040' : 'white'}
-                     >{c.name}</Text>
+                     >{c.description}</Text>
                   </Box>
                 </Flex>
                 <Text color={colorMode === 'light' ? '#404040' : 'white'}  fontSize="lg">
                   {' '}
-                  {c.amount}
+                  {0.6}
                 </Text>
               </Flex>
             ))}
