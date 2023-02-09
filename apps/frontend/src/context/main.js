@@ -35,10 +35,8 @@ export const createWalletUsingPharse = async (m_string) => {
 }
 
 
-export const getEtherBalance = async (addr, vss) => {
+export const getEtherBalance = async (provider, addr, vss) => {
     // getting the address from the localstorage
-    
-
     const bal = await provider.getBalance(addr);
    
     const bal_ = ethers.utils.formatEther(bal).slice(0, 8);

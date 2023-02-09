@@ -2,6 +2,7 @@
 
 import { BridgeId, NetworkType, Quote, QuoteRequest, Update } from "./types";
 import { getBridgeProvider } from "./factory/bridgeProvider";
+import { ethers } from "ethers";
 export * from "./types";
 export {Chains, Assets} from  "./config/index";
 
@@ -57,5 +58,6 @@ export async function moveAsset(quote: Quote): Promise<Update> {
 export async function performNextStep(update: Update): Promise<Update> {
     return getBridgeProvider(update.quote.bridgeId)?.performNextStep(update)!;
 }
+
 
 // ... Add other functions that frontend will need to call without using a specific bridge provider

@@ -37,8 +37,8 @@ import { Chains, NetworkType, supportedDepositAssetsByChain } from '@chain-hoppe
 const Bridge = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [depositChainBalance, setDepositChainBalance] = useState(0);
-  const [withdrawalChainBalance, setWithdrawalChainBalance] = useState(0);
+  const [depositTokenBalanceOnOtherChain, setDepositTokenBalanceOnOtherChain] = useState(0);
+  const [withdrawalTokenBalanceOnOtherChain, setWithdrawalTokenBalanceOnOtherChain] = useState(0);
 
    const { colorMode } = useColorMode();
   // const connectWallet = () => {
@@ -46,7 +46,7 @@ const Bridge = () => {
   //   // setIsConnect(false)
   // };
 
-  const { otherChainAccount} = useContext(TransactionContext);
+  const { otherChainAccount, otherWalletProvider} = useContext(TransactionContext);
 
   
 
@@ -74,18 +74,19 @@ const Bridge = () => {
   // });
 
   useEffect(()=>{
-      if(selected === Chains.ETH)
-        getEtherBalance(otherChainAccount, setDepositChainBalance).then(data=>{console.log(depositChainBalance)});
+      if(selected === Chains.ETH  && selectToken === 'ETH' && otherWalletProvider)  {
+        getEtherBalance(otherWalletProvider, otherChainAccount, setDepositTokenBalanceOnOtherChain);
+      }
       else 
-        setDepositChainBalance(0);
-  },[selected]);
+        setDepositTokenBalanceOnOtherChain(0);
+  },[selectToken, selected, otherWalletProvider]);
 
   useEffect(()=>{
-    if(selectedWithdrawToChain === Chains.ETH)
-      getEtherBalance(otherChainAccount, setDepositChainBalance).then(data=>{console.log(depositChainBalance)});
+    if(selectedWithdrawToChain === Chains.ETH && selectedTokenToWithdraw  === 'WETH_Wormhole' &&  otherWalletProvider)
+      getEtherBalance(otherWalletProvider, otherChainAccount, setWithdrawalTokenBalanceOnOtherChain);
     else 
-      setWithdrawalChainBalance(0);
-  },[selectedWithdrawToChain]);
+      setWithdrawalTokenBalanceOnOtherChain(0);
+  },[selectedTokenToWithdraw, selectedWithdrawToChain, otherWalletProvider]);
 
 
   return (
@@ -176,7 +177,7 @@ const Bridge = () => {
                           {selected} Chain
                          </Text>
                         </Flex>
-                        <Text color={ colorMode === 'light' ? 'black' : 'white'} ><span className="text-[#A0AEC0] mr-2 text-xs">Balance:</span>0.00005</Text>
+                        <Text color={ colorMode === 'light' ? 'black' : 'white'} ><span className="text-[#A0AEC0] mr-2 text-xs">Balance:</span>{depositTokenBalanceOnOtherChain}</Text>
                       </Flex>
                     </Box>
 
@@ -265,7 +266,7 @@ const Bridge = () => {
 
               <TabPanel>
                 <Withdrawer
-                  otherChainBalance={withdrawalChainBalance}
+                  otherChainBalance={withdrawalTokenBalanceOnOtherChain}
                   selected={selectedWithdrawToChain}
                   setSelected={setSelectedWithdrawToChain}
                   selectToken={selectedTokenToWithdraw}
