@@ -27,7 +27,7 @@ import { networks } from '../../constant/networksJSON';
 import wallet from '../../asset/ETH - Ethereum Token.png';
 import Withdrawer from '../../components/Withdrawer';
 import { Eth } from '../../asset';
-import { getEtherBalance } from '../../context/main';
+import { getEtherBalance, getSolBalance } from '../../context/main';
 import { TransactionContext } from "../../context/TransactionContext";
 import { Chains, NetworkType, supportedDepositAssetsByChain } from '@chain-hopper/sdk';
 // const NetworkSelector = lazy(
@@ -39,6 +39,9 @@ const Bridge = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [depositTokenBalanceOnOtherChain, setDepositTokenBalanceOnOtherChain] = useState(0);
   const [withdrawalTokenBalanceOnOtherChain, setWithdrawalTokenBalanceOnOtherChain] = useState(0);
+  const [algoChainBalOfDepositToken, setAlgoChainBalOfDepositToken] = useState(5000);
+  const [algoChainBalOfWithdrawalToken, setAlgoChainBalOfWithdrawalToken] = useState(5000);
+
 
    const { colorMode } = useColorMode();
   // const connectWallet = () => {
@@ -74,19 +77,29 @@ const Bridge = () => {
   // });
 
   useEffect(()=>{
+    if(otherChainAccount){
       if(selected === Chains.ETH  && selectToken === 'ETH' && otherWalletProvider)  {
         getEtherBalance(otherWalletProvider, otherChainAccount, setDepositTokenBalanceOnOtherChain);
       }
+      else if(selected === Chains.SOL  && selectToken === 'SOL') {
+        getSolBalance(NetworkType.TESTNET, otherChainAccount, setDepositTokenBalanceOnOtherChain);
+      }
+    }
       else 
         setDepositTokenBalanceOnOtherChain(0);
-  },[selectToken, selected, otherWalletProvider]);
+  },[selectToken, selected, otherWalletProvider, otherChainAccount]);
 
   useEffect(()=>{
-    if(selectedWithdrawToChain === Chains.ETH && selectedTokenToWithdraw  === 'WETH_Wormhole' &&  otherWalletProvider)
-      getEtherBalance(otherWalletProvider, otherChainAccount, setWithdrawalTokenBalanceOnOtherChain);
+    if(otherChainAccount){
+      if(selectedWithdrawToChain === Chains.ETH && selectedTokenToWithdraw  === 'WETH_Wormhole' &&  otherWalletProvider)
+        getEtherBalance(otherWalletProvider, otherChainAccount, setWithdrawalTokenBalanceOnOtherChain);
+      else if(selectedWithdrawToChain === Chains.SOL  && selectedTokenToWithdraw === 'xSOL_Glitter') {
+        getSolBalance(NetworkType.TESTNET,  otherChainAccount, setWithdrawalTokenBalanceOnOtherChain);
+      }
+    }
     else 
       setWithdrawalTokenBalanceOnOtherChain(0);
-  },[selectedTokenToWithdraw, selectedWithdrawToChain, otherWalletProvider]);
+  },[selectedTokenToWithdraw, selectedWithdrawToChain, otherWalletProvider, otherChainAccount]);
 
 
   return (
@@ -198,6 +211,7 @@ const Bridge = () => {
                     ) : ( */}
                     <Flex zIndex={1} mt={'-1px'}>
                       <SelectToken
+                        selectTokenBalance={depositTokenBalanceOnOtherChain}
                         tokens={supportedDepositAssetsByChain(selected,   NetworkType.TESTNET )}
                         network={NetworkType.TESTNET}
                         chain={selected}
@@ -237,7 +251,7 @@ const Bridge = () => {
                         </Flex>
                         <Text color={ colorMode === 'light' ? 'black' : 'white'}>
                           <span className="text-[#A0AEC0] mr-2 text-xs">
-                            Balance:</span>0.00000000
+                            Balance:</span>{algoChainBalOfDepositToken}
                           </Text>
                       </Flex>
                       </Box>
@@ -267,6 +281,7 @@ const Bridge = () => {
               <TabPanel>
                 <Withdrawer
                   otherChainBalance={withdrawalTokenBalanceOnOtherChain}
+                  algoChainBalance={algoChainBalOfWithdrawalToken}
                   selected={selectedWithdrawToChain}
                   setSelected={setSelectedWithdrawToChain}
                   selectToken={selectedTokenToWithdraw}
