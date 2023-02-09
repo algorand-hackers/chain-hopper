@@ -11,7 +11,7 @@ const SelectToken = ({ setSelectToken, walletIcon, selectToken, setWalletIcon, c
   const [pinTokenBalance, setpinTokenBalance] = useState(0);
   const [value, setValue] = useState("");
   // const { currentAccount, connectToMyAlgo, disconnectWallet } = useContext(TransactionContext);
-  const onClick = () => setValue(pinTokenBalance);
+  const onClick = () => setValue(depositTokenBalanceOnOtherChain);
   // useEffect(()=>{
   //     getEtherBalance(currentAccount, setpinTokenBalance).then(data=>{console.log(pinTokenBalance)})
    
