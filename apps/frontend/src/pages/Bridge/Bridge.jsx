@@ -27,7 +27,7 @@ import { networks } from '../../constant/networksJSON';
 import wallet from '../../asset/ETH - Ethereum Token.png';
 import Withdrawer from '../../components/Withdrawer';
 import { Eth } from '../../asset';
-import { getEtherBalance } from '../../context/main';
+import { getEtherBalance, getSolBalance } from '../../context/main';
 import { TransactionContext } from "../../context/TransactionContext";
 import { Chains, NetworkType, supportedDepositAssetsByChain } from '@chain-hopper/sdk';
 // const NetworkSelector = lazy(
@@ -74,19 +74,29 @@ const Bridge = () => {
   // });
 
   useEffect(()=>{
+    if(otherChainAccount){
       if(selected === Chains.ETH  && selectToken === 'ETH' && otherWalletProvider)  {
         getEtherBalance(otherWalletProvider, otherChainAccount, setDepositTokenBalanceOnOtherChain);
       }
+      else if(selected === Chains.SOL  && selectToken === 'SOL') {
+        getSolBalance(NetworkType.TESTNET, otherChainAccount, setDepositTokenBalanceOnOtherChain);
+      }
+    }
       else 
         setDepositTokenBalanceOnOtherChain(0);
-  },[selectToken, selected, otherWalletProvider]);
+  },[selectToken, selected, otherWalletProvider, otherChainAccount]);
 
   useEffect(()=>{
-    if(selectedWithdrawToChain === Chains.ETH && selectedTokenToWithdraw  === 'WETH_Wormhole' &&  otherWalletProvider)
-      getEtherBalance(otherWalletProvider, otherChainAccount, setWithdrawalTokenBalanceOnOtherChain);
+    if(otherChainAccount){
+      if(selectedWithdrawToChain === Chains.ETH && selectedTokenToWithdraw  === 'WETH_Wormhole' &&  otherWalletProvider)
+        getEtherBalance(otherWalletProvider, otherChainAccount, setWithdrawalTokenBalanceOnOtherChain);
+      else if(selectedWithdrawToChain === Chains.SOL  && selectedTokenToWithdraw === 'xSOL_Glitter') {
+        getSolBalance(NetworkType.TESTNET,  otherChainAccount, setWithdrawalTokenBalanceOnOtherChain);
+      }
+    }
     else 
       setWithdrawalTokenBalanceOnOtherChain(0);
-  },[selectedTokenToWithdraw, selectedWithdrawToChain, otherWalletProvider]);
+  },[selectedTokenToWithdraw, selectedWithdrawToChain, otherWalletProvider, otherChainAccount]);
 
 
   return (
