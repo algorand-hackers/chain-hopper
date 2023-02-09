@@ -7,6 +7,7 @@ import {
     PublicKey,
   } from "@solana/web3.js";
 import { NetworkType } from "@chain-hopper/sdk";
+const algosdk = require('algosdk');
 
 // Stating the constants needed in this application
 const rpcUrl = "https://eth-mainnet.g.alchemy.com/v2/X6ZbuunfiCSmLDfVARGxggzu5KAbwy35";
@@ -61,6 +62,19 @@ export const getSolBalance = async (network, addr, vss) => {
    
     const bal_ = ethers.utils.formatUnits(bal, 9).slice(0, 8);
     
+    vss(bal_)
+}
+
+export const getAlgoBalance = async (network, addr, vss) => {
+    const algodToken = '';
+    const algodServer = network  === NetworkType.MAINNET ? "https://testnet-api.algonode.cloud" : "https://testnet-api.algonode.cloud";
+    const algodPort = '';
+
+    let algodClient = new algosdk.Algodv2(algodToken, algodServer, algodPort);
+
+    let bal = (await algodClient.accountInformation(addr).do()).amount;
+   
+    const bal_ = ethers.utils.formatEther(bal).slice(0, 8);
     vss(bal_)
 }
 
