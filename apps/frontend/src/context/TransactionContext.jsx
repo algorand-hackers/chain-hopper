@@ -24,6 +24,7 @@ export const TransactionsProvider = ({ children }) => {
   const [otherExplorerName, setOtheExplorerName] = useState('');
   const [otherExplorerLogo, setOtherExplorerLogo] = useState('');
   const [otherExplorerLogoAltText, setOtherExplorerLogoAltText] = useState('');
+  const [otherWalletProvider, setOtherWalletProvider] = useState('');
 
 
 
@@ -101,6 +102,7 @@ export const TransactionsProvider = ({ children }) => {
         setOtherExplorerLogo(Images_Icons.EtherscanLogo);
         setOtherExplorerLogoAltText('Ethereum');
         setOtheExplorerName("EtherScan");
+        setOtherWalletProvider(new ethers.providers.Web3Provider(ethereum))
         localStorage.setItem("wallet", accounts[0]);
         // window.location.reload();
       } else {
@@ -236,7 +238,7 @@ export const TransactionsProvider = ({ children }) => {
         otherExplorerLogo,
         otherExplorerLogoAltText,
         otherExplorerName,
-        algoBalance
+        otherWalletProvider
       }}
     >
       {children}
