@@ -27,7 +27,7 @@ import { networks } from '../../constant/networksJSON';
 import wallet from '../../asset/ETH - Ethereum Token.png';
 import Withdrawer from '../../components/Withdrawer';
 import { Eth } from '../../asset';
-import { getEtherBalance, getSolBalance } from '../../context/main';
+import { getAlgoBalance, getEtherBalance, getSolBalance } from '../../context/main';
 import { TransactionContext } from "../../context/TransactionContext";
 import { Chains, NetworkType, supportedDepositAssetsByChain } from '@chain-hopper/sdk';
 // const NetworkSelector = lazy(
@@ -49,7 +49,7 @@ const Bridge = () => {
   //   // setIsConnect(false)
   // };
 
-  const { otherChainAccount, otherWalletProvider} = useContext(TransactionContext);
+  const { algorandAccount, otherChainAccount, otherWalletProvider} = useContext(TransactionContext);
 
   
 
@@ -77,7 +77,13 @@ const Bridge = () => {
   // });
 
   useEffect(()=>{
-    if(otherChainAccount){
+    if(otherChainAccount  && algorandAccount){
+      // Algorand balances
+      if(selectToken  ===  'xALGO_Glitter'){
+        getAlgoBalance(NetworkType.TESTNET, algorandAccount, setAlgoChainBalOfDepositToken);
+      }
+
+      // Other chain balances
       if(selected === Chains.ETH  && selectToken === 'ETH' && otherWalletProvider)  {
         getEtherBalance(otherWalletProvider, otherChainAccount, setDepositTokenBalanceOnOtherChain);
       }
@@ -87,10 +93,16 @@ const Bridge = () => {
     }
       else 
         setDepositTokenBalanceOnOtherChain(0);
-  },[selectToken, selected, otherWalletProvider, otherChainAccount]);
+  },[selectToken, selected, otherWalletProvider, otherChainAccount, algorandAccount]);
 
   useEffect(()=>{
-    if(otherChainAccount){
+    if(otherChainAccount && algorandAccount){
+      // Algorand balances
+      if(selectedTokenToWithdraw  ===  'ALGO'){
+        getAlgoBalance(NetworkType.TESTNET, algorandAccount, setAlgoChainBalOfWithdrawalToken);
+      }
+
+      //  Other chain balances
       if(selectedWithdrawToChain === Chains.ETH && selectedTokenToWithdraw  === 'WETH_Wormhole' &&  otherWalletProvider)
         getEtherBalance(otherWalletProvider, otherChainAccount, setWithdrawalTokenBalanceOnOtherChain);
       else if(selectedWithdrawToChain === Chains.SOL  && selectedTokenToWithdraw === 'xSOL_Glitter') {
@@ -99,7 +111,7 @@ const Bridge = () => {
     }
     else 
       setWithdrawalTokenBalanceOnOtherChain(0);
-  },[selectedTokenToWithdraw, selectedWithdrawToChain, otherWalletProvider, otherChainAccount]);
+  },[selectedTokenToWithdraw, selectedWithdrawToChain, otherWalletProvider, otherChainAccount, algorandAccount]);
 
 
   return (

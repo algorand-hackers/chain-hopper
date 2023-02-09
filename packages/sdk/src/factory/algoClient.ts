@@ -1,6 +1,7 @@
 //@ts-nocheck
 import {Algodv2 } from 'algosdk';
 import { NetworkType } from "../../types";
+import { getAlgorandHost } from '../config';
 
 let algoClientCache: Record<NetworkType, Algodv2> = {};
 
