@@ -6,6 +6,8 @@ import metamaskLogoM from '../asset/metamask.svg'
 import myAlgoLogoM from '../asset/myAlgo.png';
 import phantomLogoM from '../asset/phantomLogo.svg';
 import Images_Icons from '../constant/icons-images';
+import { getSolBalance } from './main';
+import { NetworkType } from '@chain-hopper/sdk';
 
 
 export const TransactionContext = React.createContext();
@@ -24,6 +26,7 @@ export const TransactionsProvider = ({ children }) => {
   const [otherExplorerName, setOtheExplorerName] = useState('');
   const [otherExplorerLogo, setOtherExplorerLogo] = useState('');
   const [otherExplorerLogoAltText, setOtherExplorerLogoAltText] = useState('');
+  const [otherWalletProvider, setOtherWalletProvider] = useState('');
 
 
 
@@ -101,6 +104,7 @@ export const TransactionsProvider = ({ children }) => {
         setOtherExplorerLogo(Images_Icons.EtherscanLogo);
         setOtherExplorerLogoAltText('Ethereum');
         setOtheExplorerName("EtherScan");
+        setOtherWalletProvider(new ethers.providers.Web3Provider(ethereum))
         localStorage.setItem("wallet", accounts[0]);
         // window.location.reload();
       } else {
@@ -118,6 +122,7 @@ export const TransactionsProvider = ({ children }) => {
 
   const disconnectWallet = async (chain) => {
     if(chain == 'algo') {
+      await getSolBalance(NetworkType.MAINNET, "d");
       setAlgorandAccount("");
     }else{
       setOtherChainAccount("");
@@ -234,7 +239,8 @@ export const TransactionsProvider = ({ children }) => {
         otherChainName,
         otherExplorerLogo,
         otherExplorerLogoAltText,
-        otherExplorerName
+        otherExplorerName,
+        otherWalletProvider
       }}
     >
       {children}

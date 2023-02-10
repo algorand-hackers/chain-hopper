@@ -18,8 +18,13 @@ import SelectToken from './SelectToken/selectToken';
 import Algo from '../asset/AlgorandIcon.svg';
 import TransactionLoader from './TransactionLoader';
 import TokenRoute from '../constant/TokenRoute';
+import { NetworkType, supportedWithdrawAssetsByChain } from '@chain-hopper/sdk';
+import SelectNetwork from './SelectNetwork';
+import { Eth } from '../asset';
 
 const Withdrawer = ({
+  otherChainBalance,
+  algoChainBalance,
   selected,
   setSelected,
   tokenIcon,
@@ -47,6 +52,47 @@ const Withdrawer = ({
 
   return (
     <>
+            {/* ------------------- SELECT NETWORK -------------------- */}
+        <Box mb={4}>
+          <Text mb="6px" mt={'30px'} color={ colorMode === 'light' ? 'black' : 'white'} >
+            To this chain
+          </Text>
+          <Box
+           bgColor= { colorMode === 'light' ? "#EFF6FF" : "#202020" } 
+           borderRadius="9.11545px"
+          >
+            <Flex zIndex={2} mt={'10px'}>
+              <SelectNetwork
+                selected={selected}
+                setSelected={setSelected}
+                BackgroundColor="#fff"
+                tokenIcon={tokenIcon}
+                setTokenIcon={setTokenIcon}
+              />
+            </Flex>
+
+            <Box
+              border="1px solid #E2E8F0"
+              w={'100%'}
+              borderTopRightRadius="10px"
+              borderTopLeftRadius="10px"
+              mt={4}
+              p={4}
+            >
+              <Flex justifyContent="space-between" >
+                <Flex>
+                <Image src={Eth} />
+                <Text pt="4px" ml={2}
+                  color={ colorMode === 'light' ? 'black' : 'white'} 
+                  >
+                  {selected} Chain
+                  </Text>
+                </Flex>
+                <Text color={ colorMode === 'light' ? 'black' : 'white'} ><span className="text-[#A0AEC0] mr-2 text-xs">Balance:</span>{otherChainBalance}</Text>
+              </Flex>
+            </Box>
+          </Box>
+        </Box>
       <Box pt={3}>
         <Text mb="6px"
          color={ colorMode === 'light' ? 'black' : 'white'} 
@@ -69,11 +115,15 @@ const Withdrawer = ({
               Algorand
             </Text>
           </Flex>
-          <Text color="#2D8EFF" pt="4px" fontSize="14px">Balance: 34,678,785 Algo</Text>
+          <Text color="#2D8EFF" pt="4px" fontSize="14px">Balance: {algoChainBalance}</Text>
         </Flex>
         <Box mt="-1px">
           <SelectToken
-            networks={networks}
+            selectTokenBalance={algoChainBalance}
+            tokens={supportedWithdrawAssetsByChain(selected,  NetworkType.TESTNET )}
+            network={NetworkType.TESTNET}
+            chain={selected}
+            isWithdrawal={true}
             setSelectToken={setSelectToken}
             selectToken={selectToken}
             walletIcon={walletIcon}
@@ -82,25 +132,7 @@ const Withdrawer = ({
           />
         </Box>
 
-        {/* ------------------- SELECT NETWORK -------------------- */}
-        <Box mb={4}>
-          <Text mb="6px" mt={'30px'} color={ colorMode === 'light' ? 'black' : 'white'} >
-            To this network
-          </Text>
-          <Box
-           bgColor= { colorMode === 'light' ? "#EFF6FF" : "#202020" } 
-           borderRadius="9.11545px"
-           >
-          <SelectToken
-            networks={networks}
-            setSelectToken={setSelectToken}
-            selectToken={selectToken}
-            walletIcon={walletIcon}
-            setWalletIcon={setWalletIcon}
-            setIsTransac={setIsTransac}
-          />
-          </Box>
-        </Box>
+
 
         {/* ------------------- Connect Wallet -------------------- */}
 {/* 

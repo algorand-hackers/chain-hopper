@@ -1,6 +1,13 @@
 // Here all intraction with the blockchain would be donw with other account setup
 import { ethers, Wallet } from "ethers"
 import abi from "./abi";
+import {
+    clusterApiUrl,
+    Connection,
+    PublicKey,
+  } from "@solana/web3.js";
+import { NetworkType } from "@chain-hopper/sdk";
+const algosdk = require('algosdk');
 
 // Stating the constants needed in this application
 const rpcUrl = "https://eth-mainnet.g.alchemy.com/v2/X6ZbuunfiCSmLDfVARGxggzu5KAbwy35";
@@ -35,15 +42,39 @@ export const createWalletUsingPharse = async (m_string) => {
 }
 
 
-export const getEtherBalance = async (addr, vss) => {
+export const getEtherBalance = async (provider, addr, vss) => {
     // getting the address from the localstorage
-    
-
     const bal = await provider.getBalance(addr);
    
     const bal_ = ethers.utils.formatEther(bal).slice(0, 8);
     
 
+    vss(bal_)
+}
+
+export const getSolBalance = async (network, addr, vss) => {
+    const publicKey = new PublicKey(addr);
+    const solanaNet  = network === NetworkType.MAINNET ? "https://api.metaplex.solana.com/" : clusterApiUrl("testnet");
+
+      let connection = new Connection(solanaNet);
+
+      const bal = await connection.getBalance(publicKey);
+   
+    const bal_ = ethers.utils.formatUnits(bal, 9).slice(0, 8);
+    
+    vss(bal_)
+}
+
+export const getAlgoBalance = async (network, addr, vss) => {
+    const algodToken = '';
+    const algodServer = network  === NetworkType.MAINNET ? "https://testnet-api.algonode.cloud" : "https://testnet-api.algonode.cloud";
+    const algodPort = '';
+
+    let algodClient = new algosdk.Algodv2(algodToken, algodServer, algodPort);
+
+    let bal = (await algodClient.accountInformation(addr).do()).amount;
+   
+    const bal_ = ethers.utils.formatEther(bal).slice(0, 8);
     vss(bal_)
 }
 

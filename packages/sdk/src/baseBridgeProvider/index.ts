@@ -9,8 +9,11 @@ export abstract class BaseBridgeProvider {
     // Return the list of chains supported by this bridgeProvider
     public abstract supportedChains(network: NetworkType): Array<string>;
 
-    // Return the list of assets supported by this bridgeProvider for the specified chain and network
-    public abstract supportedAssetsByChain(chain: string, network: NetworkType): string[];
+    // Return the list of assets that can be deposited into Algorand from the specified chain and network
+    public abstract supportedDepositAssetsByChain(chain: string, network: NetworkType): string[];
+
+    // Return the list of assets that can be withdrawn from algorand into the the chain and network spcified
+    public abstract supportedWithdrawAssetsByChain(chain: string, network: NetworkType): string[];
 
     public abstract moveAsset(quote: Quote): Promise<Update>;
         

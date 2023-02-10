@@ -5,10 +5,10 @@ import { getNonAlgorandChain } from "../utils";
 import { GlitterBridgeSDK } from 'glitter-bridge-sdk';
 
 
-const solMainnetAssets = Assets.Mainnet[Chains.SOL];
-const algoMainnetAssets = Assets.Mainnet[Chains.ALGO];
-const solTestnetAssets = Assets.Testnet[Chains.SOL];
-const algoTestnetAssets = Assets.Testnet[Chains.ALGO];
+const solMainnetAssets = Assets[NetworkType.MAINNET][Chains.SOL];
+const algoMainnetAssets = Assets[NetworkType.MAINNET][Chains.ALGO];
+const solTestnetAssets = Assets[NetworkType.TESTNET][Chains.SOL];
+const algoTestnetAssets = Assets[NetworkType.TESTNET][Chains.ALGO];
 const baseURL =  'https://api.glitterfinance.org/api'
 
 const sdk = new GlitterBridgeSDK();
@@ -21,15 +21,15 @@ export class GlitterBridgeProvider implements BaseBridgeProvider {
       readonly supportedAssetsMaps = {        
         [NetworkType.MAINNET]: {
           [Chains.SOL]: [
-            [solMainnetAssets.xALGO?.symbol, algoMainnetAssets.ALGO.symbol], 
-            [solMainnetAssets.SOLANA?.symbol, algoMainnetAssets.xSOL.symbol], 
+            [solMainnetAssets.xALGO_Glitter?.symbol, algoMainnetAssets.ALGO.symbol], 
+            [solMainnetAssets.SOL?.symbol, algoMainnetAssets.xSOL_Glitter.symbol], 
             [solMainnetAssets.USDCs?.symbol, algoMainnetAssets.USDCa.symbol] 
           ],
         },
         [NetworkType.TESTNET]: {
             [Chains.SOL]: [
-              [solTestnetAssets.xALGO?.symbol, algoTestnetAssets.ALGO.symbol], 
-              [solTestnetAssets.SOLANA?.symbol, algoTestnetAssets.xSOL.symbol], 
+              [solTestnetAssets.xALGO_Glitter?.symbol, algoTestnetAssets.ALGO.symbol], 
+              [solTestnetAssets.SOL?.symbol, algoTestnetAssets.xSOL_Glitter.symbol], 
               [solTestnetAssets.USDCs?.symbol, algoTestnetAssets.USDCa.symbol] 
             ],        
         }
@@ -40,9 +40,13 @@ export class GlitterBridgeProvider implements BaseBridgeProvider {
          return [Chains.SOL];
     }
 
-    public supportedAssetsByChain(chain: string, network: NetworkType) {
+    public supportedDepositAssetsByChain(chain: string, network: NetworkType) {
         return this.supportedAssetsMaps[network][chain].map(assetMap => assetMap[0]);
     }
+
+    public supportedWithdrawAssetsByChain(chain: string, network: NetworkType) {
+      return this.supportedAssetsMaps[network][chain].map(assetMap => assetMap[1]);
+  }
    
 
     public async getQuote(quoteRequest: QuoteRequest): Promise<Quote | null> {
@@ -53,7 +57,10 @@ export class GlitterBridgeProvider implements BaseBridgeProvider {
         if(!this.supportedChains(quoteRequest.network).includes(nonAlgorandChain)) return null;
 
         // Check if asset is supported
-        if(!this.supportedAssetsByChain(nonAlgorandChain, quoteRequest.network).includes(quoteRequest.assetName)) return null;
+        const  supportedDepositAssets = this.supportedDepositAssetsByChain(nonAlgorandChain, quoteRequest.network);
+        const  supportedWithdrawAssets = this.supportedWithdrawAssetsByChain(nonAlgorandChain, quoteRequest.network);
+
+        if(!supportedDepositAssets.includes(quoteRequest.assetName) && !supportedWithdrawAssets.includes(quoteRequest.assetName)) return null;
 
         // Get Quote ...
 
