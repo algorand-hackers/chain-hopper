@@ -52,7 +52,7 @@ const Home = () => {
     <Flex direction="column" 
       justify="space-between" 
       bg={ colorMode === 'light' ? 'bg1' : 'bg3'}  
-      h={{base:"80vh", md:"100%"}} px={5}
+      h={"100vh"} px={5}
       >
         <Box w={{base:"100%", md:"100%", lg:"85%"}} mt="6rem" mx="auto">
             <Text w={{base:"100%", md:"100%", lg:"554px"}} mb={2} fontSize={{base:"2.2rem", md:"34px", lg:"38.8px"}} fontWeight="700" className='leading-[46px] font-[syne]'> 

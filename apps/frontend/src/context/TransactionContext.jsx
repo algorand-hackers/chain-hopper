@@ -29,7 +29,6 @@ export const TransactionsProvider = ({ children }) => {
   const [otherWalletProvider, setOtherWalletProvider] = useState('');
 
 
-
   const [algoscan, setAlgoscan] = useState('');
   const [otherScan, setOtherScan] = useState('');
 
@@ -38,6 +37,7 @@ export const TransactionsProvider = ({ children }) => {
 
   const connectMetamask = async () => {
     try {
+      await checkMetaMaskRightNetwork();
       if (ethereum) {
         const accounts = await ethereum.request({
           method: 'eth_requestAccounts',
@@ -65,6 +65,34 @@ export const TransactionsProvider = ({ children }) => {
        throw new Error('No ethereum object');
     }
   };
+
+  const checkMetaMaskRightNetwork = async () => {
+    try {
+      await ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: '0x1' }],
+      });
+    } catch (switchError) {
+      if (switchError.code === 4902) {
+        try {
+          await ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [
+              {
+                chainId: '0x1',
+                chainName: 'Ethereum',
+                rpcUrls: ['https://eth-mainnet.g.alchemy.com/v2/X6ZbuunfiCSmLDfVARGxggzu5KAbwy35'],
+                blockExplorerUrls: ['https://etherscan.io']
+              },
+            ],
+          });
+        } catch (error) {
+          console.log(alert(error));
+        }
+      }
+      // handle other "switch" errors
+    }
+  }
 
   const disconnectWallet = async (chain) => {
     if(chain == 'algo') {
@@ -112,7 +140,6 @@ export const TransactionsProvider = ({ children }) => {
    }
 
   useEffect(() => {
-    // checkIfWalletIsConnect();
   }, []);
 
   
