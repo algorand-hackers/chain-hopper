@@ -10,19 +10,11 @@ import { TransactionContext } from "../../context/TransactionContext";
 const SelectToken = ({ setSelectToken, walletIcon, selectToken, setWalletIcon, chain, network, tokens, isWithdrawal, selectTokenBalance, setIsTransac }) => {
   const [value, setValue] = useState("");
   // const { currentAccount, connectToMyAlgo, disconnectWallet } = useContext(TransactionContext);
-<<<<<<< HEAD
-  const onClick = () => setValue(depositTokenBalanceOnOtherChain);
-  // useEffect(()=>{
-  //     getEtherBalance(currentAccount, setpinTokenBalance).then(data=>{console.log(pinTokenBalance)})
-   
-  // } )
-=======
   const onClick = () => {
     alert('Cammer herer');
     setValue(selectTokenBalance);
   }
 
->>>>>>> 2a50cd6de79e2b7d95bcf71c7639caf03f2b2919
   const [isOpen, setIsOpen] = useState(false);
   const onClose = () => setIsOpen(false);
 
