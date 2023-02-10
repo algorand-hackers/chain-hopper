@@ -117,7 +117,7 @@ const Bridge = () => {
   return (
     <Flex 
       flexDir={'column'} 
-      h="100%"
+      h="100vh"
       bg={ colorMode === 'light' ? 'bg1' : 'bg3'}  
       >
       <Stack {...root} maxW="1600px" mx="auto" pos="relative">

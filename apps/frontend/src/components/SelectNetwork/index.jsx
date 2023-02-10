@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext} from 'react';
 import { Flex, Stack, Text, Image, Box, Img } from '@chakra-ui/react';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import Images_Icons from '../../constant/icons-images';
 import {allSupportedChains, NetworkType, Chains} from '@chain-hopper/sdk';
+import { TransactionContext } from "../../context/TransactionContext";
+
 const SelectNetwork = ({ selected, setSelected, tokenIcon, setTokenIcon, BackgroundColor }) => {
 
   const { wrapperSelect, buttonSelect, optionContent, optionContentChild } =
@@ -10,7 +12,7 @@ const SelectNetwork = ({ selected, setSelected, tokenIcon, setTokenIcon, Backgro
 
   const [isActive, setIsActive] = useState(false);
   const [icon, setIcon] = useState(false);
-  const  supportedChains = allSupportedChains(NetworkType.TESTNET)
+  const  supportedChains = allSupportedChains(NetworkType.TESTNET);
 
   const chainLogos = {
     [Chains.ETH]: Images_Icons.ethereumLogo,
@@ -23,6 +25,13 @@ const SelectNetwork = ({ selected, setSelected, tokenIcon, setTokenIcon, Backgro
       img: chainLogos[chain]
     }
   });
+
+  const {
+    algorandAccount,
+    otherChainAccount,
+    connectMetamask,
+    connectToMyAlgo,
+  } = useContext(TransactionContext);
 
 
   return (
@@ -48,6 +57,7 @@ const SelectNetwork = ({ selected, setSelected, tokenIcon, setTokenIcon, Backgro
             },
           }}
         >
+         
           <Box>
             {options?.map((option, index) => (
               <Flex
@@ -66,7 +76,7 @@ const SelectNetwork = ({ selected, setSelected, tokenIcon, setTokenIcon, Backgro
               {option.token}
             </Flex>
             ))}
-          
+        
           </Box>
         </Stack>
       )}
