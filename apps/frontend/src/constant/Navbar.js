@@ -9,6 +9,7 @@ import ConnectWallet from '../components/ConnectWallet/ConnectWallet';
 import { TransactionContext } from "../context/TransactionContext";
 import Images_Icons from '../constant/icons-images';
 import ConnectedWallet from '../components/ConnectWallet/ConnectedWallet';
+import { Chains } from '@chain-hopper/sdk';
 
 const Navbar = () => {
 
@@ -30,7 +31,7 @@ const Navbar = () => {
       otherChainName,
       otherExplorerLogo,
       otherExplorerLogoAltText,
-      otherExplorerName
+      otherExplorerName,
     } = useContext(TransactionContext);
 
     const connectWallets = () => {
@@ -70,7 +71,7 @@ const Navbar = () => {
                 </Box>
             )}
                 
-            {algorandAccount &&  (ConnectedWallet({chainName: "algo", walletImage:algorandWalletImage, account: algorandAccount, walletName: algorandWalletName, explorerUrl: algoscan, explorerName: "Algoscan", explorerLogo: Images_Icons.algologo, explorerLogoAltText: "Algorand", disconnectWallet}))}
+            {algorandAccount &&  (ConnectedWallet({chainName: Chains.ALGO, walletImage:algorandWalletImage, account: algorandAccount, walletName: algorandWalletName, explorerUrl: algoscan, explorerName: "Algoscan", explorerLogo: Images_Icons.algologo, explorerLogoAltText: "Algorand", disconnectWallet}))}
             {otherChainAccount &&  (ConnectedWallet({chainName: otherChainName, walletImage:otherWalletImage, account: otherChainAccount, walletName: otherWalletName, explorerUrl: otherScan, explorerName: otherExplorerName, explorerLogo: otherExplorerLogo, explorerLogoAltText: otherExplorerLogoAltText, disconnectWallet}))}
 
 

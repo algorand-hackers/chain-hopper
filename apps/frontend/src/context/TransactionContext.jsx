@@ -7,7 +7,7 @@ import myAlgoLogoM from '../asset/myAlgo.png';
 import phantomLogoM from '../asset/phantomLogo.svg';
 import Images_Icons from '../constant/icons-images';
 import { getSolBalance } from './main';
-import { NetworkType } from '@chain-hopper/sdk';
+import { Chains, NetworkType } from '@chain-hopper/sdk';
 
 
 export const TransactionContext = React.createContext();
@@ -28,9 +28,9 @@ export const TransactionsProvider = ({ children }) => {
   const [otherExplorerLogoAltText, setOtherExplorerLogoAltText] = useState('');
   const [otherWalletProvider, setOtherWalletProvider] = useState('');
 
-
   const [algoscan, setAlgoscan] = useState('');
   const [otherScan, setOtherScan] = useState('');
+
 
   // const checkIfWalletIsConnect = async () => {
   //   // if (typeof window != "undefined" && typeof window.ethereum != "undefined"){
@@ -149,7 +149,7 @@ export const TransactionsProvider = ({ children }) => {
   }
 
   const disconnectWallet = async (chain) => {
-    if(chain == 'algo') {
+    if(chain == Chains.ALGO) {
       await getSolBalance(NetworkType.MAINNET, "d");
       setAlgorandAccount("");
     }else{
@@ -247,6 +247,7 @@ export const TransactionsProvider = ({ children }) => {
       });
     }
   };
+
   
   return (
     <TransactionContext.Provider
@@ -267,7 +268,7 @@ export const TransactionsProvider = ({ children }) => {
         otherExplorerLogo,
         otherExplorerLogoAltText,
         otherExplorerName,
-        otherWalletProvider
+        otherWalletProvider,
       }}
     >
       {children}
