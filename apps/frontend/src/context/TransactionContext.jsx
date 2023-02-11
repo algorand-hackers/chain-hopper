@@ -90,7 +90,10 @@ export const TransactionsProvider = ({ children }) => {
           console.log(alert(error));
         }
       }
-      // handle other "switch" errors
+      if (chainId !== 0x1) {
+        window.alert('Please switch to the Ethereum network!')
+        throw new Error('Please switch to the Ethereum network')
+      }
     }
   }
 
