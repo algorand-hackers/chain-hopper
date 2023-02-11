@@ -1,4 +1,4 @@
-import { Asset, NetworkType } from "../types"
+import { Asset, AssetKeys, NetworkType } from "../types"
 
 export const Chains = {
     SOL: "Solana",
@@ -18,44 +18,44 @@ export const SOLANA_WALLETS = {Phantom: 'Phantom', Solflare: 'Solflare'}
 export const Assets: Record<string, Record<string,Record<string, Asset>>> = {
     [NetworkType.MAINNET]: {
         [Chains.SOL]:{
-            xALGO_Glitter: {symbol: 'xALGO_Glitter', description: 'Wrapped ALGO on Solana', address: 'xALGoH1zUfRmpCriy94qbfoMXHtK6NDnMKzT4Xdvgms', decimals: 18, imageUrl: "https://cryptologos.cc/logos/algorand-algo-logo.png?v=002" },
+            [AssetKeys.xALGO_Glitter]: {symbol: 'xALGO', description: 'Wrapped ALGO on Solana', address: 'xALGoH1zUfRmpCriy94qbfoMXHtK6NDnMKzT4Xdvgms', decimals: 18, imageUrl: "https://cryptologos.cc/logos/algorand-algo-logo.png?v=002" },
         
-            SOL: {symbol: 'SOL', description: 'Native Solana on Solana', address: '', decimals: 9, imageUrl: "https://cryptologos.cc/logos/solana-sol-logo.png?v=024"},
+            [AssetKeys.SOL]: {symbol: 'SOL', description: 'Native Solana on Solana', address: '', decimals: 9, imageUrl: "https://cryptologos.cc/logos/solana-sol-logo.png?v=024"},
     
-            USDCs: {symbol: 'USDCs', description: "USDC on Solana", address: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v', decimals: 6, imageUrl:  "https://cryptologos.cc/logos/usd-coin-usdc-logo.png?v=002"}
+            [AssetKeys.USDCs]: {symbol: 'USDC', description: "USDC on Solana", address: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v', decimals: 6, imageUrl:  "https://cryptologos.cc/logos/usd-coin-usdc-logo.png?v=002"}
         },
         [Chains.ALGO]:{
-            ALGO: {symbol: 'ALGO', description: 'Native ALGO on Algorand', address: '', decimals: 18, imageUrl:  "https://cryptologos.cc/logos/algorand-algo-logo.png?v=002"},
+            [AssetKeys.ALGO]: {symbol: 'ALGO', description: 'Native ALGO on Algorand', address: '', decimals: 18, imageUrl:  "https://cryptologos.cc/logos/algorand-algo-logo.png?v=002"},
     
-            xSOL_Glitter: {symbol: 'xSOL_Glitter', description: 'Wrapped Sol on Algorand', address: '792313023', decimals: 9, imageUrl: "https://cryptologos.cc/logos/solana-sol-logo.png?v=024"},
+            [AssetKeys.xSOL_Glitter]: {symbol: 'xSOL', description: 'Wrapped Sol on Algorand', address: '792313023', decimals: 9, imageUrl: "https://cryptologos.cc/logos/solana-sol-logo.png?v=024"},
     
-            USDCa: {symbol: 'USDCa', description: "USDC on Algorand", address: '31566704', decimals: 6, imageUrl:  "https://cryptologos.cc/logos/usd-coin-usdc-logo.png?v=002"},
+            [AssetKeys.USDCa]: {symbol: 'USDC', description: "USDC on Algorand", address: '31566704', decimals: 6, imageUrl:  "https://cryptologos.cc/logos/usd-coin-usdc-logo.png?v=002"},
     
-            WETH_Wormhole: {symbol: 'WETH_wormhole', description: "Wormhole Wrapped ether on algorand", address: '887406851', decimals: 18, imageUrl: "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=002"} //@Todo insert correct address
+            [AssetKeys.WETH_Wormhole]: {symbol: 'WETH', description: "Wormhole Wrapped ether on algorand", address: '887406851', decimals: 18, imageUrl: "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=002"} //@Todo insert correct address
         },
         [Chains.ETH]:{
-            ETH: {symbol: 'ETH', description: 'Native ETH on Ethereum', address: '', decimals: 18, imageUrl: "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=002"},
+            [AssetKeys.ETH]: {symbol: 'ETH', description: 'Native ETH on Ethereum', address: '', decimals: 18, imageUrl: "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=002"},
         }
     },
     [NetworkType.TESTNET]:  {
         [Chains.SOL]:{
-            xALGO_Glitter: {symbol: 'xALGO_Glitter', description: 'Wrapped ALGO on Solana', address: '', decimals:18, imageUrl:  "https://cryptologos.cc/logos/algorand-algo-logo.png?v=002"},
+            [AssetKeys.xALGO_Glitter]: {symbol: 'xALGO', description: 'Wrapped ALGO on Solana', address: '', decimals:18, imageUrl:  "https://cryptologos.cc/logos/algorand-algo-logo.png?v=002"},
         
-            SOL: {symbol: 'SOL', description: 'Native Solana on Solana', address: '', decimals: 9, imageUrl: "https://cryptologos.cc/logos/solana-sol-logo.png?v=024"},
+            [AssetKeys.SOL]: {symbol: 'SOL', description: 'Native Solana on Solana', address: '', decimals: 9, imageUrl: "https://cryptologos.cc/logos/solana-sol-logo.png?v=024"},
     
-            USDCs: {symbol: 'USDCs', description: "USDC on Solana", address: 'CpMah17kQEL2wqyMKt3mZBdTnZbkbfx4nqmQMFDP5vwp', decimals: 6, imageUrl:  "https://cryptologos.cc/logos/usd-coin-usdc-logo.png?v=002"}
+            [AssetKeys.USDCs]: {symbol: 'USDC', description: "USDC on Solana", address: 'CpMah17kQEL2wqyMKt3mZBdTnZbkbfx4nqmQMFDP5vwp', decimals: 6, imageUrl:  "https://cryptologos.cc/logos/usd-coin-usdc-logo.png?v=002"}
         },
         [Chains.ALGO]:{
-            ALGO: {symbol: 'ALGO', description: 'Native ALGO on Algorand', address: '', decimals: 18, imageUrl:  "https://cryptologos.cc/logos/algorand-algo-logo.png?v=002"},
+            [AssetKeys.ALGO]: {symbol: 'ALGO', description: 'Native ALGO on Algorand', address: '', decimals: 18, imageUrl:  "https://cryptologos.cc/logos/algorand-algo-logo.png?v=002"},
     
-            xSOL_Glitter: {symbol: 'xSOL_Glitter', description: 'Wrapped Sol on Algorand', address: '', decimals: 9, imageUrl: "https://cryptologos.cc/logos/solana-sol-logo.png?v=024"},
+            [AssetKeys.xSOL_Glitter]: {symbol: 'xSOL', description: 'Wrapped Sol on Algorand', address: '', decimals: 9, imageUrl: "https://cryptologos.cc/logos/solana-sol-logo.png?v=024"},
     
-            USDCa: {symbol: 'USDCa', description: "USDC on Algorand", address: '113638050', decimals: 6, imageUrl:  "https://cryptologos.cc/logos/usd-coin-usdc-logo.png?v=002"},
+            [AssetKeys.USDCa]: {symbol: 'USDC', description: "USDC on Algorand", address: '113638050', decimals: 6, imageUrl:  "https://cryptologos.cc/logos/usd-coin-usdc-logo.png?v=002"},
     
-            WETH_Wormhole: {symbol: 'WETH_Wormhole', description: "Wormhole Wrapped ether on algorand", address: '', decimals: 18, imageUrl: "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=002"} //@Todo insert correct address
+            [AssetKeys.WETH_Wormhole]: {symbol: 'WETH', description: "Wormhole Wrapped ether on algorand", address: '', decimals: 18, imageUrl: "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=002"} //@Todo insert correct address
         },
         [Chains.ETH]:{
-            ETH: {symbol: 'ETH', description: 'Native ETH on Ethereum', address: '', decimals: 18, imageUrl: "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=002"},
+            [AssetKeys.ETH]: {symbol: 'ETH', description: 'Native ETH on Ethereum', address: '', decimals: 18, imageUrl: "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=002"},
         }
     }
 }

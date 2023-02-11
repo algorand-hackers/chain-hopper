@@ -2,17 +2,20 @@ import React, { useState, useContext} from 'react';
 import { Flex, Stack, Text, Image, Box, Img } from '@chakra-ui/react';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import Images_Icons from '../../constant/icons-images';
-import {allSupportedChains, NetworkType, Chains} from '@chain-hopper/sdk';
+import {allSupportedChains, Chains, supportedChainsByWithdrawalAsset} from '@chain-hopper/sdk';
 import { TransactionContext } from "../../context/TransactionContext";
 
-const SelectNetwork = ({ selected, setSelected, tokenIcon, setTokenIcon, BackgroundColor }) => {
+const SelectNetwork = ({ selectToken, selected, setSelected, tokenIcon, setTokenIcon, BackgroundColor, network}) => {
 
   const { wrapperSelect, buttonSelect, optionContent, optionContentChild } =
     useSelectNetworkStyles();
 
   const [isActive, setIsActive] = useState(false);
   const [icon, setIcon] = useState(false);
-  const  supportedChains = allSupportedChains(NetworkType.TESTNET);
+
+  let supportedChains;
+  if(selectToken) supportedChains = supportedChainsByWithdrawalAsset(network, selectToken);
+  else supportedChains = allSupportedChains(network);
 
   const chainLogos = {
     [Chains.ETH]: Images_Icons.ethereumLogo,

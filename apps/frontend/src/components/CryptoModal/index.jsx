@@ -27,7 +27,7 @@ import { NetworkType } from '@chain-hopper/sdk';
 import { useEffect } from 'react';
 
 
-const CryptoModal = ({ isOpen, onClose, setSelectToken, setWalletIcon, setIsTransac, tokens, network, chain, isWithdrawal }) => {
+const CryptoModal = ({ isOpen, onClose, setSelectToken, setWalletIcon, setIsTransac, tokens, network, chain, isWithdrawal, setSelectTokenLogo, setSelectTokenSymbol }) => {
   // const [isOpen, setIsOpen] = useState(false);
   // const onClose = () => setIsOpen(false);
   const [crypto, setCrypto] = useState([]);
@@ -38,7 +38,7 @@ const CryptoModal = ({ isOpen, onClose, setSelectToken, setWalletIcon, setIsTran
     // alert(JSON.stringify(tokens))
     // alert(JSON.stringify(Assets[network][tokenDetailsChain]));
     // alert(JSON.stringify(tokens.map(token =>  Assets[tokenDetailsChain][chain][token])))
-    setCrypto(tokens.map(token =>  Assets[network][tokenDetailsChain][token]));
+    setCrypto(tokens.map(token =>  {  return {...Assets[network][tokenDetailsChain][token], key:token}}));
   }, [tokens])
 
   const chains = allSupportedChains();
@@ -76,7 +76,7 @@ const CryptoModal = ({ isOpen, onClose, setSelectToken, setWalletIcon, setIsTran
            fontWeight="600" 
            fontSize={'18px'}
            >
-            {chain} tokens
+            {chain} assets
           </ModalHeader>
           <ModalCloseButton mt={5} />
           <InputGroup
@@ -114,8 +114,10 @@ const CryptoModal = ({ isOpen, onClose, setSelectToken, setWalletIcon, setIsTran
                 mb={5}
                 cursor="pointer"
                 onClick={e => {
-                  setSelectToken(c.symbol)
+                  setSelectToken(c.key)
+                  setSelectTokenLogo(c.imageUrl)
                   setWalletIcon(c.imageUrl)
+                  setSelectTokenSymbol(c.symbol)
                   onClose()
                   setIsTransac(true)
                 }}
@@ -133,10 +135,10 @@ const CryptoModal = ({ isOpen, onClose, setSelectToken, setWalletIcon, setIsTran
                      >{c.description}</Text>
                   </Box>
                 </Flex>
-                <Text color={colorMode === 'light' ? '#404040' : 'white'}  fontSize="lg">
+                {/* <Text color={colorMode === 'light' ? '#404040' : 'white'}  fontSize="lg">
                   {' '}
                   {0.6}
-                </Text>
+                </Text> */}
               </Flex>
             ))}
           </ModalBody>
