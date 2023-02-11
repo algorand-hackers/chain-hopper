@@ -18,7 +18,7 @@ export type Asset = {
 
 export type QuoteRequest<FromWallet = any, ToWallet = any> = {
     amountIn: string,
-    assetName: string,
+    assetKey: AssetKeys,
     fromAddress: string,
     fromChainName: string,
     fromWallet: FromWallet,
@@ -41,7 +41,8 @@ export interface GasFeeEstimate {
 }
 
 export type Quote<FromWallet = any, ToWallet = any> = {
-    assetName: string,
+    assetKey: AssetKeys,
+    outputAssetKey: AssetKeys,
     fromAddress: string,
     fromChainName: string,
     fromWallet: FromWallet,
@@ -65,3 +66,14 @@ export type Update = {
     errorMessage?: string
 }
 
+
+export enum AssetKeys {
+    xALGO_Glitter,
+    SOL,
+    USDCs,
+    ALGO,
+    xSOL_Glitter,
+    USDCa,
+    WETH_Wormhole,
+    ETH
+}

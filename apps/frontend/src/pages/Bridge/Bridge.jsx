@@ -29,7 +29,7 @@ import Withdrawer from '../../components/Withdrawer';
 import { Eth } from '../../asset';
 import { getAlgoBalance, getEtherBalance, getSolBalance } from '../../context/main';
 import { TransactionContext } from "../../context/TransactionContext";
-import { Chains, NetworkType, supportedDepositAssetsByChain } from '@chain-hopper/sdk';
+import { AssetKeys, Chains, NetworkType, supportedDepositAssetsByChain } from '@chain-hopper/sdk';
 // const NetworkSelector = lazy(
 //   () => import("../../components/NetworkSelector")
 // );
@@ -56,13 +56,18 @@ const Bridge = () => {
   const { root, fontsm } = useBridgeStyles();
 
   // This is to select Network
-  const [selected, setSelected] = useState('Select');
-  const [selectedWithdrawToChain, setSelectedWithdrawToChain] = useState('Select');
+  const [selected, setSelected] = useState('');
+  const [selectedWithdrawToChain, setSelectedWithdrawToChain] = useState('');
 
   const [tokenIcon, setTokenIcon] = useState();
   // This is to select Token
-  const [selectToken, setSelectToken] = useState('Select');
-  const [selectedTokenToWithdraw, setSelectedTokenToWithdraw] = useState('Select');
+  const [selectToken, setSelectToken] = useState('Asset');
+  const [selectTokenLogo, setSelectTokenLogo] = useState('');
+  const [selectTokenSymbol, setSelectTokenSymbol] = useState('');
+
+  const [selectedTokenToWithdraw, setSelectedTokenToWithdraw] = useState('Asset');
+  const [selectedTokenToWithdrawLogo, setSelectedTokenToWithdrawLogo] = useState('');
+  const [selectedTokenToWithdrawSymbol, setSelectedTokenToWithdrawSymbol] = useState('');
 
   const [walletIcon, setWalletIcon] = useState(wallet);
   // This is for the connect button on the component to start it
@@ -79,15 +84,15 @@ const Bridge = () => {
   useEffect(()=>{
     if(otherChainAccount  && algorandAccount){
       // Algorand balances
-      if(selectToken  ===  'xALGO_Glitter'){
+      if(selectToken  ===  AssetKeys.xALGO_Glitter){
         getAlgoBalance(NetworkType.TESTNET, algorandAccount, setAlgoChainBalOfDepositToken);
       }
 
       // Other chain balances
-      if(selected === Chains.ETH  && selectToken === 'ETH' && otherWalletProvider)  {
+      if(selected === Chains.ETH  && selectToken === AssetKeys.ETH && otherWalletProvider)  {
         getEtherBalance(otherWalletProvider, otherChainAccount, setDepositTokenBalanceOnOtherChain);
       }
-      else if(selected === Chains.SOL  && selectToken === 'SOL') {
+      else if(selected === Chains.SOL  && selectToken === AssetKeys.SOL) {
         getSolBalance(NetworkType.TESTNET, otherChainAccount, setDepositTokenBalanceOnOtherChain);
       }
     }
@@ -98,20 +103,30 @@ const Bridge = () => {
   useEffect(()=>{
     if(otherChainAccount && algorandAccount){
       // Algorand balances
-      if(selectedTokenToWithdraw  ===  'ALGO'){
+      if(selectedTokenToWithdraw  ===  AssetKeys.ALGO){
         getAlgoBalance(NetworkType.TESTNET, algorandAccount, setAlgoChainBalOfWithdrawalToken);
       }
 
       //  Other chain balances
-      if(selectedWithdrawToChain === Chains.ETH && selectedTokenToWithdraw  === 'WETH_Wormhole' &&  otherWalletProvider)
+      if(selectedWithdrawToChain === Chains.ETH && selectedTokenToWithdraw  === AssetKeys.WETH_Wormhole &&  otherWalletProvider)
         getEtherBalance(otherWalletProvider, otherChainAccount, setWithdrawalTokenBalanceOnOtherChain);
-      else if(selectedWithdrawToChain === Chains.SOL  && selectedTokenToWithdraw === 'xSOL_Glitter') {
+      else if(selectedWithdrawToChain === Chains.SOL  && selectedTokenToWithdraw === AssetKeys.xSOL_Glitter) {
         getSolBalance(NetworkType.TESTNET,  otherChainAccount, setWithdrawalTokenBalanceOnOtherChain);
       }
     }
     else 
       setWithdrawalTokenBalanceOnOtherChain(0);
   },[selectedTokenToWithdraw, selectedWithdrawToChain, otherWalletProvider, otherChainAccount, algorandAccount]);
+
+  useEffect(() =>{
+    setSelectTokenLogo('');
+    setSelectTokenSymbol('');
+    setSelectToken('');
+  },[selected]);
+
+  useEffect(() =>{
+    setSelectedWithdrawToChain('');
+  },[selectedTokenToWithdraw]);
 
 
   return (
@@ -171,13 +186,13 @@ const Bridge = () => {
                      mb={-1}
                      color={ colorMode === 'light' ? 'black' : 'white'} 
                     >
-                      From the chain
+                      {selected && `From ${selected} chain`}
                     </Text>
 
                     {/* ------------------- SELECT NETWORK -------------------- */}
                     <Flex zIndex={2} mt={'10px'}>
                       <SelectNetwork
-                        selected={selected}
+                        selected={selected || 'Select From Chain'}
                         setSelected={setSelected}
                         BackgroundColor="#fff"
                         tokenIcon={tokenIcon}
@@ -185,6 +200,7 @@ const Bridge = () => {
                       />
                     </Flex>
 
+                    {selectTokenSymbol && (
                     <Box
                       border="1px solid #E2E8F0"
                       w={'100%'}
@@ -193,18 +209,20 @@ const Bridge = () => {
                       mt={4}
                       p={4}
                     >
+                      
                       <Flex justifyContent="space-between" >
                         <Flex>
-                        <Image src={Eth} />
+                        <Image src={selectTokenLogo} w="48px" h="48px" mr={5} />
                         <Text pt="4px" ml={2}
                          color={ colorMode === 'light' ? 'black' : 'white'} 
                          >
-                          {selected} Chain
+                          {selectTokenSymbol}
                          </Text>
                         </Flex>
                         <Text color={ colorMode === 'light' ? 'black' : 'white'} ><span className="text-[#A0AEC0] mr-2 text-xs">Balance:</span>{depositTokenBalanceOnOtherChain}</Text>
                       </Flex>
-                    </Box>
+
+                    </Box>)}
 
                     {/* {!walletConnected ? (
                       <>
@@ -232,6 +250,10 @@ const Bridge = () => {
                         walletIcon={walletIcon}
                         setWalletIcon={setWalletIcon}
                         setIsTransac={setIsTransac}
+                        selectTokenLogo={selectTokenLogo}
+                        setSelectTokenLogo={setSelectTokenLogo}
+                        selectTokenSymbol={selectTokenSymbol}
+                        setSelectTokenSymbol={setSelectTokenSymbol}
                       />
                     </Flex>
                     {/* )} */}
@@ -240,7 +262,7 @@ const Bridge = () => {
 
                     <Flex flexDir={'column'} mt={'15px'} mb="10px">
                       <Text {...fontsm} mb={2} color={ colorMode === 'light' ? 'black' : 'white'}>
-                        To Algorand
+                        To Algorand Chain
                       </Text>
 
                       <Box
@@ -300,6 +322,10 @@ const Bridge = () => {
                   setSelectToken={setSelectedTokenToWithdraw}
                   tokenIcon={tokenIcon}
                   setTokenIcon={setTokenIcon}
+                  selectTokenLogo={selectedTokenToWithdrawLogo}
+                  setSelectTokenLogo={setSelectedTokenToWithdrawLogo}
+                  selectTokenSymbol={selectedTokenToWithdrawSymbol}
+                  setSelectTokenSymbol={setSelectedTokenToWithdrawSymbol}
                   // ConnectWallet Props
 
                   walletIcon={walletIcon}
