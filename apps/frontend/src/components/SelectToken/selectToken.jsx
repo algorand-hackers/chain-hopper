@@ -7,7 +7,7 @@ import wallet from "../../asset/ETH - Ethereum Token.png"
 import Images_Icons from '../../constant/icons-images';
 import { getEtherBalance } from '../../context/main';
 import { TransactionContext } from "../../context/TransactionContext";
-const SelectToken = ({ setSelectToken, walletIcon, selectToken, setWalletIcon, chain, network, tokens, isWithdrawal, selectTokenBalance, setIsTransac }) => {
+const SelectToken = ({ setSelectToken, walletIcon, selectToken, setWalletIcon, chain, network, tokens, isWithdrawal, selectTokenBalance, setIsTransac, selectTokenLogo, setSelectTokenLogo, selectTokenSymbol, setSelectTokenSymbol }) => {
   const [value, setValue] = useState("");
   // const { currentAccount, connectToMyAlgo, disconnectWallet } = useContext(TransactionContext);
   const onClick = () => {
@@ -42,11 +42,11 @@ const SelectToken = ({ setSelectToken, walletIcon, selectToken, setWalletIcon, c
           mx="2px"
           cursor={"pointer"} 
         >
-          <Image h="20px" w="20px" src={walletIcon}  />
+          {selectTokenLogo && <Image h="20px" w="20px" src={walletIcon}  /> }
           <Text fontWeight="500" fontSize={"18px"} mx="2px"
            color={colorMode === 'light' ? 'dark' : 'white' }  
            >
-            {selectToken}
+            {selectTokenSymbol || 'Asset'}
            </Text>
           
           {colorMode == 'light' ? (
@@ -85,6 +85,8 @@ const SelectToken = ({ setSelectToken, walletIcon, selectToken, setWalletIcon, c
             walletIcon={walletIcon} 
             setWalletIcon={setWalletIcon}
             setIsTransac={setIsTransac}
+            setSelectTokenLogo={setSelectTokenLogo}
+            setSelectTokenSymbol={setSelectTokenSymbol}
         />
         </Flex>
   );

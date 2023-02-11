@@ -2,7 +2,7 @@ import { ChainId, ChainName, CHAINS, CONTRACTS, getEmitterAddressAlgorand, getEm
 import { TransactionSignerPair } from "@certusone/wormhole-sdk/lib/cjs/algorand";
 import { ethers } from "ethers";
 import { ALGORAND_WALLETS, Assets, BRIDGE_STATUS, Chains, ALGORAND_WAIT_FOR_CONFIRMATIONS, getWormHoleRpchost } from "../config";
-import { BridgeId, NetworkType, Quote, QuoteRequest, Update } from "../types";
+import { Asset, AssetKeys, BridgeId, NetworkType, Quote, QuoteRequest, Update } from "../types";
 import { BaseBridgeProvider } from "../baseBridgeProvider";
 import { getNonAlgorandChain } from "../utils";
 import { AlgorandUpdate, EthereumUpdate, GetSignedVAAWithRetryResult, WormHoleUpdate } from "./types";
@@ -12,20 +12,16 @@ import MyAlgoConnect from "@randlabs/myalgo-connect";
 import { getAlgoClient } from "../factory/algoClient";
 import { waitingTimes } from "./timeEstimates";
 
-const ethMainnetAssets = Assets[NetworkType.MAINNET][Chains.ETH];
-const ethTestnetAssets = Assets[NetworkType.TESTNET][Chains.ETH];
-const algoMainnetAssets = Assets[NetworkType.MAINNET][Chains.ALGO];
-const algoTestnetAssets = Assets[NetworkType.TESTNET][Chains.ALGO];
 
 export class WormHoleBridgeProvider implements BaseBridgeProvider  {
 
 
     readonly supportedAssetsMaps = {
         [NetworkType.MAINNET]: {
-            [Chains.ETH]: [[ethMainnetAssets.ETH.symbol, algoMainnetAssets.WETH_Wormhole.symbol]]
+            [Chains.ETH]: [[AssetKeys.ETH, AssetKeys.WETH_Wormhole]]
         },
         [NetworkType.TESTNET]: {
-            [Chains.ETH]: [[ethTestnetAssets.ETH.symbol, algoTestnetAssets.WETH_Wormhole.symbol]]
+          [Chains.ETH]: [[AssetKeys.ETH, AssetKeys.WETH_Wormhole]]
         }
     }
 
@@ -37,9 +33,24 @@ export class WormHoleBridgeProvider implements BaseBridgeProvider  {
         return this.supportedAssetsMaps[network][chain].map(assetMap => assetMap[0]);
     }
 
-    public supportedWithdrawAssetsByChain(chain: string, network: NetworkType) {
+    private supportedWithdrawAssetsByChain(chain: string, network: NetworkType) {
       return this.supportedAssetsMaps[network][chain].map(assetMap => assetMap[1]);
-  }
+    }
+
+    public supportedChainsByWithdrawalAsset(network: NetworkType, asset: AssetKeys) {
+      return  this.supportedChains(network).filter(chain => 
+        this.supportedWithdrawAssetsByChain(chain, network).includes(asset)
+      )
+    }
+
+    public supportedWithdrawalAssets(network: NetworkType) {
+      let assets = new Set();
+      this.supportedChains(network).forEach(chain => {
+        this.supportedWithdrawAssetsByChain(chain, network).forEach(asset => assets.add(asset));
+      });
+
+      return Array.from(assets) as AssetKeys[];
+    }
 
     public async getQuote(quoteRequest: QuoteRequest): Promise<Quote | null> {
 
@@ -52,12 +63,13 @@ export class WormHoleBridgeProvider implements BaseBridgeProvider  {
         const  supportedDepositAssets = this.supportedDepositAssetsByChain(nonAlgorandChain, quoteRequest.network);
         const  supportedWithdrawAssets = this.supportedWithdrawAssetsByChain(nonAlgorandChain, quoteRequest.network);
 
-        if(!supportedDepositAssets.includes(quoteRequest.assetName) && !supportedWithdrawAssets.includes(quoteRequest.assetName)) return null;
+        if(!supportedDepositAssets.includes(quoteRequest.assetKey) && !supportedWithdrawAssets.includes(quoteRequest.assetKey)) return null;
 
 
         // Get Quote ...
         return {
           ...quoteRequest,
+          outputAssetKey: this.outputAssetByInputAsset(quoteRequest.assetKey, quoteRequest.fromChainName, quoteRequest.network),
           amountOut: quoteRequest.amountIn,
           bridgeId: BridgeId.WormHole,
           timeEstimate: {send: waitingTimes[quoteRequest.fromChainName], receive: waitingTimes[quoteRequest.toChainName]}
@@ -92,23 +104,23 @@ export class WormHoleBridgeProvider implements BaseBridgeProvider  {
     private async moveAssetFromAlgorand(quote: Quote) {
 
         const bridges = this.getAlgorandBridges(quote.network);
-        const asset = quote.network == NetworkType.MAINNET ? Assets[NetworkType.MAINNET][Chains.ALGO][quote.assetName] : Assets[NetworkType.TESTNET][Chains.ALGO][quote.assetName];
+        const asset = quote.network == NetworkType.MAINNET ? Assets[NetworkType.MAINNET][Chains.ALGO][quote.assetKey] : Assets[NetworkType.TESTNET][Chains.ALGO][quote.assetKey];
         const transferAmountParsed = parseUnits(quote.amountIn, asset.decimals );
         const feeParsed = parseUnits("0", asset.decimals);
 
         const algodClient = getAlgoClient(quote.network);
 
-          const txs = await transferFromAlgorand(
-            algodClient,
-            bridges.tokenBridge,
-            bridges.bridge,
-            quote.fromAddress,
-            BigInt(asset.address),
-            transferAmountParsed.toBigInt(),
-            quote.toAddress,
-            CHAINS.algorand,
-            feeParsed.toBigInt()
-          );
+        const txs = await transferFromAlgorand(
+          algodClient,
+          bridges.tokenBridge,
+          bridges.bridge,
+          quote.fromAddress,
+          BigInt(asset.address),
+          transferAmountParsed.toBigInt(),
+          quote.toAddress,
+          CHAINS.algorand,
+          feeParsed.toBigInt()
+        );
 
         const signedTxs = await this.signAlgorandTransactions(quote.fromWalletType, quote.fromWallet, txs);
         if(signedTxs){
@@ -117,8 +129,13 @@ export class WormHoleBridgeProvider implements BaseBridgeProvider  {
 
         const result = this.waitForTransactionOnAlgorand(txs[txs.length - 1].tx.txID(), quote.network);
 
-          return {quote, txs, algodClient, result, status: BRIDGE_STATUS.WAITING_FOR_SEND_CONFIRMATION, tokenBridge: bridges.tokenBridge};
-        }
+        return {quote, txs, algodClient, result, status: BRIDGE_STATUS.WAITING_FOR_SEND_CONFIRMATION, tokenBridge: bridges.tokenBridge};
+    }
+
+    private outputAssetByInputAsset(inputAsset: AssetKeys, chain: string, network: NetworkType) {
+      const assetMap = this.supportedAssetsMaps[network][chain].find(map => map.includes(inputAsset));
+      return assetMap![0] ===  inputAsset ? assetMap![1] : assetMap![0];
+    }
 
     private async signUsingMyAlgoWallet(wallet: MyAlgoConnect, txs: TransactionSignerPair[]) {
         assignGroupID(txs.map((tx) => tx.tx));

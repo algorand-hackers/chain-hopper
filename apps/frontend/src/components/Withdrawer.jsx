@@ -18,7 +18,7 @@ import SelectToken from './SelectToken/selectToken';
 import Algo from '../asset/AlgorandIcon.svg';
 import TransactionLoader from './TransactionLoader';
 import TokenRoute from '../constant/TokenRoute';
-import { NetworkType, supportedWithdrawAssetsByChain } from '@chain-hopper/sdk';
+import { NetworkType, supportedWithdrawalAssets } from '@chain-hopper/sdk';
 import SelectNetwork from './SelectNetwork';
 import { Eth } from '../asset';
 
@@ -38,6 +38,10 @@ const Withdrawer = ({
   networks,
   setSelectToken,
   selectToken,
+  selectTokenSymbol,
+  setSelectTokenSymbol,
+  selectTokenLogo,
+  setSelectTokenLogo,
   setIsTransac,
   walletConnected,
   tranferBtn,
@@ -52,18 +56,64 @@ const Withdrawer = ({
 
   return (
     <>
+      <Box pt={3}>
+        <Text mb="6px"
+         color={ colorMode === 'light' ? 'black' : 'white'} 
+         >
+          From Algorand Chain
+        </Text>
+        {selectTokenSymbol  && (
+        <Flex
+          p={3}
+          justify="space-between"
+          borderTopRightRadius="10px"
+          borderTopLeftRadius="10px"
+          border="1px solid #E2E8F0"
+          w={'100%'}
+        >
+          <Flex gap={2}>
+          <Image src={selectTokenLogo} w="48px" h="48px" mr={5} />
+            <Text pt="4px" fontSize="17px" 
+            color={ colorMode === 'light' ? 'black' : 'white'}
+            >
+              {selectTokenSymbol}
+            </Text>
+          </Flex>
+          <Text color="#2D8EFF" pt="4px" fontSize="14px">Balance: {algoChainBalance}</Text>
+        </Flex>)}
+        <Box mt="-1px">
+          <SelectToken
+            selectTokenBalance={algoChainBalance}
+            tokens={supportedWithdrawalAssets(NetworkType.TESTNET )}
+            network={NetworkType.TESTNET}
+            chain={selected}
+            isWithdrawal={true}
+            setSelectToken={setSelectToken}
+            selectToken={selectToken}
+            walletIcon={walletIcon}
+            setWalletIcon={setWalletIcon}
+            setIsTransac={setIsTransac}
+            selectTokenLogo={selectTokenLogo}
+            setSelectTokenLogo={setSelectTokenLogo}
+            selectTokenSymbol={selectTokenSymbol}
+            setSelectTokenSymbol={setSelectTokenSymbol}
+          />
+        </Box>
+
             {/* ------------------- SELECT NETWORK -------------------- */}
         <Box mb={4}>
-          <Text mb="6px" mt={'30px'} color={ colorMode === 'light' ? 'black' : 'white'} >
-            To this chain
-          </Text>
+          {selected && <Text mb="6px" mt={'30px'} color={ colorMode === 'light' ? 'black' : 'white'} >
+            To {selected} chain
+          </Text>}
           <Box
            bgColor= { colorMode === 'light' ? "#EFF6FF" : "#202020" } 
            borderRadius="9.11545px"
           >
             <Flex zIndex={2} mt={'10px'}>
               <SelectNetwork
-                selected={selected}
+                network={NetworkType.TESTNET}
+                selectToken={selectToken}
+                selected={selected || 'Select To Chain'}
                 setSelected={setSelected}
                 BackgroundColor="#fff"
                 tokenIcon={tokenIcon}
@@ -93,45 +143,6 @@ const Withdrawer = ({
             </Box>
           </Box>
         </Box>
-      <Box pt={3}>
-        <Text mb="6px"
-         color={ colorMode === 'light' ? 'black' : 'white'} 
-         >
-          From Algorand
-        </Text>
-        <Flex
-          p={3}
-          justify="space-between"
-          borderTopRightRadius="10px"
-          borderTopLeftRadius="10px"
-          border="1px solid #E2E8F0"
-          w={'100%'}
-        >
-          <Flex gap={2}>
-            <Image src={Algo} alt="algo" />
-            <Text pt="4px" fontSize="17px" 
-            color={ colorMode === 'light' ? 'black' : 'white'}
-            >
-              Algorand
-            </Text>
-          </Flex>
-          <Text color="#2D8EFF" pt="4px" fontSize="14px">Balance: {algoChainBalance}</Text>
-        </Flex>
-        <Box mt="-1px">
-          <SelectToken
-            selectTokenBalance={algoChainBalance}
-            tokens={supportedWithdrawAssetsByChain(selected,  NetworkType.TESTNET )}
-            network={NetworkType.TESTNET}
-            chain={selected}
-            isWithdrawal={true}
-            setSelectToken={setSelectToken}
-            selectToken={selectToken}
-            walletIcon={walletIcon}
-            setWalletIcon={setWalletIcon}
-            setIsTransac={setIsTransac}
-          />
-        </Box>
-
 
 
         {/* ------------------- Connect Wallet -------------------- */}

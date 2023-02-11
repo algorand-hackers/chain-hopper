@@ -2,7 +2,7 @@
 // Each individual bridgeProvider will provide their own implementations for these functions
 // However return values should follow a standard format irrespective of the difference in implementation
 
-import { NetworkType, Quote, QuoteRequest, Update } from "../types";
+import { AssetKeys, NetworkType, Quote, QuoteRequest, Update } from "../types";
 
 export abstract class BaseBridgeProvider {
 
@@ -10,10 +10,13 @@ export abstract class BaseBridgeProvider {
     public abstract supportedChains(network: NetworkType): Array<string>;
 
     // Return the list of assets that can be deposited into Algorand from the specified chain and network
-    public abstract supportedDepositAssetsByChain(chain: string, network: NetworkType): string[];
+    public abstract supportedDepositAssetsByChain(chain: string, network: NetworkType): AssetKeys[];
 
-    // Return the list of assets that can be withdrawn from algorand into the the chain and network spcified
-    public abstract supportedWithdrawAssetsByChain(chain: string, network: NetworkType): string[];
+    // Return the list of assets that can be withdrawn from algorand. I.e they have liquid market in other chains
+    public abstract supportedWithdrawalAssets(network: NetworkType): AssetKeys[];
+    
+    // Return all chains that have liquid market for a given asset in algorand chain
+    public abstract supportedChainsByWithdrawalAsset(network: NetworkType, asset: AssetKeys): string[];
 
     public abstract moveAsset(quote: Quote): Promise<Update>;
         
