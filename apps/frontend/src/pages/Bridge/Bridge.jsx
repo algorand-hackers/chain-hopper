@@ -49,8 +49,17 @@ const Bridge = () => {
   //   // setIsConnect(false)
   // };
 
-  const { algorandAccount, otherChainAccount, otherWalletProvider} = useContext(TransactionContext);
+  const { algorandAccount, otherChainAccount, connectMetamask, connectToMyAlgo, connectPhantom, otherWalletProvider, disconnectWallet} = useContext(TransactionContext);
 
+  const connectWallets = () => {
+    onOpen()
+  }
+
+  useEffect(() => {
+    onClose()
+    
+  }, [algorandAccount, otherChainAccount])
+ 
   
 
   const { root, fontsm } = useBridgeStyles();
@@ -68,6 +77,7 @@ const Bridge = () => {
   const [selectedTokenToWithdraw, setSelectedTokenToWithdraw] = useState('Asset');
   const [selectedTokenToWithdrawLogo, setSelectedTokenToWithdrawLogo] = useState('');
   const [selectedTokenToWithdrawSymbol, setSelectedTokenToWithdrawSymbol] = useState('');
+  const [isDepositTab, setIsDepositTab] = useState(true);
 
   const [walletIcon, setWalletIcon] = useState(wallet);
   // This is for the connect button on the component to start it
@@ -122,19 +132,59 @@ const Bridge = () => {
     setSelectTokenLogo('');
     setSelectTokenSymbol('');
     setSelectToken('');
+    if(otherChainAccount) disconnectWallet("");
+    if(selected){
+      connectWallets();
+    }
   },[selected]);
+
+  useEffect(() => {
+    if(!otherChainAccount && (selected || selectedWithdrawToChain)) connectWallets();
+  }, [otherChainAccount])
+
+  useEffect(() =>{
+    if(otherChainAccount) disconnectWallet("");
+    if(selectedWithdrawToChain){
+      connectWallets();
+    }
+  },[selectedWithdrawToChain]);
+
 
   useEffect(() =>{
     setSelectedWithdrawToChain('');
   },[selectedTokenToWithdraw]);
 
+  useEffect(() => {
+    if(algorandAccount){
+      connectWallets();
+    }
+  }, [algorandAccount])
 
+  useEffect(() => {
+    if(isDepositTab){
+      setSelectedWithdrawToChain("");
+    }
+    else{
+      setSelected("");
+    }
+  }, [isDepositTab])
   return (
+    
     <Flex 
       flexDir={'column'} 
       h="100vh"
       bg={ colorMode === 'light' ? 'bg1' : 'bg3'}  
       >
+          <ConnectWallet 
+            chain={isDepositTab ? selected : selectedWithdrawToChain}
+            algorandAccount={algorandAccount}
+            otherChainAccount={otherChainAccount}
+            isOpen={isOpen} 
+            onClose={onClose} 
+            connectMetamask={connectMetamask}  
+            connectToMyAlgo={connectToMyAlgo}
+            connectPhantom={connectPhantom}
+            />
       <Stack {...root} maxW="1600px" mx="auto" pos="relative">
         <Box
           bg={ colorMode === 'light' ? 'rgba(255, 255, 255, 0.97)' : 'bg4'}  
@@ -148,7 +198,7 @@ const Bridge = () => {
           pt="10px"
         >
           {/* ----------------------------------- TOP BUTTON TAB  [DEPOSIT & WITHDRAW] --------------------------------------------- */}
-          <Tabs variant="unstyled">
+          <Tabs variant="unstyled" onChange={(index) => index === 0 ? setIsDepositTab(true) : setIsDepositTab(false)}>
             <TabList padding="10px" 
              bg={ colorMode === 'light' ? '#EDF2FA' : 'bg5'}  
              borderRadius={'9.11545px'}
@@ -165,7 +215,7 @@ const Bridge = () => {
               >
                 Deposit
               </Tab>
-              <Tab
+              <Tab 
                 _selected={ colorMode === 'light' ? { color: 'black', bg: '#FFFFFF' } : { color:'white', bg:'#3A6FFF' }  }
                 color={ colorMode === 'light' ? 'black' : 'white'}  
                 fontWeight={'500'}

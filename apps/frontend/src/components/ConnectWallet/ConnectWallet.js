@@ -14,6 +14,7 @@ import metamask from '../../asset/metamaskLogo.svg';
 import phantomLogo from '../../asset/phantomLogo.svg';
 // import { toast } from 'react-toastify';
 import Images_Icons from '../../constant/icons-images';
+import { Chains } from '@chain-hopper/sdk';
 
 // const wallet = [
 //   {
@@ -36,6 +37,7 @@ import Images_Icons from '../../constant/icons-images';
 // const peraWallet = new PeraWalletConnect();
 
 const ConnectWallet = ({
+  chain,
   algorandAccount,
   otherChainAccount,
   connectMetamask,
@@ -110,7 +112,8 @@ const ConnectWallet = ({
 
 
               {!!algorandAccount && !otherChainAccount && 
-              (<> <Flex
+              (<> 
+              {!chain || chain === Chains.ETH && (<Flex
                 direction={'column'}
                 display="flex"
                 justify="center"
@@ -133,10 +136,10 @@ const ConnectWallet = ({
                    Metamask
                   </Text>
                 </Box>
-              </Flex>
+              </Flex> )}
                
                  {/* -------------------- My Phantom Wallet ------------------------ */}
-                 <Flex
+                 {!chain || chain === Chains.SOL && (<Flex
                 direction={'column'}
                 display="flex"
                 justify="center"
@@ -159,7 +162,7 @@ const ConnectWallet = ({
                    Phantom
                   </Text>
                 </Box>
-              </Flex></>)}
+              </Flex>)}</>)}
 
               {/* -------------------- Pera Wallet ------------------------ */}
               {/* <Flex
