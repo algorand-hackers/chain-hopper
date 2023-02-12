@@ -13,8 +13,7 @@ import { Chains } from '@chain-hopper/sdk';
 
 const Navbar = () => {
 
-
-
+  
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isMenu, setIsMenu] = useState(false);

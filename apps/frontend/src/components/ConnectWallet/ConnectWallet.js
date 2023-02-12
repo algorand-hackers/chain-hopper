@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   Modal,
   ModalOverlay,
@@ -46,6 +46,20 @@ const ConnectWallet = ({
   isOpen,
   onClose,
 }) => {
+
+  const [networkId, setNetworkId] = useState(null);
+
+  useEffect(() => {
+    const checkNetwork = async () => {
+      if (window.ethereum) {
+        const network = await window.ethereum.networkVersion;
+        setNetworkId(network);
+      }
+    };
+
+    checkNetwork();
+  }, []);
+
 
   const { colorMode } = useColorMode();
 
@@ -135,6 +149,9 @@ const ConnectWallet = ({
                   <Text mt="4px" textAlign={'left'} fontSize="16px">
                    Metamask
                   </Text>
+                  <div>
+      {networkId === '1' ? 'Mainnet' : 'Testnet'}
+    </div>
                 </Box>
               </Flex> )}
                
@@ -161,6 +178,7 @@ const ConnectWallet = ({
                   <Text mt="4px" textAlign={'left'} fontSize="16px">
                    Phantom
                   </Text>
+
                 </Box>
               </Flex>)}</>)}
 

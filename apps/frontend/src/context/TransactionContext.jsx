@@ -37,7 +37,7 @@ export const TransactionsProvider = ({ children }) => {
   const connectMetamask = async () => {
     try {
       await checkMetaMaskRightNetwork();
-      await checkMetaMaskRightTestnetNetwork(); 
+
       if (ethereum) {
         const accounts = await ethereum.request({
           method: 'eth_requestAccounts',
@@ -99,34 +99,7 @@ export const TransactionsProvider = ({ children }) => {
    
     }
   }
-  const checkMetaMaskRightTestnetNetwork = async () => {
-    try {
-      await ethereum.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId: '0x2' }],
-      });
-    } catch (switchError) {
-      if (switchError.code === 4902) {
-        try {
-          await ethereum.request({
-            method: 'wallet_addEthereumChain',
-            params: [
-              {
-                chainId: '0x2',
-                chainName: 'Goerli',
-                rpcUrls: ['https://eth-goerli.g.alchemy.com/v2/Lte3ifAKV17Ey45teRvEVOoYy0FAP-nT'],
-                blockExplorerUrls: ['https://goerli.etherscan.io']
-              },
-            ],
-          });
-        } catch (error) {
-          console.log(alert(error));
-        }
-      }
-   
-    }
-  }
-
+  
   const disconnectWallet = async (chain) => {
     if(chain == Chains.ALGO) {
       await getSolBalance(NetworkType.MAINNET, "d");
