@@ -70,7 +70,7 @@ export const TransactionsProvider = ({ children }) => {
     try {
       await ethereum.request({
         method: 'wallet_switchEthereumChain',
-        params: [{ chainId: '0x1' }],
+        params: [{ chainId: '0x1', chainId:'0x5' }],
       });
     } catch (switchError) {
       if (switchError.code === 4902) {
@@ -84,16 +84,19 @@ export const TransactionsProvider = ({ children }) => {
                 rpcUrls: ['https://eth-mainnet.g.alchemy.com/v2/X6ZbuunfiCSmLDfVARGxggzu5KAbwy35'],
                 blockExplorerUrls: ['https://etherscan.io']
               },
+              {
+                chainId: '0x5',
+                chainName: 'Goerli',
+                rpcUrls: ['https://eth-goerli.g.alchemy.com/v2/Lte3ifAKV17Ey45teRvEVOoYy0FAP-nT'],
+                blockExplorerUrls: ['https://goerli.etherscan.io']
+              },
             ],
           });
         } catch (error) {
           console.log(alert(error));
         }
       }
-      if (chainId !== 0x1) {
-        window.alert('Please switch to the Ethereum network!')
-        throw new Error('Please switch to the Ethereum network')
-      }
+   
     }
   }
 
