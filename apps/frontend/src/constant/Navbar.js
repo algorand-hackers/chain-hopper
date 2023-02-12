@@ -9,36 +9,12 @@ import ConnectWallet from '../components/ConnectWallet/ConnectWallet';
 import { TransactionContext } from '../context/TransactionContext';
 import Images_Icons from '../constant/icons-images';
 import ConnectedWallet from '../components/ConnectWallet/ConnectedWallet';
-import { ethers, providers } from 'ethers';
+import { Chains } from '@chain-hopper/sdk';
+
 const Navbar = () => {
-  const ethProvider = new ethers.providers.InfuraProvider('mainnet');
-  const solanaProvider = new ethers.providers.JsonRpcProvider(
-    'https://api.solana.com'
-  );
-  // const checkUserChain =  async () =>{
-  //     console.log("checkUserChain")
-  //   const ethNetwork = await ethers.providers.getNetwork();
-  //   console.log(ethNetwork, "etehrdj")
-  //    const solanaNetwork = await solanaProvider.getNetwork();
 
-  //     console.log(solanaNetwork, "test")
-  //     if (ethNetwork.chainId !== 1 || solanaNetwork.chainId !== 32) {
-  //         alert("You are not on the main Ethereum or solana network. Please switch to the main network to use this app.");
-  //     }
 
-  // }
-  async function checkUserChain() {
 
-    let {chainId} =  await ethers.providers.getNetwork()
-    
-      .request({ method: 'eth_chainId' })
-      .then((chainSymbol) => {
-        console.log(chainSymbol)
-         if (chainSymbol !== 0x1) {
-            alert("You are not on the main Ethereum or solana network. Please switch to the main network to use this app.");
-        }
-      });
-  }
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isMenu, setIsMenu] = useState(false);
@@ -75,15 +51,7 @@ const Navbar = () => {
     connectPhantom,
   ]);
 
-  useEffect(() => {
-    checkUserChain();
-  }, [
-    algorandAccount,
-    otherChainAccount,
-    connectMetamask,
-    connectToMyAlgo,
-    connectPhantom,
-  ]);
+
 
   return (
     <Flex h="100px">
