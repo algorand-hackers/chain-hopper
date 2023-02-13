@@ -10,12 +10,8 @@ import { toast } from "react-toastify";
 import { shortenAddress } from "../../utils/shortenedAddress";
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import Images_Icons from "../../constant/icons-images";
-import React, {useState} from 'react';
 
 const ConnectedWallet = ({chainName, walletImage, account, walletName, explorerUrl, explorerName, explorerLogo, explorerLogoAltText, disconnectWallet} ) => {
-
-  
- 
 
     const copyAddressToClipboard = () => {
 
@@ -44,8 +40,6 @@ return (<Menu>
       <Flex gap={4} align="center" display={{ base: 'none', md: 'flex' }}>
         {/* name is coming from useTransactions Context */}
        <Text fontWeight={500}>Connected to {walletName}</Text>
-     
-
         <Center size='20px' bgColor="#F1F1F1">
          <Image boxSize="25px" src={walletImage} alt="" />
         </Center>

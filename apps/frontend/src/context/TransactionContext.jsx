@@ -15,7 +15,7 @@ export const TransactionContext = React.createContext();
 const { ethereum, solana } = window;
 
 export const TransactionsProvider = ({ children }) => {
-  const [algoBalance, setAlgoBalance] = useState(0);
+
   const [otherChainAccount, setOtherChainAccount] = useState('');
   const [algorandAccount, setAlgorandAccount] = useState('');
   const [algorandWalletName, setAlgorandWalletName] = useState('');
@@ -31,13 +31,67 @@ export const TransactionsProvider = ({ children }) => {
   const [algoscan, setAlgoscan] = useState('');
   const [otherScan, setOtherScan] = useState('');
 
-  
 
+  // const checkIfWalletIsConnect = async () => {
+  //   // if (typeof window != "undefined" && typeof window.ethereum != "undefined"){
+  //   //   try {
+  //   //     // if (!ethereum) return 
+  //   //     // alert("Please install MetaMask.")
+       
+  //   //     // const provider = new ethers.providers.Web3Provider(ethereum);
+  //   //     const accounts = await ethereum.request({ method: 'eth_accounts' });
+  
+  //   //     if (accounts.length) {
+  //   //       //  setCurrentAccount(await provider.lookupAddress(accounts[0]));
+  //   //       setCurrentAccount(accounts[0]);
+  //   //       //         var address = '0x1234...';
+  //   //       // var name = await provider.lookupAddress(address);
+  //   //       // // ethers.js automatically checks that the forward resolution matches.
+  //   //     } else {
+  //   //       console.log('No accounts found');
+  //   //     }
+  //   // }catch (error) {
+  //   //   console.log(error);
+  //   // }else{
+  //   //        console.log("Please install Metamask");
+  //   //        toast.warning('Please install Metamask', {
+  //   //        position: toast.POSITION.TOP_CENTER, 
+  //   //        autoClose: 5000
+  //   //       });
+  //   //     }
+  //   if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
+  //         // console.log("clicked metamask")
+  //          try {
+  //               /* Metamask is installed */
+  //               const accounts = await ethereum.request({ method: 'eth_accounts' });
+  
+  //               if (accounts.length) {
+  //                       //  setCurrentAccount(await provider.lookupAddress(accounts[0]));
+  //                       setCurrentAccount(accounts[0]);
+  //                       //         var address = '0x1234...';
+  //                       // var name = await provider.lookupAddress(address);
+  //                       // // ethers.js automatically checks that the forward resolution matches.
+  //                     } else {
+  //                       console.log('No accounts found');
+  //                     }
+  //          } catch (err) {
+  //               console.error(err.messages);
+  //          }
+  //       } else {
+  //         /* Metamask is not installed */
+  //         if(localStorage.getItem("wallet")){
+  //           setCurrentAccount(localStorage.getItem("wallet"));
+  //         }
+  //          toast.info('Please install Metamask', {
+  //          position: toast.POSITION.TOP_CENTER, 
+  //          autoClose: 2000
+  //         });
+  //       }
+  // };
 
   const connectMetamask = async () => {
     try {
       await checkMetaMaskRightNetwork();
-
       if (ethereum) {
         const accounts = await ethereum.request({
           method: 'eth_requestAccounts',
@@ -84,22 +138,16 @@ export const TransactionsProvider = ({ children }) => {
                 rpcUrls: ['https://eth-mainnet.g.alchemy.com/v2/X6ZbuunfiCSmLDfVARGxggzu5KAbwy35'],
                 blockExplorerUrls: ['https://etherscan.io']
               },
-              {
-                chainId: '0x5',
-                chainName: 'Goerli',
-                rpcUrls: ['https://eth-goerli.g.alchemy.com/v2/Lte3ifAKV17Ey45teRvEVOoYy0FAP-nT'],
-                blockExplorerUrls: ['https://goerli.etherscan.io']
-              },
             ],
           });
         } catch (error) {
           console.log(alert(error));
         }
       }
-   
+      // handle other "switch" errors
     }
   }
-  
+
   const disconnectWallet = async (chain) => {
     if(chain == Chains.ALGO) {
       await getSolBalance(NetworkType.MAINNET, "d");
@@ -134,7 +182,6 @@ export const TransactionsProvider = ({ children }) => {
        setAlgorandAccount(addresses[0].toString())
        setAlgorandWalletName("My Algo");
        setAlgorandWalletImage(myAlgoLogoM);
-       setAlgoBalance(accounts[0].balance)
        setAlgoscan('https://algoexplorer.io/address');
      } catch (err) {
        console.error(err);
@@ -148,7 +195,22 @@ export const TransactionsProvider = ({ children }) => {
   useEffect(() => {
   }, []);
 
-  
+  // const [phantom, setPhantom] = useState(null);
+
+  // useEffect(() => {
+  //   if (window["solana"]?.isPhantom) {
+  //     setPhantom(window["solana"]);
+  //   } else {
+  //     toast.error('Something went wrong connecting to Phantom wallet', {
+  //       position: toast.POSITION.TOP_LEFT,
+  //       autoClose: 2000
+  //     });
+  //   }
+  // }, [solana]);
+
+  // const connectPhantom = () => {
+  //    phantom?.connect();
+  // }
 
   //  --------------------------  Phantom Wallet connect function -------------------------------
 
