@@ -37,7 +37,6 @@ export const TransactionsProvider = ({ children }) => {
   const [algoscan, setAlgoscan] = useState('');
   const [otherScan, setOtherScan] = useState('');
 
-  const [phantomNetwork, setPhantomNetwork] = useState(null);
   const [network, setNetwork] = useState(null);
   
  
@@ -116,6 +115,19 @@ export const TransactionsProvider = ({ children }) => {
     }
   }
 
+
+  const getNetwork = async () => {
+    const wallet = await ethers.Wallet();
+    const networkID = await wallet.providers.getNetwork();
+    if (networkID.chainId === MainnetID) {
+      setNetwork(NetworkType.MAINNET);
+    } else if (networkID.chainId === TestnetID) {
+      setNetwork(NetworkType.TESTNET);
+    } else {
+      setNetwork('unknown');
+    }
+  };
+
   const disconnectWallet = async (chain) => {
     if(chain == Chains.ALGO) {
       await getSolBalance(NetworkType.MAINNET, "d");
@@ -170,7 +182,7 @@ export const TransactionsProvider = ({ children }) => {
   const connectPhantom = async () => {
     try {
       
-  
+       await getNetwork();
         if (solana) {
           // When using this flag, Phantom will only connect and emit a connect event if the application is trusted. Therefore, this can be safely called on page load for new users, as they won't be bothered by a pop-up window even if they have never connected to Phantom before.
           // if user already connected, { onlyIfTrusted: true }
@@ -187,17 +199,7 @@ export const TransactionsProvider = ({ children }) => {
           setOtherExplorerLogo(phantomLogoM);
           setOtherExplorerLogoAltText('Solana');
           setOtheExplorerName("Solana Scan");
-          const getNetwork = async () => {
-            const wallet = await ethers.Wallet();
-            const networkID = await wallet.providers.getNetwork();
-            if (networkID.chainId === MainnetID) {
-              setPhantomNetwork(NetworkType.MAINNET);
-            } else if (networkID.chainId === TestnetID) {
-              setPhantomNetwork(NetworkType.TESTNET);
-            } else {
-              setPhantomNetwork('unknown');
-            }
-          };
+      
         } else {
           // alert("Please install phantom wallet");
           toast.info('Please install or unlock phantom wallet (https://phantom.app/)', {
@@ -236,7 +238,7 @@ export const TransactionsProvider = ({ children }) => {
         otherExplorerName,
         otherWalletProvider,
         network: network || NetworkType.TESTNET,
-        phantomNetwork: phantomNetwork || NetworkType.TESTNET,
+        
       }}
     >
       {children}
