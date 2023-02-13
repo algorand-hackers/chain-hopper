@@ -158,16 +158,20 @@ const Bridge = () => {
     if(algorandAccount){
       connectWallets();
     }
-  }, [algorandAccount])
+  }, [algorandAccount]);
 
   useEffect(() => {
     if(isDepositTab){
       setSelectedWithdrawToChain("");
+      setSelectedTokenToWithdraw("");
+      setSelectedTokenToWithdrawSymbol("");
+      setSelectedTokenToWithdrawLogo("");
+
     }
     else{
       setSelected("");
     }
-  }, [isDepositTab])
+  }, [isDepositTab]);
   return (
     
     <Flex 
