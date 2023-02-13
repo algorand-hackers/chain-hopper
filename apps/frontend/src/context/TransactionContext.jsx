@@ -31,7 +31,7 @@ export const TransactionsProvider = ({ children }) => {
   const [algoscan, setAlgoscan] = useState('');
   const [otherScan, setOtherScan] = useState('');
 
-  const [networkId, setNetworkId] = useState(null);
+  const [network, setNetwork] = useState(null);
 
   
 
@@ -96,13 +96,6 @@ export const TransactionsProvider = ({ children }) => {
 
   const connectMetamask = async () => {
     try {
-      const chainId = await window.ethereum.send('eth_chainId');
-
-      if (chainId === '0x1') {
-        setNetworkId(NetworkType.MAINNET);
-      } else {
-        setNetworkId(NetworkType.TESTNET);
-      }
 
       await checkMetaMaskRightNetwork();
       
@@ -122,6 +115,14 @@ export const TransactionsProvider = ({ children }) => {
         setOtherWalletProvider(new ethers.providers.Web3Provider(ethereum))
         localStorage.setItem("wallet", accounts[0]);
         // window.location.reload();
+
+        const chainId = await ethereum.send('eth_chainId');
+
+        if (chainId.result === '0x1') {
+          setNetwork(NetworkType.MAINNET);
+        } else {
+          setNetwork(NetworkType.TESTNET);
+        }
       } else {
         toast.info('Please install Metamask on your browser extension', {
           position: toast.POSITION.TOP_CENTER, 
@@ -284,7 +285,7 @@ export const TransactionsProvider = ({ children }) => {
         otherExplorerLogoAltText,
         otherExplorerName,
         otherWalletProvider,
-        networkId,
+        network: network || NetworkType.TESTNET,
       }}
     >
       {children}

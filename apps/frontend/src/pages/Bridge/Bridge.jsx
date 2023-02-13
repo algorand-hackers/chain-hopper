@@ -49,7 +49,7 @@ const Bridge = () => {
   //   // setIsConnect(false)
   // };
 
-  const { algorandAccount, otherChainAccount, connectMetamask, connectToMyAlgo, connectPhantom, otherWalletProvider, disconnectWallet} = useContext(TransactionContext);
+  const { algorandAccount, otherChainAccount, connectMetamask, connectToMyAlgo, connectPhantom, otherWalletProvider, disconnectWallet, network} = useContext(TransactionContext);
 
   const connectWallets = () => {
     onOpen()
@@ -95,7 +95,7 @@ const Bridge = () => {
     if(otherChainAccount  && algorandAccount){
       // Algorand balances
       if(selectToken  ===  AssetKeys.xALGO_Glitter){
-        getAlgoBalance(NetworkType.TESTNET, algorandAccount, setAlgoChainBalOfDepositToken);
+        getAlgoBalance(network, algorandAccount, setAlgoChainBalOfDepositToken);
       }
 
       // Other chain balances
@@ -103,7 +103,7 @@ const Bridge = () => {
         getEtherBalance(otherWalletProvider, otherChainAccount, setDepositTokenBalanceOnOtherChain);
       }
       else if(selected === Chains.SOL  && selectToken === AssetKeys.SOL) {
-        getSolBalance(NetworkType.TESTNET, otherChainAccount, setDepositTokenBalanceOnOtherChain);
+        getSolBalance(network, otherChainAccount, setDepositTokenBalanceOnOtherChain);
       }
     }
       else 
@@ -114,14 +114,14 @@ const Bridge = () => {
     if(otherChainAccount && algorandAccount){
       // Algorand balances
       if(selectedTokenToWithdraw  ===  AssetKeys.ALGO){
-        getAlgoBalance(NetworkType.TESTNET, algorandAccount, setAlgoChainBalOfWithdrawalToken);
+        getAlgoBalance(network, algorandAccount, setAlgoChainBalOfWithdrawalToken);
       }
 
       //  Other chain balances
       if(selectedWithdrawToChain === Chains.ETH && selectedTokenToWithdraw  === AssetKeys.WETH_Wormhole &&  otherWalletProvider)
         getEtherBalance(otherWalletProvider, otherChainAccount, setWithdrawalTokenBalanceOnOtherChain);
       else if(selectedWithdrawToChain === Chains.SOL  && selectedTokenToWithdraw === AssetKeys.xSOL_Glitter) {
-        getSolBalance(NetworkType.TESTNET,  otherChainAccount, setWithdrawalTokenBalanceOnOtherChain);
+        getSolBalance(network,  otherChainAccount, setWithdrawalTokenBalanceOnOtherChain);
       }
     }
     else 
@@ -129,6 +129,7 @@ const Bridge = () => {
   },[selectedTokenToWithdraw, selectedWithdrawToChain, otherWalletProvider, otherChainAccount, algorandAccount]);
 
   useEffect(() =>{
+    alert(network);
     setSelectTokenLogo('');
     setSelectTokenSymbol('');
     setSelectToken('');
@@ -296,8 +297,8 @@ const Bridge = () => {
                     <Flex zIndex={1} mt={'-1px'}>
                       <SelectToken
                         selectTokenBalance={depositTokenBalanceOnOtherChain}
-                        tokens={supportedDepositAssetsByChain(selected,   NetworkType.TESTNET )}
-                        network={NetworkType.TESTNET}
+                        tokens={supportedDepositAssetsByChain(selected,   network )}
+                        network={network}
                         chain={selected}
                         setSelectToken={setSelectToken}
                         selectToken={selectToken}
@@ -398,6 +399,7 @@ const Bridge = () => {
                   // Transfer useState
                   tranferBtn={tranferBtn}
                   setTranferBtn={setTranferBtn}
+                  network={network}
                 />
               </TabPanel>
             </TabPanels>
