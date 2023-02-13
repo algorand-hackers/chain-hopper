@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { ethers } from 'ethers';
+import { ethers, providers } from 'ethers';
 import MyAlgoConnect from '@randlabs/myalgo-connect';
 import metamaskLogoM from '../asset/metamask.svg'
 import myAlgoLogoM from '../asset/myAlgo.png';
@@ -8,18 +8,19 @@ import phantomLogoM from '../asset/phantomLogo.svg';
 import Images_Icons from '../constant/icons-images';
 import { getSolBalance } from './main';
 import { Chains, NetworkType } from '@chain-hopper/sdk';
-import { Phantom } from '@aphantom-ds/phantom-js';
+
 
 
 
 export const TransactionContext = React.createContext();
 
 const { ethereum, solana } = window;
+const MainnetID = '0x1';
+const TestnetID = '0x2';
 
 export const TransactionsProvider = ({ children }) => {
 
-  const MainnetID = '0x1';
-  const TestnetID = '0x2';
+ 
 
   const [otherChainAccount, setOtherChainAccount] = useState('');
   const [algorandAccount, setAlgorandAccount] = useState('');
@@ -36,11 +37,12 @@ export const TransactionsProvider = ({ children }) => {
   const [algoscan, setAlgoscan] = useState('');
   const [otherScan, setOtherScan] = useState('');
 
-  const [networkId, setNetworkId] = useState(null);
-
+  const [phantomNetwork, setPhantomNetwork] = useState(null);
+  const [network, setNetwork] = useState(null);
   
-
-  
+ 
+   
+   
 
 
 
@@ -160,27 +162,24 @@ export const TransactionsProvider = ({ children }) => {
   useEffect(() => {
   }, []);
 
-  // const [phantom, setPhantom] = useState(null);
-
-  // useEffect(() => {
-  //   if (window["solana"]?.isPhantom) {
-  //     setPhantom(window["solana"]);
-  //   } else {
-  //     toast.error('Something went wrong connecting to Phantom wallet', {
-  //       position: toast.POSITION.TOP_LEFT,
-  //       autoClose: 2000
-  //     });
-  //   }
-  // }, [solana]);
-
-  // const connectPhantom = () => {
-  //    phantom?.connect();
-  // }
+  
 
   //  --------------------------  Phantom Wallet connect function -------------------------------
 
   const connectPhantom = async () => {
     try {
+      const getNetwork = async () => {
+        const wallet = await ethers.Wallet();
+        const networkID = await wallet.providers.getNetwork();
+        if (networkID.chainId === MainnetID) {
+          setPhantomNetwork(NetworkType.MAINNET);
+        } else if (networkID.chainId === TestnetID) {
+          setPhantomNetwork(NetworkType.TESTNET);
+        } else {
+          setPhantomNetwork('unknown');
+        }
+      };
+  
         if (solana) {
           // When using this flag, Phantom will only connect and emit a connect event if the application is trusted. Therefore, this can be safely called on page load for new users, as they won't be bothered by a pop-up window even if they have never connected to Phantom before.
           // if user already connected, { onlyIfTrusted: true }
@@ -234,7 +233,8 @@ export const TransactionsProvider = ({ children }) => {
         otherExplorerLogoAltText,
         otherExplorerName,
         otherWalletProvider,
-        networkId,
+        network,
+        phantomNetwork,
       }}
     >
       {children}
