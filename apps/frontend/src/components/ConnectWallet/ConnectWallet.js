@@ -47,6 +47,8 @@ const ConnectWallet = ({
   onClose,
 }) => {
 
+  
+
   const { colorMode } = useColorMode();
 
   return (
@@ -135,6 +137,7 @@ const ConnectWallet = ({
                   <Text mt="4px" textAlign={'left'} fontSize="16px">
                    Metamask
                   </Text>
+                 
                 </Box>
               </Flex> )}
                

@@ -31,6 +31,9 @@ export const TransactionsProvider = ({ children }) => {
   const [algoscan, setAlgoscan] = useState('');
   const [otherScan, setOtherScan] = useState('');
 
+  const [networkId, setNetworkId] = useState(null);
+
+  
 
   // const checkIfWalletIsConnect = async () => {
   //   // if (typeof window != "undefined" && typeof window.ethereum != "undefined"){
@@ -89,9 +92,21 @@ export const TransactionsProvider = ({ children }) => {
   //       }
   // };
 
+
+
   const connectMetamask = async () => {
     try {
+      const chainId = await window.ethereum.send('eth_chainId');
+
+      if (chainId === '0x1') {
+        setNetworkId(NetworkType.MAINNET);
+      } else {
+        setNetworkId(NetworkType.TESTNET);
+      }
+
       await checkMetaMaskRightNetwork();
+      
+     
       if (ethereum) {
         const accounts = await ethereum.request({
           method: 'eth_requestAccounts',
@@ -269,6 +284,7 @@ export const TransactionsProvider = ({ children }) => {
         otherExplorerLogoAltText,
         otherExplorerName,
         otherWalletProvider,
+        networkId,
       }}
     >
       {children}
