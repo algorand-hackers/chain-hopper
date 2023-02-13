@@ -31,13 +31,26 @@ export const TransactionsProvider = ({ children }) => {
   const [algoscan, setAlgoscan] = useState('');
   const [otherScan, setOtherScan] = useState('');
 
+  const [networkId, setNetworkId] = useState(null);
+
   
+
+
 
 
   const connectMetamask = async () => {
     try {
-      await checkMetaMaskRightNetwork();
+      const chainId = await window.ethereum.send('eth_chainId');
 
+      if (chainId === '0x1') {
+        setNetworkId(NetworkType.MAINNET);
+      } else {
+        setNetworkId(NetworkType.TESTNET);
+      }
+
+      await checkMetaMaskRightNetwork();
+      
+     
       if (ethereum) {
         const accounts = await ethereum.request({
           method: 'eth_requestAccounts',
@@ -207,6 +220,7 @@ export const TransactionsProvider = ({ children }) => {
         otherExplorerLogoAltText,
         otherExplorerName,
         otherWalletProvider,
+        networkId,
       }}
     >
       {children}
