@@ -46,6 +46,7 @@ const Withdrawer = ({
   walletConnected,
   tranferBtn,
   setTranferBtn,
+  network,
 }) => {
 
   const connectWallet = () => {
@@ -84,8 +85,8 @@ const Withdrawer = ({
         <Box mt="-1px">
           <SelectToken
             selectTokenBalance={algoChainBalance}
-            tokens={supportedWithdrawalAssets(NetworkType.TESTNET )}
-            network={NetworkType.TESTNET}
+            tokens={supportedWithdrawalAssets(network)}
+            network={network}
             chain={selected}
             isWithdrawal={true}
             setSelectToken={setSelectToken}
@@ -111,7 +112,7 @@ const Withdrawer = ({
           >
             <Flex zIndex={2} mt={'10px'}>
               <SelectNetwork
-                network={NetworkType.TESTNET}
+                network={network}
                 selectToken={selectToken}
                 selected={selected || 'Select To Chain'}
                 setSelected={setSelected}

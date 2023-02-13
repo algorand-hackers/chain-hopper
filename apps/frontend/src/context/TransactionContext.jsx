@@ -48,13 +48,6 @@ export const TransactionsProvider = ({ children }) => {
 
   const connectMetamask = async () => {
     try {
-      const chainId = await window.ethereum.send('eth_chainId');
-
-      if (chainId === '0x1') {
-        setNetworkId(NetworkType.MAINNET);
-      } else {
-        setNetworkId(NetworkType.TESTNET);
-      }
 
       await checkMetaMaskRightNetwork();
       
@@ -74,6 +67,14 @@ export const TransactionsProvider = ({ children }) => {
         setOtherWalletProvider(new ethers.providers.Web3Provider(ethereum))
         localStorage.setItem("wallet", accounts[0]);
         // window.location.reload();
+
+        const chainId = await ethereum.send('eth_chainId');
+
+        if (chainId.result === '0x1') {
+          setNetwork(NetworkType.MAINNET);
+        } else {
+          setNetwork(NetworkType.TESTNET);
+        }
       } else {
         toast.info('Please install Metamask on your browser extension', {
           position: toast.POSITION.TOP_CENTER, 
@@ -168,17 +169,7 @@ export const TransactionsProvider = ({ children }) => {
 
   const connectPhantom = async () => {
     try {
-      const getNetwork = async () => {
-        const wallet = await ethers.Wallet();
-        const networkID = await wallet.providers.getNetwork();
-        if (networkID.chainId === MainnetID) {
-          setPhantomNetwork(NetworkType.MAINNET);
-        } else if (networkID.chainId === TestnetID) {
-          setPhantomNetwork(NetworkType.TESTNET);
-        } else {
-          setPhantomNetwork('unknown');
-        }
-      };
+      
   
         if (solana) {
           // When using this flag, Phantom will only connect and emit a connect event if the application is trusted. Therefore, this can be safely called on page load for new users, as they won't be bothered by a pop-up window even if they have never connected to Phantom before.
@@ -196,6 +187,17 @@ export const TransactionsProvider = ({ children }) => {
           setOtherExplorerLogo(phantomLogoM);
           setOtherExplorerLogoAltText('Solana');
           setOtheExplorerName("Solana Scan");
+          const getNetwork = async () => {
+            const wallet = await ethers.Wallet();
+            const networkID = await wallet.providers.getNetwork();
+            if (networkID.chainId === MainnetID) {
+              setPhantomNetwork(NetworkType.MAINNET);
+            } else if (networkID.chainId === TestnetID) {
+              setPhantomNetwork(NetworkType.TESTNET);
+            } else {
+              setPhantomNetwork('unknown');
+            }
+          };
         } else {
           // alert("Please install phantom wallet");
           toast.info('Please install or unlock phantom wallet (https://phantom.app/)', {
@@ -233,8 +235,8 @@ export const TransactionsProvider = ({ children }) => {
         otherExplorerLogoAltText,
         otherExplorerName,
         otherWalletProvider,
-        network,
-        phantomNetwork,
+        network: network || NetworkType.TESTNET,
+        phantomNetwork: phantomNetwork || NetworkType.TESTNET,
       }}
     >
       {children}
