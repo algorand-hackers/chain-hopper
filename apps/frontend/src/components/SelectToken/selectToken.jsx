@@ -11,7 +11,6 @@ const SelectToken = ({ setSelectToken, walletIcon, selectToken, setWalletIcon, c
   const [value, setValue] = useState("");
   // const { currentAccount, connectToMyAlgo, disconnectWallet } = useContext(TransactionContext);
   const onClick = () => {
-    alert('Cammer herer');
     setValue(selectTokenBalance);
   }
 

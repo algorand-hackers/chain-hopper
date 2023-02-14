@@ -16,25 +16,13 @@ import ConnectWallet from '../components/ConnectWallet/ConnectWallet';
 import { TransactionContext } from "../context/TransactionContext";
 import Images_Icons from '../constant/icons-images';
 import ConnectedWallet from '../components/ConnectWallet/ConnectedWallet';
-import { Chains } from '@chain-hopper/sdk';
+import { Chains, NetworkType } from '@chain-hopper/sdk';
 
 const Navbar = () => {
 
-    const [selectedNetwork, setSelectedNetwork] = useState("mainnet");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const toast = useToast();
-  
-    const handleNetworkChange = (event) => {
-        setSelectedNetwork(event.target.value);
-        setIsModalOpen(false);
-        toast({
-          title: `Switched to ${event.target.value}`,
-          status: "success",
-          duration: 2000,
-          isClosable: true,
-          position: "top-right",
-        });
-      };
+
   
     const handleModalClose = () => {
       setIsModalOpen(false);
@@ -63,7 +51,21 @@ const Navbar = () => {
       otherExplorerLogo,
       otherExplorerLogoAltText,
       otherExplorerName,
+      network,
+      setNetwork,
     } = useContext(TransactionContext);
+
+    const handleNetworkChange = (event) => {
+      setNetwork(event.target.value);
+      setIsModalOpen(false);
+      toast({
+        title: `Switched to ${event.target.value}`,
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+        position: "top-right",
+      });
+    };
 
     const connectWallets = () => {
       onOpen()
@@ -111,7 +113,7 @@ const Navbar = () => {
         onClick={handleArrowClick}
       >
         <Text fontWeight="bold" mr={2}>
-          Switch Mode
+          {network}
         </Text>
         <BsChevronDown />
       </Box>
@@ -124,7 +126,7 @@ const Navbar = () => {
             <Button
               variant="ghost"
               width="full"
-              value="mainnet"
+              value={NetworkType.MAINNET}
               onClick={handleNetworkChange}
             >
               Mainnet
@@ -132,7 +134,7 @@ const Navbar = () => {
             <Button
               variant="ghost"
               width="full"
-              value="testnet"
+              value={NetworkType.TESTNET}
               onClick={handleNetworkChange}
             >
               Testnet
