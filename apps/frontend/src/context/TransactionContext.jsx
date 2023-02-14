@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { ethers } from 'ethers';
+import { ethers, providers } from 'ethers';
 import MyAlgoConnect from '@randlabs/myalgo-connect';
 import metamaskLogoM from '../asset/metamask.svg'
 import myAlgoLogoM from '../asset/myAlgo.png';
@@ -10,11 +10,17 @@ import { getSolBalance } from './main';
 import { Chains, NetworkType } from '@chain-hopper/sdk';
 
 
+
+
 export const TransactionContext = React.createContext();
 
 const { ethereum, solana } = window;
+const MainnetID = '0x1';
+const TestnetID = '0x2';
 
 export const TransactionsProvider = ({ children }) => {
+
+ 
 
   const [otherChainAccount, setOtherChainAccount] = useState('');
   const [algorandAccount, setAlgorandAccount] = useState('');
@@ -32,65 +38,10 @@ export const TransactionsProvider = ({ children }) => {
   const [otherScan, setOtherScan] = useState('');
 
   const [network, setNetwork] = useState(null);
-
   
-
-  // const checkIfWalletIsConnect = async () => {
-  //   // if (typeof window != "undefined" && typeof window.ethereum != "undefined"){
-  //   //   try {
-  //   //     // if (!ethereum) return 
-  //   //     // alert("Please install MetaMask.")
-       
-  //   //     // const provider = new ethers.providers.Web3Provider(ethereum);
-  //   //     const accounts = await ethereum.request({ method: 'eth_accounts' });
-  
-  //   //     if (accounts.length) {
-  //   //       //  setCurrentAccount(await provider.lookupAddress(accounts[0]));
-  //   //       setCurrentAccount(accounts[0]);
-  //   //       //         var address = '0x1234...';
-  //   //       // var name = await provider.lookupAddress(address);
-  //   //       // // ethers.js automatically checks that the forward resolution matches.
-  //   //     } else {
-  //   //       console.log('No accounts found');
-  //   //     }
-  //   // }catch (error) {
-  //   //   console.log(error);
-  //   // }else{
-  //   //        console.log("Please install Metamask");
-  //   //        toast.warning('Please install Metamask', {
-  //   //        position: toast.POSITION.TOP_CENTER, 
-  //   //        autoClose: 5000
-  //   //       });
-  //   //     }
-  //   if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
-  //         // console.log("clicked metamask")
-  //          try {
-  //               /* Metamask is installed */
-  //               const accounts = await ethereum.request({ method: 'eth_accounts' });
-  
-  //               if (accounts.length) {
-  //                       //  setCurrentAccount(await provider.lookupAddress(accounts[0]));
-  //                       setCurrentAccount(accounts[0]);
-  //                       //         var address = '0x1234...';
-  //                       // var name = await provider.lookupAddress(address);
-  //                       // // ethers.js automatically checks that the forward resolution matches.
-  //                     } else {
-  //                       console.log('No accounts found');
-  //                     }
-  //          } catch (err) {
-  //               console.error(err.messages);
-  //          }
-  //       } else {
-  //         /* Metamask is not installed */
-  //         if(localStorage.getItem("wallet")){
-  //           setCurrentAccount(localStorage.getItem("wallet"));
-  //         }
-  //          toast.info('Please install Metamask', {
-  //          position: toast.POSITION.TOP_CENTER, 
-  //          autoClose: 2000
-  //         });
-  //       }
-  // };
+ 
+   
+   
 
 
 
@@ -164,6 +115,19 @@ export const TransactionsProvider = ({ children }) => {
     }
   }
 
+
+  const getNetwork = async () => {
+    const wallet = await ethers.Wallet();
+    const networkID = await wallet.providers.getNetwork();
+    if (networkID.chainId === MainnetID) {
+      setNetwork(NetworkType.MAINNET);
+    } else if (networkID.chainId === TestnetID) {
+      setNetwork(NetworkType.TESTNET);
+    } else {
+      setNetwork('unknown');
+    }
+  };
+
   const disconnectWallet = async (chain) => {
     if(chain == Chains.ALGO) {
       await getSolBalance(NetworkType.MAINNET, "d");
@@ -211,27 +175,14 @@ export const TransactionsProvider = ({ children }) => {
   useEffect(() => {
   }, []);
 
-  // const [phantom, setPhantom] = useState(null);
-
-  // useEffect(() => {
-  //   if (window["solana"]?.isPhantom) {
-  //     setPhantom(window["solana"]);
-  //   } else {
-  //     toast.error('Something went wrong connecting to Phantom wallet', {
-  //       position: toast.POSITION.TOP_LEFT,
-  //       autoClose: 2000
-  //     });
-  //   }
-  // }, [solana]);
-
-  // const connectPhantom = () => {
-  //    phantom?.connect();
-  // }
+  
 
   //  --------------------------  Phantom Wallet connect function -------------------------------
 
   const connectPhantom = async () => {
     try {
+      
+       await getNetwork();
         if (solana) {
           // When using this flag, Phantom will only connect and emit a connect event if the application is trusted. Therefore, this can be safely called on page load for new users, as they won't be bothered by a pop-up window even if they have never connected to Phantom before.
           // if user already connected, { onlyIfTrusted: true }
@@ -248,6 +199,7 @@ export const TransactionsProvider = ({ children }) => {
           setOtherExplorerLogo(phantomLogoM);
           setOtherExplorerLogoAltText('Solana');
           setOtheExplorerName("Solana Scan");
+      
         } else {
           // alert("Please install phantom wallet");
           toast.info('Please install or unlock phantom wallet (https://phantom.app/)', {
@@ -286,6 +238,7 @@ export const TransactionsProvider = ({ children }) => {
         otherExplorerName,
         otherWalletProvider,
         network: network || NetworkType.TESTNET,
+        
       }}
     >
       {children}

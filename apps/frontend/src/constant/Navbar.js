@@ -1,6 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { Box, Flex, Text, Icon, useDisclosure} from "@chakra-ui/react";
+import {  Flex, Text, Icon, useDisclosure, Box,  Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalBody,
+    ModalCloseButton,
+    Button,  useToast,} from "@chakra-ui/react";
 import {GiHamburgerMenu} from "react-icons/gi"
+import {BsChevronDown} from "react-icons/bs"
 import { Link } from 'react-router-dom';
 import Applogo from "../asset/Applogo.svg"
 import Btn from '../components/UI/Btn';
@@ -12,6 +19,30 @@ import ConnectedWallet from '../components/ConnectWallet/ConnectedWallet';
 import { Chains } from '@chain-hopper/sdk';
 
 const Navbar = () => {
+
+    const [selectedNetwork, setSelectedNetwork] = useState("mainnet");
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const toast = useToast();
+  
+    const handleNetworkChange = (event) => {
+        setSelectedNetwork(event.target.value);
+        setIsModalOpen(false);
+        toast({
+          title: `Switched to ${event.target.value}`,
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+          position: "top-right",
+        });
+      };
+  
+    const handleModalClose = () => {
+      setIsModalOpen(false);
+    };
+  
+    const handleArrowClick = () => {
+      setIsModalOpen(true);
+    };
 
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [isMenu, setIsMenu] = useState(false)
@@ -65,6 +96,51 @@ const Navbar = () => {
                     Contact us
                 </Link>
             </Flex>
+            <Box
+      border="2px solid"
+      borderColor="gray.300"
+      borderRadius="full"
+      p={2}
+      position="relative"
+    >
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+        cursor="pointer"
+        onClick={handleArrowClick}
+      >
+        <Text fontWeight="bold" mr={2}>
+          Switch Mode
+        </Text>
+        <BsChevronDown />
+      </Box>
+      <Modal isOpen={isModalOpen} onClose={handleModalClose} size="sm">
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Switch Mode</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Button
+              variant="ghost"
+              width="full"
+              value="mainnet"
+              onClick={handleNetworkChange}
+            >
+              Mainnet
+            </Button>
+            <Button
+              variant="ghost"
+              width="full"
+              value="testnet"
+              onClick={handleNetworkChange}
+            >
+              Testnet
+            </Button>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </Box>
             {(!algorandAccount || !otherChainAccount) && (
                 <Box onClick={connectWallets} display={{base:"none", md:"block"}}>
                     <Btn text={!algorandAccount ? "connect Algo wallet" : "connect other wallet"} />
