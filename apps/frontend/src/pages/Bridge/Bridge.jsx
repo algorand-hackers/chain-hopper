@@ -129,7 +129,6 @@ const Bridge = () => {
   },[selectedTokenToWithdraw, selectedWithdrawToChain, otherWalletProvider, otherChainAccount, algorandAccount]);
 
   useEffect(() =>{
-    alert(network);
     setSelectTokenLogo('');
     setSelectTokenSymbol('');
     setSelectToken('');

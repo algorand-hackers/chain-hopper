@@ -37,7 +37,7 @@ export const TransactionsProvider = ({ children }) => {
   const [algoscan, setAlgoscan] = useState('');
   const [otherScan, setOtherScan] = useState('');
 
-  const [network, setNetwork] = useState(null);
+  const [network, setNetwork] = useState(NetworkType.TESTNET);
   
  
    
@@ -47,11 +47,10 @@ export const TransactionsProvider = ({ children }) => {
 
   const connectMetamask = async () => {
     try {
-
-      await checkMetaMaskRightNetwork();
-      
      
       if (ethereum) {
+        await checkMetaMaskRightNetwork();
+
         const accounts = await ethereum.request({
           method: 'eth_requestAccounts',
         });
@@ -66,14 +65,6 @@ export const TransactionsProvider = ({ children }) => {
         setOtherWalletProvider(new ethers.providers.Web3Provider(ethereum))
         localStorage.setItem("wallet", accounts[0]);
         // window.location.reload();
-
-        const chainId = await ethereum.send('eth_chainId');
-
-        if (chainId.result === '0x1') {
-          setNetwork(NetworkType.MAINNET);
-        } else {
-          setNetwork(NetworkType.TESTNET);
-        }
       } else {
         toast.info('Please install Metamask on your browser extension', {
           position: toast.POSITION.TOP_CENTER, 
@@ -91,10 +82,10 @@ export const TransactionsProvider = ({ children }) => {
     try {
       await ethereum.request({
         method: 'wallet_switchEthereumChain',
-        params: [{ chainId: '0x1' }],
+        params: [{ chainId: network === NetworkType.MAINNET ? '0x1' : '0x5' }],
       });
     } catch (switchError) {
-      if (switchError.code === 4902) {
+      if (switchError.code === 4902 && network === NetworkType.MAINNET) {
         try {
           await ethereum.request({
             method: 'wallet_addEthereumChain',
@@ -116,24 +107,24 @@ export const TransactionsProvider = ({ children }) => {
   }
 
 
-  const getNetwork = async () => {
-    const wallet = await ethers.Wallet();
-    const networkID = await wallet.providers.getNetwork();
-    if (networkID.chainId === MainnetID) {
-      setNetwork(NetworkType.MAINNET);
-    } else if (networkID.chainId === TestnetID) {
-      setNetwork(NetworkType.TESTNET);
-    } else {
-      setNetwork('unknown');
-    }
-  };
+  // const getNetwork = async () => {
+  //   const wallet = await ethers.Wallet();
+  //   const networkID = await wallet.providers.getNetwork();
+  //   if (networkID.chainId === MainnetID) {
+  //     setNetwork(NetworkType.MAINNET);
+  //   } else if (networkID.chainId === TestnetID) {
+  //     setNetwork(NetworkType.TESTNET);
+  //   } else {
+  //     setNetwork('unknown');
+  //   }
+  // };
 
   const disconnectWallet = async (chain) => {
     if(chain == Chains.ALGO) {
-      await getSolBalance(NetworkType.MAINNET, "d");
-      setAlgorandAccount("");
+      disconnectAlgorandWallet();
+      disconnectOtherWallet();
     }else{
-      setOtherChainAccount("");
+      disconnectOtherWallet();
     }
     localStorage.clear();
     toast.info('Disconnected Successfully', {
@@ -143,13 +134,21 @@ export const TransactionsProvider = ({ children }) => {
     // window.location.reload();
   }
 
+  const disconnectAlgorandWallet = async () => {
+    setAlgorandAccount("");
+  }
+
+  const disconnectOtherWallet = async ()  => {
+    setOtherChainAccount("");
+  }
+
   // --------------------------- My Aglo Wallet Context functions -----------------------------
 
  const myAlgoConnect = new MyAlgoConnect({ disableLedgerNano: false });
 
    const settings = {
        shouldSelectOneAccount: false,
-       openManager: false
+       openManager: false,
    };
 
   async function connectToMyAlgo() {
@@ -173,7 +172,8 @@ export const TransactionsProvider = ({ children }) => {
    }
 
   useEffect(() => {
-  }, []);
+    disconnectOtherWallet();
+  }, [network]);
 
   
 
@@ -182,11 +182,11 @@ export const TransactionsProvider = ({ children }) => {
   const connectPhantom = async () => {
     try {
       
-       await getNetwork();
+      //  await getNetwork();
         if (solana) {
           // When using this flag, Phantom will only connect and emit a connect event if the application is trusted. Therefore, this can be safely called on page load for new users, as they won't be bothered by a pop-up window even if they have never connected to Phantom before.
           // if user already connected, { onlyIfTrusted: true }
-          const response = await solana.connect({ onlyIfTrusted: false });
+          const response = await solana.connect({ onlyIfTrusted: false, network: 'mainnet' });
           console.log(
             "public key",
             response.publicKey.toString()
@@ -237,8 +237,8 @@ export const TransactionsProvider = ({ children }) => {
         otherExplorerLogoAltText,
         otherExplorerName,
         otherWalletProvider,
-        network: network || NetworkType.TESTNET,
-        
+        network,
+        setNetwork,
       }}
     >
       {children}
