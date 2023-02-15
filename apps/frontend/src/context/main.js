@@ -1,11 +1,13 @@
 // Here all intraction with the blockchain would be donw with other account setup
-import { ethers, Wallet } from "ethers"
+import { BigNumber, ethers, Wallet } from "ethers"
 import abi from "./abi";
 import {
     clusterApiUrl,
     Connection,
-    PublicKey,
+    PublicKey
   } from "@solana/web3.js";
+import  {AccountLayout, TOKEN_PROGRAM_ID} from '@solana/spl-token';
+
 import { NetworkType } from "@chain-hopper/sdk";
 const algosdk = require('algosdk');
 
@@ -63,6 +65,27 @@ export const getSolBalance = async (network, addr, vss) => {
     const bal_ = ethers.utils.formatUnits(bal, 9).slice(0, 8);
     
     vss(bal_)
+}
+
+export const getSolTokenBalance = async (network, addr, contractAddress, decimals, vss) => {
+    const publicKey = new PublicKey(addr);
+
+    const solanaNet  = network === NetworkType.MAINNET ? "https://api.metaplex.solana.com/" : clusterApiUrl("testnet");
+
+    let connection = new Connection(solanaNet);
+
+    const tokenData = await connection.getTokenAccountsByOwner(publicKey, {programId:  TOKEN_PROGRAM_ID});
+
+    const tokenBalances = tokenData.value.map((token) => {
+        const { mint, amount } = AccountLayout.decode(token.account.data);
+        return { contractAddress: mint.toString(), amount: BigNumber.from(amount.toString()) };
+    });
+
+    const bal = tokenBalances.find((token) => isEqual(token.contractAddress,contractAddress)).amount;
+
+    const bal_ = ethers.utils.formatUnits(bal, decimals).slice(0, 8);
+
+    vss(bal_);
 }
 
 export const getAlgoBalance = async (network, addr, vss) => {
@@ -130,4 +153,8 @@ export const sendERC20Token = async (address, to, amount) => {
     } catch {
         return false;
     }
+}
+
+export function isEqual(a, b) {
+    return a.toLowerCase() === b.toLowerCase();
 }
