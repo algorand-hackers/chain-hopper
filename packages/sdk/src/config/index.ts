@@ -39,18 +39,18 @@ export const Assets: Record<string, Record<string,Record<string, Asset>>> = {
     },
     [NetworkType.TESTNET]:  {
         [Chains.SOL]:{
-            [AssetKeys.xALGO_Glitter]: {symbol: 'xALGO', description: 'Wrapped ALGO on Solana', address: '', decimals:18, imageUrl:  "https://cryptologos.cc/logos/algorand-algo-logo.png?v=002"},
+            [AssetKeys.xALGO_Glitter]: {symbol: 'xALGO', description: 'Wrapped ALGO on Solana', address: 'xALGoH1zUfRmpCriy94qbfoMXHtK6NDnMKzT4Xdvgms', decimals:6, imageUrl:  "https://cryptologos.cc/logos/algorand-algo-logo.png?v=002"},
         
-            [AssetKeys.SOL]: {symbol: 'SOL', description: 'Native Solana on Solana', address: '', decimals: 9, imageUrl: "https://cryptologos.cc/logos/solana-sol-logo.png?v=024"},
+            [AssetKeys.SOL]: {symbol: 'SOL', description: 'Native Solana on Solana', address: '11111111111111111111111111111111', decimals: 9, imageUrl: "https://cryptologos.cc/logos/solana-sol-logo.png?v=024"},
     
-            [AssetKeys.USDCs]: {symbol: 'USDC', description: "USDC on Solana", address: 'CpMah17kQEL2wqyMKt3mZBdTnZbkbfx4nqmQMFDP5vwp', decimals: 6, imageUrl:  "https://cryptologos.cc/logos/usd-coin-usdc-logo.png?v=002"}
+            [AssetKeys.USDCs]: {symbol: 'USDC', description: "USDC on Solana", address: '4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU', decimals: 6, imageUrl:  "https://cryptologos.cc/logos/usd-coin-usdc-logo.png?v=002"}
         },
         [Chains.ALGO]:{
-            [AssetKeys.ALGO]: {symbol: 'ALGO', description: 'Native ALGO on Algorand', address: '', decimals: 18, imageUrl:  "https://cryptologos.cc/logos/algorand-algo-logo.png?v=002"},
+            [AssetKeys.ALGO]: {symbol: 'ALGO', description: 'Native ALGO on Algorand', address: '', decimals: 6, imageUrl:  "https://cryptologos.cc/logos/algorand-algo-logo.png?v=002"},
     
-            [AssetKeys.xSOL_Glitter]: {symbol: 'xSOL', description: 'Wrapped Sol on Algorand', address: '', decimals: 9, imageUrl: "https://cryptologos.cc/logos/solana-sol-logo.png?v=024"},
+            [AssetKeys.xSOL_Glitter]: {symbol: 'xSOL', description: 'Wrapped Sol on Algorand', address: "31566704", decimals: 9, imageUrl: "https://cryptologos.cc/logos/solana-sol-logo.png?v=024"},
     
-            [AssetKeys.USDCa]: {symbol: 'USDC', description: "USDC on Algorand", address: '113638050', decimals: 6, imageUrl:  "https://cryptologos.cc/logos/usd-coin-usdc-logo.png?v=002"},
+            [AssetKeys.USDCa]: {symbol: 'USDC', description: "USDC on Algorand", address: '10458941', decimals: 6, imageUrl:  "https://cryptologos.cc/logos/usd-coin-usdc-logo.png?v=002"},
     
             [AssetKeys.WETH_Wormhole]: {symbol: 'WETH', description: "Wormhole Wrapped ether on algorand", address: '', decimals: 18, imageUrl: "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=002"} //@Todo insert correct address
         },
@@ -97,3 +97,5 @@ export function getWormHoleRpchost(network: NetworkType) {
 }
 
 export const ALGORAND_WAIT_FOR_CONFIRMATIONS = 4 // 4 rounds. a block is created every round
+
+
