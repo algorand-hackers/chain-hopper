@@ -97,3 +97,83 @@ export function getWormHoleRpchost(network: NetworkType) {
 }
 
 export const ALGORAND_WAIT_FOR_CONFIRMATIONS = 4 // 4 rounds. a block is created every round
+
+
+export const glitterBridgeTokenInformation: any  = {
+    Solana: {
+        tokens: [
+            {
+              network: "solana",
+              symbol: "SOL",
+              address: "11111111111111111111111111111111",
+              decimals: 9,
+              min_transfer: 0.05,
+              fee_divisor: 200,
+              name: undefined,
+              max_transfer: undefined,
+              total_supply: undefined,
+            },
+            {
+              network: "solana",
+              symbol: "xALGO",
+              address: "xALGoH1zUfRmpCriy94qbfoMXHtK6NDnMKzT4Xdvgms",
+              decimals: 6,
+              min_transfer: 5,
+              fee_divisor: 200,
+              name: undefined,
+              max_transfer: undefined,
+              total_supply: undefined,
+            },
+            {
+              network: "solana",
+              symbol: "USDC",
+              address: "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
+              decimals: 6,
+              min_transfer: 1,
+              fee_divisor: 200,
+              name: undefined,
+              max_transfer: undefined,
+              total_supply: undefined,
+            }
+          ]
+    },
+
+    Algorand: {
+        tokens: [
+            {
+              network: "algorand",
+              symbol: "ALGO",
+              address: "",
+              decimals: 6,
+              min_transfer: 5,
+              fee_divisor: 200,
+              name: undefined,
+              max_transfer: undefined,
+              total_supply: undefined,
+            },
+            {
+              network: "algorand",
+              symbol: "USDC",
+              address: 10458941,
+              decimals: 6,
+              min_transfer: 5,
+              fee_divisor: 200,
+              name: undefined,
+              max_transfer: undefined,
+              total_supply: undefined,
+            },
+            {
+              network: "algorand",
+              symbol: "xSOL",
+              address: 31566704,
+              decimals: 9,
+              min_transfer: 0.05,
+              fee_divisor: 200,
+              name: undefined,
+              max_transfer: undefined,
+              total_supply: undefined,
+            }
+          ]
+    }
+   
+}
