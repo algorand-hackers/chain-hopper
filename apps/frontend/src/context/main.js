@@ -158,3 +158,7 @@ export const sendERC20Token = async (address, to, amount) => {
 export function isEqual(a, b) {
     return a.toLowerCase() === b.toLowerCase();
 }
+
+export  function getAddressExplorerLink(template, account ) {
+    return template.replace('{address}',  account);
+}

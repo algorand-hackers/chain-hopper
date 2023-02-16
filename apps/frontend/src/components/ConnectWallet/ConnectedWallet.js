@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { shortenAddress } from "../../utils/shortenedAddress";
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import Images_Icons from "../../constant/icons-images";
+import { getAddressExplorerLink } from "../../context/main";
 
 const ConnectedWallet = ({chainName, walletImage, account, walletName, explorerUrl, explorerName, explorerLogo, explorerLogoAltText, disconnectWallet} ) => {
 
@@ -65,7 +66,7 @@ return (<Menu>
         <Flex gap={2} align="center" direction="column" display={{ base: 'none', md: 'flex' }}>
                 <Flex pr="10px">
                 <Image src={explorerLogo} alt={explorerLogoAltText} w="30px" h="30px"   />
-                <a href={`${explorerUrl}/${account}`} isExternal target="_blank">
+                <a href={getAddressExplorerLink(explorerUrl, account)} isExternal target="_blank">
                
               <Text ml="10px">View on {explorerName}</Text>
               </a>

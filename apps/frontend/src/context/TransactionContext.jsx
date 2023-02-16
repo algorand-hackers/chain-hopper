@@ -54,7 +54,7 @@ export const TransactionsProvider = ({ children }) => {
         setOtherChainAccount(accounts[0]);
         setOtherWalletName("Metamask");
         setOtherWalletImage(metamaskLogoM);
-        setOtherScan(`https://etherscan.io/address`);
+        setOtherScan(network === NetworkType.MAINNET ?  'https://etherscan.io/address/{address}' : 'https://goerli.etherscan.io/address/{address}');
         setOtherChainName("ethereum");
         setOtherExplorerLogo(Images_Icons.EtherscanLogo);
         setOtherExplorerLogoAltText('Ethereum');
@@ -82,25 +82,8 @@ export const TransactionsProvider = ({ children }) => {
         params: [{ chainId: network === NetworkType.MAINNET ? '0x1' : '0x5' }],
       });
     } catch (switchError) {
-      if (switchError.code === 4902 && network === NetworkType.MAINNET) {
-        try {
-          await ethereum.request({
-            method: 'wallet_addEthereumChain',
-            params: [
-              {
-                chainId: '0x1',
-                chainName: 'Ethereum',
-                rpcUrls: ['https://eth-mainnet.g.alchemy.com/v2/X6ZbuunfiCSmLDfVARGxggzu5KAbwy35'],
-                blockExplorerUrls: ['https://etherscan.io']
-              },
-            ],
-          });
-        } catch (error) {
-          console.log(alert(error));
-        }
+          console.log(alert(switchError));
       }
-      // handle other "switch" errors
-    }
   }
 
 
@@ -147,7 +130,7 @@ export const TransactionsProvider = ({ children }) => {
        setAlgorandAccount(addresses[0].toString())
        setAlgorandWalletName("My Algo");
        setAlgorandWalletImage(myAlgoLogoM);
-       setAlgoscan('https://algoexplorer.io/address');
+       setAlgoscan(network === NetworkType.MAINNET ?  'https://algoexplorer.io/address/{address}' : 'https://testnet.algoexplorer.io/address/{address}');
      } catch (err) {
        console.error(err);
        toast.error('something went wrong... issue might be your network', {
@@ -180,7 +163,7 @@ export const TransactionsProvider = ({ children }) => {
           setOtherChainAccount(response.publicKey.toString());
           setOtherWalletName("Phantom");
           setOtherWalletImage(phantomLogoM);
-          setOtherScan('https://explorer.solana.com/address');
+          setOtherScan(network === NetworkType.MAINNET ?  'https://explorer.solana.com/address/{address}' : 'https://explorer.solana.com/address/{address}?cluster=testnet');
           setOtherChainName("solana");
           setOtherExplorerLogo(phantomLogoM);
           setOtherExplorerLogoAltText('Solana');
