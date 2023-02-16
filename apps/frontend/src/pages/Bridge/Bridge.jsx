@@ -27,9 +27,9 @@ import { networks } from '../../constant/networksJSON';
 import wallet from '../../asset/ETH - Ethereum Token.png';
 import Withdrawer from '../../components/Withdrawer';
 import { Eth } from '../../asset';
-import { getAlgoBalance, getEtherBalance, getSolBalance } from '../../context/main';
+import { getAlgoBalance, getEtherBalance, getSolBalance, getSolTokenBalance } from '../../context/main';
 import { TransactionContext } from "../../context/TransactionContext";
-import { AssetKeys, Chains, NetworkType, supportedDepositAssetsByChain } from '@chain-hopper/sdk';
+import { AssetKeys, Assets, Chains, NetworkType, supportedDepositAssetsByChain } from '@chain-hopper/sdk';
 // const NetworkSelector = lazy(
 //   () => import("../../components/NetworkSelector")
 // );
@@ -102,8 +102,13 @@ const Bridge = () => {
       if(selected === Chains.ETH  && selectToken === AssetKeys.ETH && otherWalletProvider)  {
         getEtherBalance(otherWalletProvider, otherChainAccount, setDepositTokenBalanceOnOtherChain);
       }
-      else if(selected === Chains.SOL  && selectToken === AssetKeys.SOL) {
-        getSolBalance(network, otherChainAccount, setDepositTokenBalanceOnOtherChain);
+      else if(selected === Chains.SOL) {
+        if( selectToken  === AssetKeys.SOL) 
+          getSolBalance(network, otherChainAccount, setDepositTokenBalanceOnOtherChain);
+        else if (!!selectToken) {
+          const tokenDetail = Assets[network][Chains.SOL][selectToken];
+          getSolTokenBalance(network, otherChainAccount, tokenDetail.address, tokenDetail.decimals, setDepositTokenBalanceOnOtherChain )
+        }
       }
     }
       else 
@@ -155,8 +160,9 @@ const Bridge = () => {
   },[selectedTokenToWithdraw]);
 
   useEffect(() => {
-    if(algorandAccount){
-      connectWallets();
+    if(algorandAccount ){
+      if((isDepositTab && selected)  || (!isDepositTab  && selectedWithdrawToChain))
+        connectWallets();
     }
   }, [algorandAccount]);
 
