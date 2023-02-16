@@ -40,9 +40,6 @@ export const TransactionsProvider = ({ children }) => {
   const [network, setNetwork] = useState(NetworkType.TESTNET);
   
  
-   
-   
-
 
 
   const connectMetamask = async () => {
@@ -107,17 +104,6 @@ export const TransactionsProvider = ({ children }) => {
   }
 
 
-  // const getNetwork = async () => {
-  //   const wallet = await ethers.Wallet();
-  //   const networkID = await wallet.providers.getNetwork();
-  //   if (networkID.chainId === MainnetID) {
-  //     setNetwork(NetworkType.MAINNET);
-  //   } else if (networkID.chainId === TestnetID) {
-  //     setNetwork(NetworkType.TESTNET);
-  //   } else {
-  //     setNetwork('unknown');
-  //   }
-  // };
 
   const disconnectWallet = async (chain) => {
     if(chain == Chains.ALGO) {

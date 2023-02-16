@@ -1,4 +1,5 @@
-import React from 'react';
+import React,{useState} from 'react';
+import {getQuotes,NetworkType} from '@chain-hopper/sdk';
 import {
   Modal,
   ModalOverlay,
@@ -22,6 +23,32 @@ import cancle from '../../asset/Cancle.svg';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 
 const TokenRouteModal = ({ onClose, isOpen }) => {
+
+  const [quotes, setQuotes] = useState([]);
+
+  const fetchQuotes = async () => {
+    try {
+      const quoteRequest = {
+        amountIn: '1000',
+        assetKey: 'ETH',
+        fromAddress: '0x20497f37a8169c8c9fa09411f8c2cfb7c90de5d1',
+        fromChainName: 'Ethereum',
+        fromWallet: {},
+        fromWalletType: 'metamask',
+        toAddress: 'KVVYUJHPZXW7PF4O64W6DG7GU3GF6SPCLS6YKUSV7WFQ7WX7HXY7LS6CRA',
+        toChainName: 'Algorand Chain',
+        toWallet: {},
+        toWalletType: 'Algorand',
+        network: 'NetworkType.Mainet'
+      };
+      const quotes = await getQuotes(quoteRequest);
+   
+      setQuotes(quotes);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <Modal onClose={onClose} isOpen={isOpen} isCentered>
       <ModalOverlay />
@@ -84,7 +111,7 @@ const TokenRouteModal = ({ onClose, isOpen }) => {
                 alt="algo"
               />
             </Flex>
-            <Box>
+            {/* <Box>
               <Text fontSize="14px" fontWeight="500">
                 10mins
               </Text>
@@ -100,7 +127,15 @@ const TokenRouteModal = ({ onClose, isOpen }) => {
                 Expected balance
               </Text>
             </Box>
-            
+             */}
+             <div>
+      <button onClick={fetchQuotes}>Get Quotes</button>
+      {quotes.map((quote, index) => (
+        <div key={index}>
+          {quote.amountOut} {quote.toChainName} for {quote.amountIn} {quote.fromChainName}
+        </div>
+      ))}
+    </div>
             <Flex cursor="pointer" align={'center'}></Flex>
           </Flex>
 
